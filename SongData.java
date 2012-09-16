@@ -1,12 +1,16 @@
 /**
  * @author jeffreymeyerson, joshstewart@utexas.edu
  *
- * The SongData class.
+ * The SongData class.  SongData is a singleton object that interface
  *
  */
 public class SongData {
 
     private List<SongEvent> events;
+    
+    private SongData {
+        
+    }
 
     public class SongEvent {
         long timestamp;
