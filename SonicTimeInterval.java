@@ -16,7 +16,7 @@ public class SonicTimeInterval extends TimeInterval {
 	 */
 	private HashMap<String, Object> qualities;
 	
-	public SonicTimeInterval (int intervalLength, HashMap<String, Object> qualities){
+	public SonicTimeInterval ( int intervalLength, HashMap<String, Object> qualities ){
 		this.qualities = qualities;
 		this.LENGTH_IN_MS = intervalLength
 	}
