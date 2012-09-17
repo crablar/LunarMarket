@@ -1,0 +1,11 @@
+/**
+ * @author jeffreymeyerson
+ *
+ * The SongDataManager class.  SongDataManager objects are used to process SongData by means of 
+ * accepting parameters from the SongData object and performing operations.
+ *
+ */
+ 
+ public class SongDataManager {
+ 
+ }

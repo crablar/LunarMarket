@@ -1,18 +1,16 @@
 /**
  * @author jeffreymeyerson
  *
- * The BehavioralTimeInterval class.  A BehavioralTimeInterval object contains a map of sonic 
- * qualities which compose the map's key set that are exhibited by the song at time tn. 
+ * The BehavioralTimeInterval class.  A BehavioralTimeInterval object contains a map of behavioral
+ * qualities that have occured up to and including this time interval.
  *
  */
-public class SonicTimeInterval extends TimeInterval {
-		
+public class BehavioralTimeInterval extends TimeInterval {
+			
 	/**
-	 *
 	 * A map of quality names to their values at time tn.  
-	 * Example: "minor chord presence"	-> False
-	 * 			"lowFreqDensity"		-> .34
-	 *
+	 * Example: "opening price higher than previous time interval"	-> False
+	 * 			"decimal increase in volume from end of t( i - 1)"	-> .62
 	 */
 	private HashMap<String, Object> qualities;
 	

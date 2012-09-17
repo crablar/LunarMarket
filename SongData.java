@@ -1,28 +1,14 @@
 /**
  * @author jeffreymeyerson, joshstewart@utexas.edu
  *
- * The SongData class.  SongData is a singleton object that interface
+ * The SongData class. Each Stock has a SongData object that is used to construct price and 
+ * volume movement. The SongData object can perform idempotent operations on the data it has 
+ * access to.
  *
  */
 public class SongData {
 
-    private List<SongEvent> events;
-    
-    private SongData {
-        
-    }
+    private ArrayList<TimeInterval> timeIntervals;
 
-    public class SongEvent {
-        long timestamp;
-        SongEventType type;
-        int value;
-
-        enum SongEventType {
-            MINOR_CHORD,
-            MAJOR_CHORD,
-            HIGH_FREQUENCY_NOTE,
-            MID_FREQUENCY_NOTE,
-            LOW_FREQUENCY_NOTE
-        }
-    }
+	
 }

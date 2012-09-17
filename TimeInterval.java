@@ -8,9 +8,10 @@
 
 public abstract class TimeInterval {
 
+	// This is the same entity as t(i) in my notation
+	private final int INTERVAL_NUMBER
+
 	private final int INTERVAL_LENGTH_IN_MS;
 	private final int INTERVAL_LENGTH_IN_S
-	
-	
 	
 }

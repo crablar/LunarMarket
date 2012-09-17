@@ -5,7 +5,7 @@
  *  Examples include cup-and-handle, head-and-shoulders, 
  *
  */
-public class BehavioralFunction{
+public class BehavioralFunction {
     
     private String name;
     

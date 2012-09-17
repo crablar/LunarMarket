@@ -2,7 +2,7 @@
  * @author jeffreymeyerson
  *
  * The SonicTimeInterval class.  A SonicTimeInterval object contains a map of sonic qualities
- * which compose the map's key set that are exhibited by the song at time tn. 
+ * which compose the map's key set that are exhibited by the song at over time interval tn. 
  *
  */
 public class SonicTimeInterval extends TimeInterval {
