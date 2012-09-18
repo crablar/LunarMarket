@@ -8,4 +8,7 @@
  
  public class BullishSongDataManager extends SongDataManager{
  
+  	// A "bullish" price pattern is one that generally increases over time
+ 	priceDefinition = uptrendWithUpperBound();
+ 
  }

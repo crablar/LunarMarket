@@ -1,9 +1,8 @@
 /**
  * @author jeffreymeyerson, joshstewart@utexas.edu
  *
- * The SongData class. Each Stock has a SongData object that is used to construct price and 
- * volume movement. The SongData object can perform idempotent operations on the data it has 
- * access to.
+ * The SongData class. Each Stock has a SongData object which is processed by
+ * SongDataManagers within that Stock to interpret the SongData in different ways.
  *
  */
 public class SongData {
