@@ -1,10 +1,14 @@
 package com.jeffmeyerson.moonstocks;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -13,6 +17,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
+	
+	public final static String EXTRA_STOCK_ID = "com.jeffmeyerson.moonstocks.STOCK_ID";
+	
+	private Context context = this;
 	
 	String stockNames[] = {"AAPL", "GOOG", "IBM"};
 	int stockPrices[] = {10000, 20000, 30203};
@@ -24,11 +32,29 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        // Add onclick listeners to existing buttons
+        Button aaplButton = (Button) findViewById(R.id.button1);
+        Button googButton = (Button) findViewById(R.id.button2);
+        aaplButton.setOnClickListener(new OnClickListener() {
+        	public void onClick(View v) {
+        		Intent intent = new Intent(context, StockActivity.class);
+        		intent.putExtra(EXTRA_STOCK_ID, "AAPL");
+        		startActivity(intent);
+        	}
+        });
+        googButton.setOnClickListener(new OnClickListener() {
+        	public void onClick(View v) {
+        		Intent intent = new Intent(context, StockActivity.class);
+        		intent.putExtra(EXTRA_STOCK_ID, "GOOG");
+        		startActivity(intent);
+        	}
+        });
+        
+        
         // Programmatically add stocks to view
         
         // Get the table layout
         TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
-        
         
         for (int i = 0; i < stockNames.length; i++) {
         	Log.d("main", "adding stock" + stockNames[i]);
@@ -46,6 +72,14 @@ public class MainActivity extends Activity {
         	Button button = new Button(this);
         	button.setGravity(Gravity.CENTER_HORIZONTAL);
         	button.setText(stockNames[i]);
+        	final int j = i;
+        	button.setOnClickListener(new OnClickListener() {
+        		public void onClick(View v) {
+        			Intent intent = new Intent(context, StockActivity.class);
+        			intent.putExtra(EXTRA_STOCK_ID, stockNames[j]);
+        			startActivity(intent);
+        		}
+        	});
         	frame.addView(button);
         	row.addView(frame);
         
