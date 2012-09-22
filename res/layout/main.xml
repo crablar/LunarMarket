@@ -4,22 +4,18 @@
     android:gravity="right"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello World, MainActivity" />
-
     <TableLayout
+        android:id="@+id/market_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <TableRow
-            android:id="@+id/tableRow2"
+            android:id="@+id/market_header"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/market_header_company"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -27,7 +23,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/market_header_price"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
@@ -35,7 +31,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/market_header_shares"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
