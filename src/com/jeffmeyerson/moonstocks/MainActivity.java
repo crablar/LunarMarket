@@ -3,6 +3,7 @@ package com.jeffmeyerson.moonstocks;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -31,6 +32,11 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        // Play launch pad music
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
+        
+        mp.start();
         
         // Add onclick listeners to existing buttons
         Button aaplButton = (Button) findViewById(R.id.button1);
