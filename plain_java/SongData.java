@@ -9,5 +9,4 @@ public class SongData {
 
     private ArrayList<TimeInterval> timeIntervals;
 
-	
 }
