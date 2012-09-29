@@ -1,3 +1,5 @@
+package plain_java;
+
 /**
  * @author jeffreymeyerson
  *
@@ -5,11 +7,11 @@
  *
  */
 public class Stock {
-    
-    // The particular behavioral pattern that this stock exhibits over time
-    private BehavioralFunction behavioralFunction;
-    
-    // The data produced by the song after it is processed by the SongTransformer API
-    private SongData songData;
+//    
+//    // The particular behavioral pattern that this stock exhibits over time
+//    private BehavioralFunction behavioralFunction;
+//    
+//    // The data produced by the song after it is processed by the SongTransformer API
+//    private SongData songData;
 
 }

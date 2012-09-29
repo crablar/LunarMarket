@@ -1,3 +1,5 @@
+package plain_java;
+
 /**
  * @author jeffreymeyerson
  *
@@ -16,9 +18,9 @@ public class Function {
 	* negatively correlated with low frequency.
 	*
 	**/
-	public Function uptrendWithUpperBound(double x, double y, double z, int upperBound){
-		int result = ( 2 * x + y ) / z;
-		( result < upperBound ? return result: return upperBound;
-	}
+//	public Function uptrendWithUpperBound(double x, double y, double z, int upperBound){
+//		double result = ( 2 * x + y ) / z;
+//		result < upperBound ? return result: return upperBound;
+//	}
     
 }

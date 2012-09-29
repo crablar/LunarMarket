@@ -1,3 +1,5 @@
+package plain_java;
+
 /**
  * @author jeffreymeyerson, joshstewart@utexas.edu
  *
@@ -10,7 +12,7 @@
  
  	private static Function priceDefinition;
  
- 	public double getPrice( SongData songData );
- 	public double getVolume( SongData songData );
+// 	public double getPrice( SongData songData );
+// 	public double getVolume( SongData songData );
  
  }

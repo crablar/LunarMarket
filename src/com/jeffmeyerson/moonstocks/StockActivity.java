@@ -13,14 +13,14 @@ public class StockActivity extends Activity {
 
 	private Handler mHandler = new Handler();
 	private TextView stockPriceView;
-	private String stockName = R.id.stock_name;
+	private String stockName = 	getResources().getString(R.string.stock_name);
 	private Stock stock;
 
 	private Runnable runnable = new Runnable() {
 	    public void run() {
 	        double price = (int) (Math.random() * 10000) / 100.0;
-	        stockPrice.setText(price + "");
-	        stockPrice.invalidate();
+	        stockPriceView.setText(price + "");
+	        stockPriceView.invalidate();
 	        mHandler.postDelayed(runnable, 2000);
 	    }
 	};

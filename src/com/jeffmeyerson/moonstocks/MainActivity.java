@@ -26,6 +26,8 @@ public class MainActivity extends Activity {
 	String stockNames[] = {"AAPL", "GOOG", "IBM"};
 	int stockPrices[] = {10000, 20000, 30203};
 	int sharesOwned[] = {50, 20, 39};
+    private MediaPlayer mp;
+
 	
     /** Called when the activity is first created. */
     @Override
@@ -33,9 +35,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        // Play launch pad music
-        MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
-        
+        mp = MediaPlayer.create(this, R.raw.main_menu);
         mp.start();
         
         // Add onclick listeners to existing buttons
@@ -107,4 +107,17 @@ public class MainActivity extends Activity {
         	marketTable.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
     }
+    
+    @Override
+    public void onDestroy(){
+    	super.onDestroy();
+    	mp.stop();
+    }
+    
+    @Override
+    public void onPause(){
+    	super.onPause();
+    	mp.pause();
+    }
+    
 }

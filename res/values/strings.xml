@@ -2,8 +2,9 @@
 <resources>
 
     <string name="app_name">LunarStocks</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_stock">StockActivity</string>
-
+	<string name="stock_name">stocknamehere</string>
+    
+    
 </resources>

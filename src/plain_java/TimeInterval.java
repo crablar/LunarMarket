@@ -1,3 +1,7 @@
+package plain_java;
+
+import java.util.HashMap;
+
 /**
  * @author jeffreymeyerson
  *
@@ -8,12 +12,12 @@
 public class TimeInterval {
 		
 	// This is the same entity as the i in t(i) in my notation
-	private final int INTERVAL_NUMBER;
+	private final int INTERVAL_NUMBER = 0;
 	private static final int INTERVAL_LENGTH_IN_MS = 2000;
-	
-	// Map from properties to their values in this Time Interval
-	private final HashMap<String, Double>
-		
+
+	// Map from properties to their values in this Time Interval		
+	private HashMap<String, Double> properties;
+
 	/**
 	 *
 	 * A map of quality names to their values at time tn.  
@@ -21,12 +25,10 @@ public class TimeInterval {
 	 * 			"lowFreqDensity"		-> .34
 	 *
 	 */
-	private HashMap<String, Double> properties;
 	
-	public TimeInterval ( int intervalLength, HashMap<String, Object> qualities ){
-		this.qualities = qualities;
-		this.LENGTH_IN_MS = intervalLength
-	}
+//	public TimeInterval ( int intervalLength, HashMap<String, Object> qualities ){
+//		
+//	}
 
 	public void addProperty(String property, Double propertyValue) {
 		
