@@ -1,8 +1,8 @@
 package com.jeffmeyerson.moonstocks;
 
+import plain_java.Stock;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -12,7 +12,9 @@ import android.widget.TextView;
 public class StockActivity extends Activity {
 
 	private Handler mHandler = new Handler();
-	private  TextView stockPrice;
+	private TextView stockPriceView;
+	private String stockName = R.id.stock_name;
+	private Stock stock;
 
 	private Runnable runnable = new Runnable() {
 	    public void run() {
@@ -28,7 +30,8 @@ public class StockActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
-        stockPrice = (TextView) findViewById(R.id.stock_price);
+        stockPriceView = (TextView) findViewById(R.id.stock_price_view);
+        
         mHandler.postDelayed(runnable, 2000);
     }
 
