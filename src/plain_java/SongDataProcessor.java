@@ -57,5 +57,8 @@ public class SongDataProcessor {
 		return numTimeIntervals;
 	}
 	
+	public Double[] getValuesFor(String key){
+		return valueMap.get(key);
+	}
 
 }

@@ -12,10 +12,15 @@ import java.util.Set;
  */
 public class SongData {
 
-    private ArrayList<TimeInterval> timeIntervals;
+    private TimeInterval[] timeIntervals;
     private static SongDataProcessor songDataProcessor;
 
-    // Generate a SongData object from a string with the given name
+    /**
+     * Creates a SongData object.
+     * 
+     * @param songName
+     * @throws FileNotFoundException
+     */
     public SongData(String songName) throws FileNotFoundException{
     	songDataProcessor = new SongDataProcessor(songName);
     	
@@ -24,12 +29,17 @@ public class SongData {
     	
     	// Initialize the time intervals
     	int numTimeIntervals = songDataProcessor.getNumTimeIntervals();
-    	timeIntervals = new ArrayList<TimeInterval>(numTimeIntervals);
+    	timeIntervals = new TimeInterval[numTimeIntervals];
     	
-    	// For each property, iterate through the array of values and create time intervals
+    	// For each property, iterate through the time intervals and describe that property at that time interval
     	for(String property : songProperties){
-    		
-    		
+    		Double[] propertyValues = songDataProcessor.getValuesFor(property);
+    		for(int i = 0; i < numTimeIntervals; i++){
+    			TimeInterval timeInterval = timeIntervals[i];
+    			Double propertyValue = propertyValues[i];
+    			timeInterval.addProperty(property, propertyValue);
+    		}
+    			
     	}
     }
 

@@ -11,8 +11,8 @@ public class TimeInterval {
 	private final int INTERVAL_NUMBER;
 	private static final int INTERVAL_LENGTH_IN_MS = 2000;
 	
-	// Object value type is probably a placeholder
-	private final HashMap<String, Object>
+	// Map from properties to their values in this Time Interval
+	private final HashMap<String, Double>
 		
 	/**
 	 *
@@ -21,11 +21,15 @@ public class TimeInterval {
 	 * 			"lowFreqDensity"		-> .34
 	 *
 	 */
-	private HashMap<String, Object> qualities;
+	private HashMap<String, Double> properties;
 	
 	public TimeInterval ( int intervalLength, HashMap<String, Object> qualities ){
 		this.qualities = qualities;
 		this.LENGTH_IN_MS = intervalLength
+	}
+
+	public void addProperty(String property, Double propertyValue) {
+		
 	}
     
 }
