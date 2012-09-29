@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
+	 // Play launch pad music
+    MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
+	
 	public final static String EXTRA_STOCK_ID = "com.jeffmeyerson.moonstocks.STOCK_ID";
 	
 	private Context context = this;
@@ -35,7 +38,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+<<<<<<< HEAD
         mp = MediaPlayer.create(this, R.raw.main_menu);
+=======
+        //launch the media player
+>>>>>>> af7665b50c7b082158375c87e49f8c0b6d77a582
         mp.start();
         
         // Add onclick listeners to existing buttons
@@ -109,15 +116,26 @@ public class MainActivity extends Activity {
     }
     
     @Override
+<<<<<<< HEAD
     public void onDestroy(){
+=======
+    public void onDestroy() {
+>>>>>>> af7665b50c7b082158375c87e49f8c0b6d77a582
     	super.onDestroy();
     	mp.stop();
     }
     
+<<<<<<< HEAD
     @Override
     public void onPause(){
     	super.onPause();
     	mp.pause();
     }
     
+=======
+    public void onPause() {
+    	super.onPause();
+    	mp.pause();
+    }
+>>>>>>> af7665b50c7b082158375c87e49f8c0b6d77a582
 }
