@@ -7,6 +7,6 @@
  */
 public class SongData {
 
-    private ArrayList<TimeInterval> timeIntervals;
+    private List<SongEvent> songEvents = new LinkedList<SongEvent>;
 
 }
