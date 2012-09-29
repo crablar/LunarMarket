@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
+	 // Play launch pad music
+    MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
+	
 	public final static String EXTRA_STOCK_ID = "com.jeffmeyerson.moonstocks.STOCK_ID";
 	
 	private Context context = this;
@@ -33,9 +36,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        // Play launch pad music
-        MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
-        
+        //launch the media player
         mp.start();
         
         // Add onclick listeners to existing buttons
@@ -106,5 +107,16 @@ public class MainActivity extends Activity {
         	row.addView(shares);
         	marketTable.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
+    }
+    
+    @Override
+    public void onDestroy() {
+    	super.onDestroy();
+    	mp.stop();
+    }
+    
+    public void onPause() {
+    	super.onPause();
+    	mp.pause();
     }
 }
