@@ -4,7 +4,7 @@
     <string name="app_name">LunarStocks</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_stock">StockActivity</string>
-	<string name="stock_name">stocknamehere</string>
+	<string name="stock_name">main_menu</string>
     
     
 </resources>

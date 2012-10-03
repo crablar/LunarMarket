@@ -43,4 +43,8 @@ public class SongData {
     	}
     }
 
+	public int getNumIntervals() {
+		return timeIntervals.length;
+	}
+
 }

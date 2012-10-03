@@ -6,31 +6,22 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+
 
 public class MainActivity extends Activity {
-	
-	 // Play launch pad music
-    MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
 	
 	public final static String EXTRA_STOCK_ID = "com.jeffmeyerson.moonstocks.STOCK_ID";
 	
 	private Context context = this;
 	
-	String stockNames[] = {"AAPL", "GOOG", "IBM"};
-	int stockPrices[] = {10000, 20000, 30203};
-	int sharesOwned[] = {50, 20, 39};
-    private MediaPlayer mp;
-
+	private String stockNames[] = {"AAPL", "GOOG", "IBM"};
+	private int stockPrices[] = {10000, 20000, 30203};
+	private int sharesOwned[] = {50, 20, 39};
+	
+	private MediaPlayer mp;
 	
     /** Called when the activity is first created. */
     @Override
@@ -38,11 +29,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-<<<<<<< HEAD
-        mp = MediaPlayer.create(this, R.raw.main_menu);
-=======
-        //launch the media player
->>>>>>> af7665b50c7b082158375c87e49f8c0b6d77a582
+        // Play launch pad music
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
+        
         mp.start();
         
         // Add onclick listeners to existing buttons
@@ -62,80 +51,8 @@ public class MainActivity extends Activity {
         		startActivity(intent);
         	}
         });
-        
-        
-        // Programmatically add stocks to view
-        
-        // Get the table layout
-        TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
-        
-        for (int i = 0; i < stockNames.length; i++) {
-        	Log.d("main", "adding stock" + stockNames[i]);
-        
-        	// Set up the row
-        	TableRow row = new TableRow(this);
-        	row.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        
-        	// Add the button and its frame
-        	FrameLayout frame = new FrameLayout(this);
-        	// convert DPs to pixels
-        	int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, getResources().getDisplayMetrics());
-        	int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
-        	frame.setLayoutParams(new LayoutParams(width, height));
-        	Button button = new Button(this);
-        	button.setGravity(Gravity.CENTER_HORIZONTAL);
-        	button.setText(stockNames[i]);
-        	final int j = i;
-        	button.setOnClickListener(new OnClickListener() {
-        		public void onClick(View v) {
-        			Intent intent = new Intent(context, StockActivity.class);
-        			intent.putExtra(EXTRA_STOCK_ID, stockNames[j]);
-        			startActivity(intent);
-        		}
-        	});
-        	frame.addView(button);
-        	row.addView(frame);
-        
-        	// Add share price
-        	TextView sharePrice = new TextView(this);
-        	sharePrice.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
-        	sharePrice.setGravity(Gravity.CENTER);
-        	sharePrice.setText("$" + stockPrices[i]);
-        	// TODO: set android:textAppearance="?android:attr/textAppearanceLarge" on share price
-        	row.addView(sharePrice);
-        
-        	// Add shares owned
-        	TextView shares = new TextView(this);
-        	shares.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        	shares.setGravity(Gravity.CENTER);
-        	shares.setText(String.valueOf(sharesOwned[i]));
-        	// TODO: set android:textAppearance="?android:attr/textAppearanceLarge" on shares owned
-        	row.addView(shares);
-        	marketTable.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        }
     }
     
-    @Override
-<<<<<<< HEAD
-    public void onDestroy(){
-=======
-    public void onDestroy() {
->>>>>>> af7665b50c7b082158375c87e49f8c0b6d77a582
-    	super.onDestroy();
-    	mp.stop();
-    }
     
-<<<<<<< HEAD
-    @Override
-    public void onPause(){
-    	super.onPause();
-    	mp.pause();
-    }
-    
-=======
-    public void onPause() {
-    	super.onPause();
-    	mp.pause();
-    }
->>>>>>> af7665b50c7b082158375c87e49f8c0b6d77a582
+
 }
