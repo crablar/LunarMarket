@@ -4,7 +4,8 @@ package plain_java;
 /**
  * @author jeffreymeyerson
  *
- * The Stock class.  This class maps a stock as a finite state machine with each state being represented by a time interval.
+ * The Stock class.  This class maps a stock like a finite state machine with each state being 
+ * represented by a time interval.
  *
  */
 
@@ -16,11 +17,11 @@ public class Stock {
     
     public Stock(SongData songData){
     	this.songData = songData;
+    	
+    	// Create a PriceCalculator for calculating the price from variables taken out of the SongData
     	this.priceCalculator = new PriceCalculator(songData);
     	prices = priceCalculator.getPriceArray();
-		System.out.println("Stock initialized.");
     }
-
 
 	public Double getPrice(int currentTime) {
 		

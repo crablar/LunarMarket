@@ -36,9 +36,12 @@ public class SongDataProcessor {
 			
 			// line example: "low_freq_values 5 6 6 7 7 8 8 9 9 10 10 11 11 12"
 			
-			// Build value array for a map entry
 			String[] lineArr = line.split(" ");
+			
+			// The key in the above example is "low_freq_values"
 			String key = lineArr[0];
+			
+			// Fill in an array of doubles to represent the values over time
 			Double[] valueList = new Double[lineArr.length - 1];
 			for(int i = 1; i < lineArr.length; i++)
 				valueList[i - 1] = new Double(lineArr[i]);
@@ -46,17 +49,13 @@ public class SongDataProcessor {
 			// Put values into map
 			valueMap.put(key, valueList);
 			
-			// Number of time intervals can be established at this point
+			// Number of time intervals can be derived at this point
 			numTimeIntervals = valueList.length;
 		}
 
 	}
 
-	/**
-	 * Get the properties enumerated by the text file the song has generated
-	 * 
-	 * @return the set of property strings
-	 */
+
 	public Set<String> getProperties() {
 		return valueMap.keySet();
 	}

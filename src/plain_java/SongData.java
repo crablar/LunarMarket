@@ -23,36 +23,30 @@ public class SongData {
     	// Get set of properties that have been mapped by the SongDataProcessor
     	Set<String> songProperties = songDataProcessor.getProperties();
     	
+    	// Get the number of properties mapped within this data set
     	numProperties = songProperties.size();
     	
-    	// Initialize the time intervals
+    	// Create an array of TimeIntervals
     	int numTimeIntervals = songDataProcessor.getNumTimeIntervals();
     	timeIntervals = new TimeInterval[numTimeIntervals];
-    	
-    	// FIX THIS
     	for(int i = 0; i < numTimeIntervals; i++){
 			timeIntervals[i] = new TimeInterval(i, 2000);
     	}
     	    	
     	// For each property, iterate through the time intervals and describe that property at that time interval
     	for(String property : songProperties){
+    		
+    		// Get the property values for the current property that is being defined
     		Double[] propertyValues = songDataProcessor.getValuesFor(property);
 
-    		System.out.println("propertyValue[0] for " + property + ": " + propertyValues[0]);
-
+    		// Iterate through each TimeInterval and set the property value of that TimeInterval
     		for(int i = 0; i < numTimeIntervals; i++){
-
     			TimeInterval timeInterval = timeIntervals[i];
-
     			Double propertyValue = propertyValues[i];    			
     			timeInterval.addProperty(property, propertyValue);    	    	
-
         		timeIntervals[i] = timeInterval;
-
     		}
     	}
-    	
-		System.out.println("properties of time interval 0: " + timeIntervals[0].getValueOf("low_freq_values"));
     }
 
 	public int getNumIntervals() {
