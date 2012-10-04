@@ -45,6 +45,7 @@ public class StockActivity extends Activity {
     	        stockPriceView.invalidate();
     	        mHandler.postDelayed(runnable, 2000);
     	        time++;
+    	        System.out.println(time);
     	    }
     	};
     	time = 0;
@@ -55,13 +56,9 @@ public class StockActivity extends Activity {
         // Create the SongDataProcessor
         SongDataProcessor songDataProcessor = new SongDataProcessor(br);
         
-        Log.d("StockActivity", "SongDataProcessor initialized");
-
         // Create the SongData using the SongDataProcessor
         SongData songData = new SongData(songDataProcessor);
-        
-        Log.d("StockActivity", "SongData initialized");
-        
+                
         // Create the Stock object
 		stock = new Stock(songData);
 		

@@ -9,7 +9,7 @@ import java.util.Set;
  * @author jeffreymeyerson
  *
  * The SongDataProcessor class.  This class is responsible for importing the appropriate files
- * and organizing the data for the SongData class to access.
+ * and generating the data for the SongData class to access.
  */
 
 public class SongDataProcessor {

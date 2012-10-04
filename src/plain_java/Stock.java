@@ -4,23 +4,29 @@ package plain_java;
 /**
  * @author jeffreymeyerson
  *
- * The Stock class.  This class eagerly maps a stock as a finite state machine with each state being represented by a time interval.
+ * The Stock class.  This class maps a stock as a finite state machine with each state being represented by a time interval.
  *
  */
 
 public class Stock {
 
     private SongData songData;
-    private int[] prices;
+    private Double[] prices;
+    private PriceCalculator priceCalculator;
     
     public Stock(SongData songData){
     	this.songData = songData;
-    	prices = new int[songData.getNumIntervals()];
+    	this.priceCalculator = new PriceCalculator(songData);
+    	prices = priceCalculator.getPriceArray();
     }
 
 
-	public int getPrice(int currentTime) {
-		return prices[currentTime];
+	public Double getPrice(int currentTime) {
+		
+		/* Time within StockActivity steadily increases, but there
+		** is only a price for each defined time interval.
+		*/
+		return prices[currentTime % prices.length];
 	}
 
 }

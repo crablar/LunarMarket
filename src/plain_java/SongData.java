@@ -11,7 +11,8 @@ import java.util.Set;
 public class SongData {
 
     private TimeInterval[] timeIntervals;
-
+    private int numProperties;
+    
     /**
      * Creates a SongData object.
      * 
@@ -21,6 +22,8 @@ public class SongData {
     	
     	// Get set of properties that have been mapped by the SongDataProcessor
     	Set<String> songProperties = songDataProcessor.getProperties();
+    	
+    	numProperties = songProperties.size();
     	
     	// Initialize the time intervals
     	int numTimeIntervals = songDataProcessor.getNumTimeIntervals();
@@ -33,21 +36,22 @@ public class SongData {
     		for(int i = 0; i < numTimeIntervals; i++){
     			TimeInterval timeInterval = new TimeInterval(i, 2000);
     			Double propertyValue = propertyValues[i];
-    			
-    	    	System.out.println("property: " + property);
-    	    	System.out.println("propertyValue: " + propertyValue);
-    	    	
-    			timeInterval.addProperty(property, propertyValue);
-    	    	System.out.println("past timeInterval.addProperty");
-    	    	
+    			timeInterval.addProperty(property, propertyValue);    	    	
     	    	timeIntervals[i] = timeInterval;
-
     		}
     	}
     }
 
 	public int getNumIntervals() {
 		return timeIntervals.length;
+	}
+
+	public int getNumProperties(){
+		return numProperties;
+	}
+	
+	public TimeInterval getTimeInterval(int time){
+		return timeIntervals[time];
 	}
 
 }
