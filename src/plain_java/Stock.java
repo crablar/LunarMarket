@@ -18,6 +18,7 @@ public class Stock {
     	this.songData = songData;
     	this.priceCalculator = new PriceCalculator(songData);
     	prices = priceCalculator.getPriceArray();
+		System.out.println("Stock initialized.");
     }
 
 

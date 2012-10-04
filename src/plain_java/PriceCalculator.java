@@ -16,7 +16,7 @@ public class PriceCalculator {
 	private PriceFunction priceFunction;
 	
 	public PriceCalculator(SongData songData) {
-		
+				
 		// The number of time intervals in the SongData
 		int numTimeIntervals = songData.getNumIntervals();
 		
@@ -29,10 +29,18 @@ public class PriceCalculator {
 			TimeInterval timeInterval = songData.getTimeInterval(i);
 			
 			double x = timeInterval.getValueOf("high_freq_values");
+			System.out.println("PC initializing: 1");
+
 			double y = timeInterval.getValueOf("low_freq_values");
+			System.out.println("PC initializing: 2");
 			
 			prices[i] = priceFunction.getPrice(x, y, 10);
+			System.out.println("PC initializing: 3");
+
 		}
+		
+		System.out.println("Price calculator initialized.");
+
 	}
 
 	public Double[] getPriceArray() {

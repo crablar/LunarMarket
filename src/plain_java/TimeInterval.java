@@ -33,11 +33,16 @@ public class TimeInterval {
 	}
 
 	public void addProperty(String property, Double propertyValue) {
+		System.out.println("TIME INTERVAL: adding property: " + property);
 		properties.put(property, propertyValue);
 	}
 	
 	public Double getValueOf(String key){
 		return properties.get(key);
+	}
+	
+	public HashMap<String, Double> getProperties(){
+		return properties;
 	}
    	
 }

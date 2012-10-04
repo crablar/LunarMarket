@@ -28,18 +28,31 @@ public class SongData {
     	// Initialize the time intervals
     	int numTimeIntervals = songDataProcessor.getNumTimeIntervals();
     	timeIntervals = new TimeInterval[numTimeIntervals];
+    	
+    	// FIX THIS
+    	for(int i = 0; i < numTimeIntervals; i++){
+			timeIntervals[i] = new TimeInterval(i, 2000);
+    	}
     	    	
     	// For each property, iterate through the time intervals and describe that property at that time interval
     	for(String property : songProperties){
-
     		Double[] propertyValues = songDataProcessor.getValuesFor(property);
+
+    		System.out.println("propertyValue[0] for " + property + ": " + propertyValues[0]);
+
     		for(int i = 0; i < numTimeIntervals; i++){
-    			TimeInterval timeInterval = new TimeInterval(i, 2000);
-    			Double propertyValue = propertyValues[i];
+
+    			TimeInterval timeInterval = timeIntervals[i];
+
+    			Double propertyValue = propertyValues[i];    			
     			timeInterval.addProperty(property, propertyValue);    	    	
-    	    	timeIntervals[i] = timeInterval;
+
+        		timeIntervals[i] = timeInterval;
+
     		}
     	}
+    	
+		System.out.println("properties of time interval 0: " + timeIntervals[0].getValueOf("low_freq_values"));
     }
 
 	public int getNumIntervals() {
