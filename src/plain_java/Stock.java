@@ -1,6 +1,5 @@
 package plain_java;
 
-import java.io.FileNotFoundException;
 
 /**
  * @author jeffreymeyerson
@@ -14,8 +13,8 @@ public class Stock {
     private SongData songData;
     private int[] prices;
     
-    public Stock(String stockName) throws FileNotFoundException{
-    	songData = new SongData(stockName);
+    public Stock(SongData songData){
+    	this.songData = songData;
     	prices = new int[songData.getNumIntervals()];
     }
 

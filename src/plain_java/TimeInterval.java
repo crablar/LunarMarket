@@ -12,8 +12,8 @@ import java.util.HashMap;
 public class TimeInterval {
 		
 	// This is the same entity as the i in t(i) in my notation
-	private final int INTERVAL_NUMBER = 0;
-	private static final int INTERVAL_LENGTH_IN_MS = 2000;
+	private final int INTERVAL_NUMBER;
+	private final int INTERVAL_LENGTH_IN_MS;
 
 	// Map from properties to their values in this Time Interval		
 	private HashMap<String, Double> properties;
@@ -26,12 +26,15 @@ public class TimeInterval {
 	 *
 	 */
 	
-//	public TimeInterval ( int intervalLength, HashMap<String, Object> qualities ){
-//		
-//	}
+	public TimeInterval (int intervalNumber, int intervalLength){
+		this.INTERVAL_NUMBER = intervalNumber;
+		this.INTERVAL_LENGTH_IN_MS = intervalLength;
+		properties = new HashMap<String, Double>();
+	}
 
 	public void addProperty(String property, Double propertyValue) {
-		
+    	System.out.println("in TimeInterval.addProperty()");
+
 	}
     
 }

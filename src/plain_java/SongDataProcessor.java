@@ -1,9 +1,8 @@
 package plain_java;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -14,19 +13,28 @@ import java.util.Set;
  */
 
 public class SongDataProcessor {
-	private String fileName;
+	
 	private int numTimeIntervals;
 	
 	// A map of properties of songs, which are represented as arrays indexed by their respective time interval values.
 	private HashMap<String, Double[]> valueMap  = new HashMap<String, Double[]>();
 	
-	public SongDataProcessor(String fileName) throws FileNotFoundException{
-		Scanner scanner = new Scanner(new File(fileName));
+	public SongDataProcessor(BufferedReader br){
 		
-		while(scanner.hasNextLine()){
+		String line = "";
+		
+		while(true){
 			
-			// For example: low_freq_values 5 6 6 7 7 8 8 9 9 10 10 11 11 12
-			String line = scanner.nextLine();
+			try {
+				line = br.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			if(line == null)
+				break;
+			
+			// line example: "low_freq_values 5 6 6 7 7 8 8 9 9 10 10 11 11 12"
 			
 			// Build value array for a map entry
 			String[] lineArr = line.split(" ");

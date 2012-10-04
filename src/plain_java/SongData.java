@@ -1,6 +1,4 @@
 package plain_java;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -13,16 +11,13 @@ import java.util.Set;
 public class SongData {
 
     private TimeInterval[] timeIntervals;
-    private static SongDataProcessor songDataProcessor;
 
     /**
      * Creates a SongData object.
      * 
      * @param songName
-     * @throws FileNotFoundException
      */
-    public SongData(String songName) throws FileNotFoundException{
-    	songDataProcessor = new SongDataProcessor(songName);
+    public SongData(SongDataProcessor songDataProcessor){
     	
     	// Get set of properties that have been mapped by the SongDataProcessor
     	Set<String> songProperties = songDataProcessor.getProperties();
@@ -30,16 +25,24 @@ public class SongData {
     	// Initialize the time intervals
     	int numTimeIntervals = songDataProcessor.getNumTimeIntervals();
     	timeIntervals = new TimeInterval[numTimeIntervals];
-    	
+    	    	
     	// For each property, iterate through the time intervals and describe that property at that time interval
     	for(String property : songProperties){
+
     		Double[] propertyValues = songDataProcessor.getValuesFor(property);
     		for(int i = 0; i < numTimeIntervals; i++){
-    			TimeInterval timeInterval = timeIntervals[i];
+    			TimeInterval timeInterval = new TimeInterval(i, 2000);
     			Double propertyValue = propertyValues[i];
-    			timeInterval.addProperty(property, propertyValue);
-    		}
     			
+    	    	System.out.println("property: " + property);
+    	    	System.out.println("propertyValue: " + propertyValue);
+    	    	
+    			timeInterval.addProperty(property, propertyValue);
+    	    	System.out.println("past timeInterval.addProperty");
+    	    	
+    	    	timeIntervals[i] = timeInterval;
+
+    		}
     	}
     }
 

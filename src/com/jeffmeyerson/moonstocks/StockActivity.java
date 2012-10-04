@@ -1,12 +1,17 @@
 package com.jeffmeyerson.moonstocks;
 
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import plain_java.SongData;
+import plain_java.SongDataProcessor;
 import plain_java.Stock;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -25,31 +30,42 @@ public class StockActivity extends Activity {
 	private String stockName;
 	private Stock stock;
 	private double price;
-	
-	//The time interval the stock is currently on
-	private int time = 0;
+	private Runnable runnable;
+	private int time;
 
-	private Runnable runnable = new Runnable() {
-	    public void run() {
-	        price = stock.getPrice(time);
-	        stockPriceView.setText(price + "");
-	        stockPriceView.invalidate();
-	        mHandler.postDelayed(runnable, 2000);
-	        time++;
-	    }
-	};
     
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        stockName =	getResources().getString(R.string.stock_name);
-        try {
-			stock = new Stock(stockName);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+    	runnable = new Runnable() {
+    	    public void run() {
+    	        price = stock.getPrice(time);
+    	        stockPriceView.setText(price + "");
+    	        stockPriceView.invalidate();
+    	        mHandler.postDelayed(runnable, 2000);
+    	        time++;
+    	    }
+    	};
+    	time = 0;
+        stockName =	"AAPL";
+        InputStream is = this.getResources().openRawResource(R.raw.main_menu_vals);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
         
+        // Create the SongDataProcessor
+        SongDataProcessor songDataProcessor = new SongDataProcessor(br);
+        
+        Log.d("StockActivity", "SongDataProcessor initialized");
+
+        // Create the SongData using the SongDataProcessor
+        SongData songData = new SongData(songDataProcessor);
+        
+        Log.d("StockActivity", "SongData initialized");
+        
+        // Create the Stock object
+		stock = new Stock(songData);
+		
+		// Get initial price
         price = stock.getPrice(time);
         setContentView(R.layout.activity_stock);
         stockPriceView = (TextView) findViewById(R.id.stock_price_view);
