@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import plain_java.Player;
 import plain_java.SongData;
 import plain_java.SongDataProcessor;
 import plain_java.Stock;
@@ -11,9 +12,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -27,11 +29,18 @@ public class StockActivity extends Activity {
 
 	private Handler mHandler = new Handler();
 	private TextView stockPriceView;
+	private TextView balanceView;
+	private TextView sharesOwnedView;
 	private Stock stock;
 	private double price;
 	private Runnable runnable;
 	private int time;
-
+	private Player player;
+	private Button buyButton;
+	private Button sellButton;
+	private double balance;
+	private int sharesOwned;
+	private String stockTicker;
     
     
     @Override
@@ -39,17 +48,31 @@ public class StockActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
         stockPriceView = (TextView) findViewById(R.id.stock_price_view);
+        sharesOwnedView = (TextView) findViewById(R.id.stock_price_view);
+        balanceView = (TextView) findViewById(R.id.stock_price_view);
         
+        // TODO: Get the Player object from our activity
+        //this.getIntent().getComponent().getClass();
+        player = new Player(1000, "Jeff");
+        
+        // TODO: Get the ticker symbol
+        stockTicker = "AAPL";
         
         // The function that repeatedly updates the stock price
     	runnable = new Runnable() {
     	    public void run() {
     	    	
-    	    	// Get the stock price for the current time
+    	    	// Get the stock price for the current time and set the TextView
     	        price = stock.getPrice(time);
+    	        stockPriceView.setText("$" + price + "");
     	        
-    	        // Set the price TextView
-    	        stockPriceView.setText(price + "");
+    	        // Get and set the player's updated balance
+    	        balance = player.getBalance();
+    	        balanceView.setText(balance + "");
+    	        
+    	        // Get and set the player's updated sharesOwned
+    	        sharesOwned = player.getSharesOwned(stockTicker);
+    	        sharesOwnedView.setText(sharesOwned + "");
     	        
     	        // Invalidate the view so that it can be reset
     	        stockPriceView.invalidate();
@@ -85,7 +108,27 @@ public class StockActivity extends Activity {
         
         // Begin running the function
         mHandler.postDelayed(runnable, 2000);
+        
+    	// Initialize buttons
+        buyButton = (Button) findViewById(R.id.buy_button);
+        sellButton = (Button) findViewById(R.id.sell_button);
+        
+        // Add onclick listeners to existing buttons
+        buyButton.setOnClickListener(new OnClickListener() {
+        	public void onClick(View v) {
+        		// Buy!!!!
+        		player.buy(price);
+        	}
+        	});
+        sellButton.setOnClickListener(new OnClickListener() {
+        	public void onClick(View v) {
+        		// Sell!!!!
+        		player.sell(price);
+        	}
+        	});
     }
+ 
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -7,42 +7,33 @@
         android:id="@+id/buy_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="34dp"
         android:text="Buy Stock" />
 
     <Button
         android:id="@+id/sell_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/buy_button"
+        android:layout_alignBaseline="@+id/buy_button"
+        android:layout_alignBottom="@+id/buy_button"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/buy_button"
         android:text="Sell Stock" />
 
-    <TextView
-        android:id="@+id/shares_owned"
+    <Button
+        android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="50"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/shares_owned_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/shares_owned"
-        android:layout_alignParentRight="true"
-        android:text="Shares Owned"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:onClick="quitToMarket"
+        android:text="Back" />
 
     <TextView
         android:id="@+id/stock_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:text="AAPL"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -50,28 +41,48 @@
         android:id="@+id/stock_price_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/stock_name"
         android:layout_below="@+id/stock_name"
         android:text="$45.39"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/back_button"
+    <TextView
+        android:id="@+id/shares_owned_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="quitToMarket"
-        android:text="Back" />
+        android:layout_alignBaseline="@+id/stock_name"
+        android:layout_alignBottom="@+id/stock_name"
+        android:layout_toRightOf="@+id/sell_button"
+        android:text="Shares Owned"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <ProgressBar
-        android:id="@+id/song_progress"
-        style="?android:attr/progressBarStyleHorizontal"
+    <TextView
+        android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buy_button"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="153dp" />
+        android:layout_alignRight="@+id/sell_button"
+        android:layout_below="@+id/stock_price_view"
+        android:layout_marginTop="52dp"
+        android:text="1000"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/shares_owned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/balance"
+        android:layout_alignRight="@+id/buy_button"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/balance_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/balance"
+        android:layout_alignLeft="@+id/balance"
+        android:layout_marginBottom="29dp"
+        android:text="Balance"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
