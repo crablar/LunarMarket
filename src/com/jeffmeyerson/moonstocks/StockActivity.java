@@ -122,7 +122,7 @@ public class StockActivity extends Activity {
         		player.buy(price);
         		
                 // Get and set the player's updated balance
-                balance = player.getBalance();
+                balance = roundToTwoPlaces(player.getBalance());
                 Log.d(this.toString(), "Balance: " + balance);
                 balanceView.setText(balance + "");
                 
@@ -137,7 +137,7 @@ public class StockActivity extends Activity {
         		player.sell(price);
         		
                 // Get and set the player's updated balance
-                balance = player.getBalance();
+                balance = roundToTwoPlaces(player.getBalance());
                 balanceView.setText(balance + "");
                 
                 // Get and set the player's updated sharesOwned
