@@ -2,6 +2,8 @@ package plain_java;
 
 import java.util.HashMap;
 
+import android.util.Log;
+
 /**
  * @author jeffreymeyerson
  *
@@ -27,8 +29,10 @@ public class Account {
 		Integer currentShares = stockShares.get(stockName);
 		if(currentShares == null)
 			stockShares.put(stockName, 1);
-		else
-			stockShares.put(stockName, currentShares++);
+		else{
+			currentShares++;
+			stockShares.put(stockName, currentShares);
+		}
 	}
 
 	// Perform the operations within an account to sell a share

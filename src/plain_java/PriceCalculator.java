@@ -1,5 +1,7 @@
 package plain_java;
 
+import java.text.DecimalFormat;
+
 import PriceFunctions.UptrendWithUpperBound;
 
 /**
@@ -12,7 +14,7 @@ import PriceFunctions.UptrendWithUpperBound;
 
 public class PriceCalculator {
 
-	private Double[] prices;
+	private double[] prices;
 	private PriceFunction priceFunction;
 	
 	public PriceCalculator(SongData songData) {
@@ -21,7 +23,7 @@ public class PriceCalculator {
 		int numTimeIntervals = songData.getNumIntervals();
 		
 		// Create a price for each TimeInterval
-		this.prices = new Double[numTimeIntervals];
+		this.prices = new double[numTimeIntervals];
 		
 		// Different stocks might have different functions in the future
 		this.priceFunction = new UptrendWithUpperBound();
@@ -36,12 +38,12 @@ public class PriceCalculator {
 			double y = timeInterval.getValueOf("low_freq_values");
 			
 			// Assign the price to the function
-			prices[i] = priceFunction.getPrice(x, y, 10);
-		}
+			prices[i] = priceFunction.getPrice(x, y, 10);;
+			}
 
 	}
-
-	public Double[] getPriceArray() {
+	
+	public double[] getPriceArray() {
 		return prices;
 	}
 

@@ -12,7 +12,7 @@ package plain_java;
 public class Stock {
 
     private SongData songData;
-    private Double[] prices;
+    private double[] prices;
     private PriceCalculator priceCalculator;
     
     public Stock(SongData songData){
@@ -23,7 +23,7 @@ public class Stock {
     	prices = priceCalculator.getPriceArray();
     }
 
-	public Double getPrice(int currentTime) {
+	public double getPrice(int currentTime) {
 		
 		/* Time within StockActivity steadily increases, but there
 		** is only a price for each defined time interval.

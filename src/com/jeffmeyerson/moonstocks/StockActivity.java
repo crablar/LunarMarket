@@ -3,6 +3,7 @@ package com.jeffmeyerson.moonstocks;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 
 import plain_java.Player;
 import plain_java.SongData;
@@ -42,6 +43,7 @@ public class StockActivity extends Activity {
 	private double balance;
 	private int sharesOwned;
 	private String stockTicker;
+	private DecimalFormat twoDForm = new DecimalFormat("#.00");
     
 	private Runnable priceFlux;
 
@@ -69,9 +71,9 @@ public class StockActivity extends Activity {
     	    public void run() {
     	    	
     	    	// Get the stock price for the current time and set the TextView
-    	        price = stock.getPrice(time);
+    	        double rawPrice = stock.getPrice(time);
+    	        price = roundToTwoPlaces(rawPrice);
     	        stockPriceView.setText("$" + price + "");
-    	        Log.d(this.toString(), "Price: " + price);
     	        
     	        // Invalidate the view so that it can be reset
     	        stockPriceView.invalidate();
@@ -121,6 +123,7 @@ public class StockActivity extends Activity {
         		
                 // Get and set the player's updated balance
                 balance = player.getBalance();
+                Log.d(this.toString(), "Balance: " + balance);
                 balanceView.setText(balance + "");
                 
                 // Get and set the player's updated sharesOwned
@@ -156,4 +159,9 @@ public class StockActivity extends Activity {
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
     }
+    
+	public double roundToTwoPlaces(double rawPrice){
+		Double result = new Double(twoDForm.format(rawPrice));
+		return result.doubleValue();
+	}
 }
