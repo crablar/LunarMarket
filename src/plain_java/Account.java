@@ -34,7 +34,7 @@ public class Account {
 	// Perform the operations within an account to sell a share
 	public void sellShare(String stockName, double price) {
 		Integer sharesOwned = stockShares.get(stockName);
-		if(sharesOwned != null && sharesOwned != new Integer(0)){
+		if(sharesOwned != null && sharesOwned > 0){
 			sharesOwned--;
 			numDollars += price;
 			stockShares.put(stockName, sharesOwned);

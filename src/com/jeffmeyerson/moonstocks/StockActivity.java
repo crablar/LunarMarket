@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +34,7 @@ public class StockActivity extends Activity {
 	private TextView sharesOwnedView;
 	private Stock stock;
 	private double price;
-	private Runnable runnable;
+
 	private int time;
 	private Player player;
 	private Button buyButton;
@@ -42,14 +43,19 @@ public class StockActivity extends Activity {
 	private int sharesOwned;
 	private String stockTicker;
     
+	private Runnable priceFlux;
+
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
         stockPriceView = (TextView) findViewById(R.id.stock_price_view);
-        sharesOwnedView = (TextView) findViewById(R.id.stock_price_view);
-        balanceView = (TextView) findViewById(R.id.stock_price_view);
+        sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
+        balanceView = (TextView) findViewById(R.id.balance_view);
+        buyButton = (Button) findViewById(R.id.buy_button);
+        sellButton = (Button) findViewById(R.id.sell_button);
+
         
         // TODO: Get the Player object from our activity
         //this.getIntent().getComponent().getClass();
@@ -59,31 +65,25 @@ public class StockActivity extends Activity {
         stockTicker = "AAPL";
         
         // The function that repeatedly updates the stock price
-    	runnable = new Runnable() {
+    	priceFlux = new Runnable() {
     	    public void run() {
     	    	
     	    	// Get the stock price for the current time and set the TextView
     	        price = stock.getPrice(time);
     	        stockPriceView.setText("$" + price + "");
-    	        
-    	        // Get and set the player's updated balance
-    	        balance = player.getBalance();
-    	        balanceView.setText(balance + "");
-    	        
-    	        // Get and set the player's updated sharesOwned
-    	        sharesOwned = player.getSharesOwned(stockTicker);
-    	        sharesOwnedView.setText(sharesOwned + "");
+    	        Log.d(this.toString(), "Price: " + price);
     	        
     	        // Invalidate the view so that it can be reset
     	        stockPriceView.invalidate();
     	        
     	        // Put this function on the message queue
-    	        mHandler.postDelayed(runnable, 2000);
+    	        mHandler.postDelayed(priceFlux, 2000);
     	        
     	        // Move to the next time interval
     	        time++;
     	    }
     	};
+
     	
     	// Start at t = 0
     	time = 0;
@@ -107,7 +107,7 @@ public class StockActivity extends Activity {
         price = stock.getPrice(time);
         
         // Begin running the function
-        mHandler.postDelayed(runnable, 2000);
+        mHandler.postDelayed(priceFlux, 2000);
         
     	// Initialize buttons
         buyButton = (Button) findViewById(R.id.buy_button);
@@ -118,16 +118,31 @@ public class StockActivity extends Activity {
         	public void onClick(View v) {
         		// Buy!!!!
         		player.buy(price);
+        		
+                // Get and set the player's updated balance
+                balance = player.getBalance();
+                balanceView.setText(balance + "");
+                
+                // Get and set the player's updated sharesOwned
+                sharesOwned = player.getSharesOwned(stockTicker);
+                sharesOwnedView.setText(sharesOwned + "");
         	}
         	});
         sellButton.setOnClickListener(new OnClickListener() {
         	public void onClick(View v) {
         		// Sell!!!!
         		player.sell(price);
+        		
+                // Get and set the player's updated balance
+                balance = player.getBalance();
+                balanceView.setText(balance + "");
+                
+                // Get and set the player's updated sharesOwned
+                sharesOwned = player.getSharesOwned(stockTicker);
+                sharesOwnedView.setText(sharesOwned + "");
         	}
         	});
     }
- 
 
 
     @Override

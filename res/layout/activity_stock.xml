@@ -20,6 +20,7 @@
         android:layout_alignBottom="@+id/buy_button"
         android:layout_marginRight="15dp"
         android:layout_toLeftOf="@+id/buy_button"
+        android:onClick="sellShare"
         android:text="Sell Stock" />
 
     <Button
@@ -57,7 +58,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/balance"
+        android:id="@+id/balance_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/sell_button"
@@ -67,11 +68,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/shares_owned"
+        android:id="@+id/shares_owned_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/balance"
-        android:layout_alignRight="@+id/buy_button"
+        android:layout_alignRight="@+id/shares_owned_text"
+        android:layout_below="@+id/shares_owned_text"
         android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -79,9 +80,9 @@
         android:id="@+id/balance_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/balance"
-        android:layout_alignLeft="@+id/balance"
-        android:layout_marginBottom="29dp"
+        android:layout_alignBottom="@+id/balance_view"
+        android:layout_alignLeft="@+id/balance_view"
+        android:layout_marginBottom="30dp"
         android:text="Balance"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
