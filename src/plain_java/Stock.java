@@ -1,27 +1,34 @@
 package plain_java;
 
-import java.io.FileNotFoundException;
 
 /**
  * @author jeffreymeyerson
  *
- * The Stock class.  This class eagerly maps a stock as a finite state machine with each state being represented by a time interval.
+ * The Stock class.  This class maps a stock like a finite state machine with each state being 
+ * represented by a time interval.
  *
  */
 
 public class Stock {
 
     private SongData songData;
-    private int[] prices;
+    private double[] prices;
+    private PriceCalculator priceCalculator;
     
-    public Stock(String stockName) throws FileNotFoundException{
-    	songData = new SongData(stockName);
-    	prices = new int[songData.getNumIntervals()];
+    public Stock(SongData songData){
+    	this.songData = songData;
+    	
+    	// Create a PriceCalculator for calculating the price from variables taken out of the SongData
+    	this.priceCalculator = new PriceCalculator(songData);
+    	prices = priceCalculator.getPriceArray();
     }
 
-
-	public int getPrice(int currentTime) {
-		return prices[currentTime];
+	public double getPrice(int currentTime) {
+		
+		/* Time within StockActivity steadily increases, but there
+		** is only a price for each defined time interval.
+		*/
+		return prices[currentTime % prices.length];
 	}
 
 }

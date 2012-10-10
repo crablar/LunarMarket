@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content" >
 
                 <Button
-                    android:id="@+id/button1"
+                    android:id="@+id/aaplButton"
                     android:layout_width="90dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="$100"
+                android:text="$7"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content" >
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/googButton"
                     android:layout_width="90dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="$100"
+                android:text="$11"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
@@ -114,7 +114,7 @@
         android:layout_gravity="bottom" >
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/accountButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

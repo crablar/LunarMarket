@@ -1,6 +1,4 @@
 package plain_java;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -13,38 +11,54 @@ import java.util.Set;
 public class SongData {
 
     private TimeInterval[] timeIntervals;
-    private static SongDataProcessor songDataProcessor;
-
+    private int numProperties;
+    
     /**
      * Creates a SongData object.
      * 
      * @param songName
-     * @throws FileNotFoundException
      */
-    public SongData(String songName) throws FileNotFoundException{
-    	songDataProcessor = new SongDataProcessor(songName);
+    public SongData(SongDataProcessor songDataProcessor){
     	
     	// Get set of properties that have been mapped by the SongDataProcessor
     	Set<String> songProperties = songDataProcessor.getProperties();
     	
-    	// Initialize the time intervals
+    	// Get the number of properties mapped within this data set
+    	numProperties = songProperties.size();
+    	
+    	// Create an array of TimeIntervals
     	int numTimeIntervals = songDataProcessor.getNumTimeIntervals();
     	timeIntervals = new TimeInterval[numTimeIntervals];
-    	
+    	for(int i = 0; i < numTimeIntervals; i++){
+			timeIntervals[i] = new TimeInterval(i, 2000);
+    	}
+    	    	
     	// For each property, iterate through the time intervals and describe that property at that time interval
     	for(String property : songProperties){
+    		
+    		// Get the property values for the current property that is being defined
     		Double[] propertyValues = songDataProcessor.getValuesFor(property);
+
+    		// Iterate through each TimeInterval and set the property value of that TimeInterval
     		for(int i = 0; i < numTimeIntervals; i++){
     			TimeInterval timeInterval = timeIntervals[i];
-    			Double propertyValue = propertyValues[i];
-    			timeInterval.addProperty(property, propertyValue);
+    			Double propertyValue = propertyValues[i];    			
+    			timeInterval.addProperty(property, propertyValue);    	    	
+        		timeIntervals[i] = timeInterval;
     		}
-    			
     	}
     }
 
 	public int getNumIntervals() {
 		return timeIntervals.length;
+	}
+
+	public int getNumProperties(){
+		return numProperties;
+	}
+	
+	public TimeInterval getTimeInterval(int time){
+		return timeIntervals[time];
 	}
 
 }
