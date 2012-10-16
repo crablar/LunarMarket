@@ -2,6 +2,7 @@ package com.jeffmeyerson.moonstocks;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
 import android.view.View;
 
 class GameView extends View {
