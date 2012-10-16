@@ -164,4 +164,15 @@ public class StockActivity extends Activity {
 		Double result = new Double(twoDForm.format(rawPrice));
 		return result.doubleValue();
 	}
+//	
+//	@Override
+//	public void onPause(){
+//		super.onPause();
+//	}
+//	
+//	@Override
+//    public void onResume(){
+//    	super.onResume();
+//    	setContentView(R.layout.activity_stock);
+//    }
 }

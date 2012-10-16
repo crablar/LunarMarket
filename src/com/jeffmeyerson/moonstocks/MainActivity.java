@@ -32,14 +32,14 @@ public class MainActivity extends Activity {
 	private Button aaplButton;
 	private Button googButton;
 	
-	    @Override
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
         // Play launch pad music
-        MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
-        mp.start();
+        //MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
+        //mp.start();
         
         // Initialize player
         player = new Player(STARTING_MONEY, "Jeff");
@@ -65,7 +65,21 @@ public class MainActivity extends Activity {
         	}
         });
     }
-    
-    
-
+//    
+//    @Override
+//    protected void onPause() {
+//        super.onPause();        
+//    }
+//
+//	@Override
+//    public void onResume(){
+//    	super.onResume();
+//    	setContentView(R.layout.main);
+//    }
+//	
+//	@Override
+//	public void onDestroy(){
+//		super.onDestroy();
+//		mp.stop();
+//	}
 }
