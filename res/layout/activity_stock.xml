@@ -2,12 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
-    <com.jeffmeyerson.moonstocks.ChartView
-        android:id="@+id/chart"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="5dp" />
     
     <Button
         android:id="@+id/buy_button"
@@ -91,5 +85,12 @@
         android:layout_marginBottom="30dp"
         android:text="Balance"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <com.jeffmeyerson.moonstocks.ChartView
+        android:id="@+id/chart"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/stock_price_view" />
 
 </RelativeLayout>

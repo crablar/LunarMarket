@@ -64,7 +64,7 @@ public class StockActivity extends Activity {
         player = new Player(1000, "Jeff");
         
         // TODO: Get the ticker symbol
-        stockTicker = "AAPL";
+        stockTicker = this.getIntent().getStringExtra("EXTRA_STOCK_ID");
         
         // The function that repeatedly updates the stock price
     	priceFlux = new Runnable() {

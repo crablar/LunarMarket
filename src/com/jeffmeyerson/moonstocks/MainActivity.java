@@ -1,9 +1,13 @@
 package com.jeffmeyerson.moonstocks;
 
+import java.util.LinkedList;
+
+import plain_java.MainActivityButtonManager;
 import plain_java.Player;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -37,10 +41,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        // Play launch pad music
-        //MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
-        //mp.start();
-        
+//        // Create CompanyModels
+//        LinkedList<CompanyModel> companyModels = getCompanyModels();
+//        MainActivityButtonManager mainActivityButtonManager = new MainActivityButtonManager(companyModels);
+//        
         // Initialize player
         player = new Player(STARTING_MONEY, "Jeff");
         
@@ -65,21 +69,24 @@ public class MainActivity extends Activity {
         	}
         });
     }
-//    
-//    @Override
-//    protected void onPause() {
-//        super.onPause();        
-//    }
-//
-//	@Override
-//    public void onResume(){
-//    	super.onResume();
-//    	setContentView(R.layout.main);
-//    }
-//	
-//	@Override
-//	public void onDestroy(){
-//		super.onDestroy();
-//		mp.stop();
-//	}
+
+	/**
+	 * Create a list of CompanyModels as defined by the companies.xml file.
+	 * 
+	 * @return
+	 */
+	private LinkedList<CompanyModel> getCompanyModels() {
+		LinkedList<CompanyModel> result = new LinkedList<CompanyModel>();
+		Resources res = getResources();
+		String[] companyStrings = res.getStringArray(R.array.companies);
+		for(String companyString : companyStrings){
+			String[] companyArr = companyString.split(" ");
+			String tickerName = companyArr[0];
+			String companyName = companyArr[1];
+			CompanyModel companyModel = new CompanyModel(tickerName, companyName);
+			result.add(companyModel);
+		}
+		return result;
+	}
+
 }
