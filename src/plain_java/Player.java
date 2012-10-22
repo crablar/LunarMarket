@@ -10,11 +10,11 @@ package plain_java;
 public class Player {
 	
 	private Account account;
-	private String name;
+	private String playerName;
 	
 	public Player(int startingMoney, String name){
 		account = new Account(startingMoney);
-		this.name = name;
+		this.playerName = name;
 	}
 
 	// Buy a share
@@ -34,6 +34,11 @@ public class Player {
 	
 	public int getSharesOwned(String tickerSymbol){
 		return account.getSharesOwned(tickerSymbol);
+	}
+	
+	@Override
+	public String toString(){
+		return playerName + ": " + account.toString();
 	}
 
 }

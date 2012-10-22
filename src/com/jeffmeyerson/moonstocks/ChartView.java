@@ -1,25 +1,38 @@
 package com.jeffmeyerson.moonstocks;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import plain_java.ChartFrame;
+import plain_java.DataPoint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 class ChartView extends View {
-	
-	final float scale = 20;//getWidth() / 20;
+
+	final float scale = 20;// getWidth() / 20;
 	private Paint paint;
-	
+
+	private ChartFrame currentFrame;
+	private Canvas canvas;
+
+	public void refreshView(ChartFrame updatedFrame) {
+		currentFrame = updatedFrame;
+	}
+
 	void initialize() {
 		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		if (currentFrame == null) {
+			currentFrame = new ChartFrame();
+		} else
+			currentFrame.update();
 	}
-	
+
 	public ChartView(Context context) {
 		super(context);
 		initialize();
@@ -39,22 +52,32 @@ class ChartView extends View {
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
-		// some sample points. in the future, this should come from the music data.
-		List<Integer> points = new ArrayList<Integer>();
-		points.add(5);
-		points.add(3);
-		points.add(7);
-		points.add(2);
+		Log.d(this.toString(), "Inside ChartView.  currentFrame: "
+				+ currentFrame.toString());
+
+		// Get the list of dataPoints
+		List<DataPoint> dataPoints= currentFrame.getDataPoints();
 		
+		// Points to be drawn on the canvas
+		List<Integer> integerPoints = new ArrayList<Integer>();
+		
+		// Convert the DataPoints to rounded Integers
+		for(int i = 0; i < dataPoints.size(); i++){
+			double pricePoint = dataPoints.get(i).getPrice();
+			Integer roundedPrice = new Integer((int) (pricePoint / 1));
+		}
 		paint.setStrokeWidth(3);
+
+		Log.d(this.toString(), "In ChartView; integerPoints: " + integerPoints.toString());
 		
-		for (int i = 1; i < points.size(); i++) {
-			if (points.get(i) < points.get(i-1)) {
+		for (int i = 1; i < integerPoints.size(); i++) {
+			if (integerPoints.get(i) < integerPoints.get(i - 1)) {
 				paint.setColor(Color.GREEN);
 			} else {
 				paint.setColor(Color.RED);
 			}
-			canvas.drawLine((i-1) * scale, points.get(i-1) * scale, i * scale, points.get(i) * scale, paint);
+			canvas.drawLine((i - 1) * scale, integerPoints.get(i - 1) * scale, i
+					* scale, integerPoints.get(i) * scale, paint);
 		}
 	}
 }

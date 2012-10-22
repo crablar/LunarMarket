@@ -38,10 +38,16 @@ public class Account {
 	// Perform the operations within an account to sell a share
 	public void sellShare(String stockName, double price) {
 		Integer sharesOwned = stockShares.get(stockName);
+		Log.d(this.toString(), "SELLING A SHARE OF " + stockName );
+		Log.d(this.toString(), "Account before sale: " + this.toString() );
+
 		if(sharesOwned != null && sharesOwned > 0){
 			sharesOwned--;
 			numDollars += price;
 			stockShares.put(stockName, sharesOwned);
+			Log.d(this.toString(), "Account after sale: " + this.toString() );
+
+			
 		}
 	}
 	
@@ -53,11 +59,17 @@ public class Account {
 	// Get the number of shares for a particular stock
 	public int getSharesOwned(String tickerSymbol) {
 		Integer sharesOwned = stockShares.get(tickerSymbol);
+
 		if(sharesOwned == null){
 			sharesOwned = 0;
 			stockShares.put(tickerSymbol, sharesOwned);
 		}
 		return sharesOwned;
+	}
+	
+	@Override
+	public String toString(){
+		return "$" + numDollars + " Shares: " + stockShares.toString();
 	}
 
 }
