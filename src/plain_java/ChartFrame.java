@@ -60,6 +60,10 @@ public class ChartFrame {
 		this.nextFrame = next;
 	}
 	
+	public ChartFrame getNextFrame(){
+		return nextFrame;
+	}
+	
 	public String toString(){
 		return "Prices represented: " + dataPoints.toString();
 	}

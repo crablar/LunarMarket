@@ -99,6 +99,10 @@ public class StockActivity extends Activity {
 		// Create ArrayList of ChartFrames
 		ArrayList<ChartFrame> chartFrames = stock.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
 
+		
+		chartView.setCurrentFrame(chartFrames.get(0));
+
+		
 		// Set the initial price as a function of time
 		price = stock.getPrice(time);
 
@@ -119,15 +123,12 @@ public class StockActivity extends Activity {
 
 				// Invalidate the StockPriceView so that it can be reset
 				stockPriceView.invalidate();
-		        Log.d(this.toString(), "Starting stock activity11");
 
-//				// Refresh ChartView to currentFrame
-				chartView.refreshView(currentFrame);
-		        Log.d(this.toString(), "Starting stock activity2");
+		        Log.d(this.toString(), "Starting stock activity");
 
 				// Invalidate the ChartView so that it can be reset
 				chartView.invalidate();
-
+				
 				// Put this function on the message queue
 				mHandler.postDelayed(priceFlux, 2000);
 

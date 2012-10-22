@@ -45,39 +45,43 @@ public class Stock {
 	public ArrayList<ChartFrame> createChartFrames(int maxNumberDataPoints) {
 
 		// Initialize the result, a list of null ChartFrames, with one entry for
-		// each of the first (maxNumberDataPoints - 1) frames, each of which don't
+		// each of the first (maxNumberDataPoints - 1) frames, each of which
+		// don't
 		// have the maxNumberDataPoints, and one entry for each frame containing
 		// maxNumberDataPoints data points
 		ArrayList<ChartFrame> result = new ArrayList<ChartFrame>();
-		
-		for(int i = 0; i < prices.length; i++)
+
+		for (int i = 0; i < prices.length; i++)
 			System.out.println(prices[i]);
-		
-		for(int i = 0; i < prices.length
-				+ maxNumberDataPoints - 1; i++)
+
+		for (int i = 0; i < prices.length + maxNumberDataPoints - 1; i++)
 			result.add(new ChartFrame());
-		
+
 		// Initialize all the frames in the list
 		int numDataPointsToDiscloseToChartFrame = 1;
 		int timeToBeginAt = 0;
 		for (int i = 0; i < result.size(); i++) {
 			ChartFrame chartFrame = result.get(i);
-			
-			// Calculate whether this ChartFrame will wrap around and by how many data points
-			int numDataPointsAfterWrapAround = (timeToBeginAt + numDataPointsToDiscloseToChartFrame) % prices.length;
-			
+
+			// Calculate whether this ChartFrame will wrap around and by how
+			// many data points
+			int numDataPointsAfterWrapAround = (timeToBeginAt + numDataPointsToDiscloseToChartFrame)
+					% prices.length;
+
 			// Calculate number of data points before wrap around
-			int numDataPointsBeforeWrapAround = numDataPointsToDiscloseToChartFrame - numDataPointsAfterWrapAround;
-			
-			for(int j = timeToBeginAt; j < timeToBeginAt + numDataPointsBeforeWrapAround; j++)
+			int numDataPointsBeforeWrapAround = numDataPointsToDiscloseToChartFrame
+					- numDataPointsAfterWrapAround;
+
+			for (int j = timeToBeginAt; j < timeToBeginAt
+					+ numDataPointsBeforeWrapAround; j++)
 				chartFrame.appendDataPoint(new DataPoint(prices[j]));
-			for(int j = 0; j < numDataPointsAfterWrapAround; j++)
+			for (int j = 0; j < numDataPointsAfterWrapAround; j++)
 				chartFrame.appendDataPoint(new DataPoint(prices[j]));
-			
+
 			Log.d(this.toString(), chartFrame.toString());
 			result.set(i, chartFrame);
-			
-			if(numDataPointsToDiscloseToChartFrame != maxNumberDataPoints)
+
+			if (numDataPointsToDiscloseToChartFrame != maxNumberDataPoints)
 				numDataPointsToDiscloseToChartFrame++;
 			else
 				timeToBeginAt++;
@@ -95,6 +99,16 @@ public class Stock {
 			ChartFrame next = result.get(indexToPointTo);
 			temp.setNextFrame(next);
 			result.set(i, temp);
+		}
+
+		for (int i = 0; i < result.size(); i++) {
+			Log.d("RESULT_OF_CREATE_CHART_FRAMES", "ChartFrame number " + i
+					+ ": ");
+			Log.d("RESULT_OF_CREATE_CHART_FRAMES",
+					"DataPoints: " + result.get(i).getDataPoints().toString());
+			Log.d("RESULT_OF_CREATE_CHART_FRAMES", "next.DataPoints: "
+					+ result.get(i).getNextFrame().getDataPoints().toString());
+
 		}
 
 		return result;

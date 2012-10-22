@@ -19,10 +19,9 @@ class ChartView extends View {
 	private Paint paint;
 
 	private ChartFrame currentFrame;
-	private Canvas canvas;
 
-	public void refreshView(ChartFrame updatedFrame) {
-		currentFrame = updatedFrame;
+	public void setCurrentFrame(ChartFrame frame){
+		currentFrame = frame;
 	}
 
 	void initialize() {
@@ -52,6 +51,15 @@ class ChartView extends View {
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
+		if (currentFrame.getNextFrame() != null){
+			System.out.println("Frame before: " + currentFrame);
+			System.out.println("Getting next frame...");
+			currentFrame = currentFrame.getNextFrame();
+			System.out.println("Frame after: " + currentFrame);
+			System.out.println("The next frame will be " + currentFrame.getNextFrame());
+
+		}
+		
 		Log.d(this.toString(), "Inside ChartView.  currentFrame: "
 				+ currentFrame.toString());
 
@@ -59,12 +67,13 @@ class ChartView extends View {
 		List<DataPoint> dataPoints= currentFrame.getDataPoints();
 		
 		// Points to be drawn on the canvas
-		List<Integer> integerPoints = new ArrayList<Integer>();
+		ArrayList<Integer> integerPoints = new ArrayList<Integer>();
 		
 		// Convert the DataPoints to rounded Integers
 		for(int i = 0; i < dataPoints.size(); i++){
 			double pricePoint = dataPoints.get(i).getPrice();
 			Integer roundedPrice = new Integer((int) (pricePoint / 1));
+			integerPoints.add(roundedPrice);
 		}
 		paint.setStrokeWidth(3);
 
