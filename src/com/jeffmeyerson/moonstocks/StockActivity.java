@@ -35,8 +35,9 @@ public class StockActivity extends Activity {
 
 	// Based on screen size?
 	private final int MAX_NUMBER_OF_DATA_POINTS_FRAMED = 14;
-	
+
 	private Handler mHandler = new Handler();
+	private TextView stockTickerView;
 	private TextView stockPriceView;
 	private TextView balanceView;
 	private TextView sharesOwnedView;
@@ -46,7 +47,7 @@ public class StockActivity extends Activity {
 
 	// Plays appropriate music for the level
 	private MediaPlayer mp;
-	
+
 	private int time;
 	private Player player;
 	private Button buyButton;
@@ -64,9 +65,10 @@ public class StockActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stock);
 
-        mp = MediaPlayer.create(this, R.raw.everline_ilk);
-        mp.setLooping(true);
-		
+		// Get the dataz from the Intent
+		Bundle extras = getIntent().getExtras();
+
+		stockTickerView = (TextView) findViewById(R.id.stock_ticker);
 		stockPriceView = (TextView) findViewById(R.id.stock_price_view);
 		sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
 		balanceView = (TextView) findViewById(R.id.balance_view);
@@ -81,18 +83,46 @@ public class StockActivity extends Activity {
 		player = new Player(1000, "Jeff");
 
 		// TODO: Get the ticker symbol
-		// stockTicker = this.getIntent().getStringExtra("EXTRA_STOCK_ID");
-		stockTicker = "AAPL";
+		if (extras != null) {
+			System.out.println("Extras contains: " + extras.size());
+			stockTicker = extras.getString("EXTRA_TICKER_ID");
+		}
+
+		System.out.println("StockTicker ISSSS " + stockTicker);
+
+		stockTickerView.setText(stockTicker);
+
+		InputStream inputStream = null;
 		
+		// TODO: Make programmatic
+		{
+			// Put the raw text file into an InputStream
+			if (stockTicker.equals("EVIL")) {
+				inputStream = this.getResources().openRawResource(
+						R.raw.evil_vals);
+				mp = MediaPlayer.create(this, R.raw.evil);
+				mp.setLooping(true);
+			}
+			if (stockTicker.equals("BDST")) {
+				inputStream = this.getResources().openRawResource(
+						R.raw.bdst_vals);
+				mp = MediaPlayer.create(this, R.raw.bdst);
+				mp.setLooping(true);
+			}
+			if (stockTicker.equals("WMC")) {
+				inputStream = this.getResources().openRawResource(
+						R.raw.wmc_vals);
+				mp = MediaPlayer.create(this, R.raw.wmc);
+				mp.setLooping(true);
+			}
+
+		}
+
 		// Start at t = 0
 		time = 0;
 
-		// Put the raw text file into an InputStream
-		InputStream is = this.getResources().openRawResource(
-				R.raw.main_menu_vals);
-
 		// Create a BufferedReader for the InputStream
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
 		// Create the SongDataProcessor, which parses the raw text file
 		SongDataProcessor songDataProcessor = new SongDataProcessor(br);
@@ -104,20 +134,17 @@ public class StockActivity extends Activity {
 		stock = new Stock(songData);
 
 		// Create ArrayList of ChartFrames
-		ArrayList<ChartFrame> chartFrames = stock.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
+		ArrayList<ChartFrame> chartFrames = stock
+				.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
 
-		
 		chartView.setCurrentFrame(chartFrames.get(0));
 
-		
 		// Set the initial price as a function of time
 		price = stock.getPrice(time);
 
 		// Initialize the ChartFrame and give it a data point
 		currentFrame = chartFrames.get(0);
 
-
-		
 		// The function that repeatedly updates the stock price and the
 		// ChartView
 		priceFlux = new Runnable() {
@@ -133,7 +160,7 @@ public class StockActivity extends Activity {
 
 				// Invalidate the ChartView so that it can be reset
 				chartView.invalidate();
-				
+
 				// Put this function on the message queue
 				mHandler.postDelayed(priceFlux, 2000);
 
@@ -141,7 +168,6 @@ public class StockActivity extends Activity {
 				time++;
 			}
 		};
-
 
 		// Begin running the function
 		mHandler.postDelayed(priceFlux, 2000);
@@ -172,7 +198,6 @@ public class StockActivity extends Activity {
 				// Sell!!!!
 				player.sell(price);
 
-
 				// Get and set the player's updated balance
 				balance = roundToTwoPlaces(player.getBalance());
 				balanceView.setText(balance + "");
@@ -186,26 +211,24 @@ public class StockActivity extends Activity {
 
 	}
 
-	
 	@Override
-	protected void onResume() {		
+	protected void onResume() {
 		super.onResume();
 		mp.start();
 	}
-	
+
 	@Override
 	protected void onPause() {
-		super.onPause();		
+		super.onPause();
 		mp.pause();
 
 	}
-	
+
 	@Override
-	protected void onDestroy(){
+	protected void onDestroy() {
 		super.onDestroy();
 		mp.release();
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
