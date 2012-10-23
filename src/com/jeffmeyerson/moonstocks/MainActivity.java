@@ -4,17 +4,16 @@
                                              
 package com.jeffmeyerson.moonstocks;
 
-import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
+import plain_java.MainActivityButtonManager;
 import plain_java.Player;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,41 +42,41 @@ public class MainActivity extends Activity {
 	private Player player;
 	
 	// Buttons for companies
-	private Button aaplButton;
-	private Button googButton;
+	private Button evilButton;
+	private Button bdstButton;
+	private Button wmcButton;
+
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+                
+        // Create CompanyModels
+        List<CompanyModel> companyModels = getCompanyModels();
+        Log.d(TAG, "we are alive");
+
+        // Create the MainActivityButtonManager (currently unused)
+        //MainActivityButtonManager mainActivityButtonManager = new MainActivityButtonManager(companyModels);
         
-        Log.d(TAG, "in onCreate");
-        
-//        // Create CompanyModels
-//        LinkedList<CompanyModel> companyModels = getCompanyModels();
-//        MainActivityButtonManager mainActivityButtonManager = new MainActivityButtonManager(companyModels);
-//        
         // Initialize player
         player = new Player(STARTING_MONEY, "Jeff");
-        
-        // Play launch pad music
-//        MediaPlayer mp = MediaPlayer.create(this, R.raw.main_menu);
-//                
-//        mp.start();
-        
+        Log.d(TAG, "we are alive");
+
         mp = MediaPlayer.create(this, R.raw.main_menu);
         mp.setLooping(true);
-//        mp.create(this, R.raw.main_menu);
-//        mp.start();
         
-//        createSoundPool();
+        Log.d(TAG, "we are alive");
         
      	// Initialize buttons
-        aaplButton = (Button) findViewById(R.id.aaplButton);
-        googButton = (Button) findViewById(R.id.googButton);
+        // TODO: make this programmatic
+        evilButton = (Button) findViewById(R.id.evilButton);
+        bdstButton = (Button) findViewById(R.id.bdstButton);
+        wmcButton = (Button) findViewById(R.id.wmcButton);
+
         
         // Add onclick listeners to existing buttons
-        aaplButton.setOnClickListener(new OnClickListener() {
+        evilButton.setOnClickListener(new OnClickListener() {
         	public void onClick(View v) {
         		Intent intent = new Intent(context, StockActivity.class);
         		intent.putExtra(EXTRA_STOCK_ID, "AAPL");
@@ -85,7 +84,14 @@ public class MainActivity extends Activity {
         		startActivity(intent);
         	}
         });
-        googButton.setOnClickListener(new OnClickListener() {
+        bdstButton.setOnClickListener(new OnClickListener() {
+        	public void onClick(View v) {
+        		Intent intent = new Intent(context, StockActivity.class);
+        		intent.putExtra(EXTRA_STOCK_ID, "GOOG");
+        		startActivity(intent);
+        	}
+        });
+        wmcButton.setOnClickListener(new OnClickListener() {
         	public void onClick(View v) {
         		Intent intent = new Intent(context, StockActivity.class);
         		intent.putExtra(EXTRA_STOCK_ID, "GOOG");
@@ -97,14 +103,12 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {		
 		super.onResume();
-		Log.d(TAG, "in onResume");
 		mp.start();
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();		
-		Log.d(TAG, "in onPause");
 		mp.pause();
 
 	}
@@ -112,7 +116,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy(){
 		super.onDestroy();
-		Log.d(TAG, "in onDestroy");
 		mp.release();
 	}
 
@@ -121,10 +124,11 @@ public class MainActivity extends Activity {
 	 * 
 	 * @return
 	 */
-	private LinkedList<CompanyModel> getCompanyModels() {
-		LinkedList<CompanyModel> result = new LinkedList<CompanyModel>();
+	private List<CompanyModel> getCompanyModels() {
+		List<CompanyModel> result = new LinkedList<CompanyModel>();
 		Resources res = getResources();
 		String[] companyStrings = res.getStringArray(R.array.companies);
+		
 		for(String companyString : companyStrings){
 			String[] companyArr = companyString.split(" ");
 			String tickerName = companyArr[0];

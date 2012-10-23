@@ -2,10 +2,9 @@
 <resources>
 
     <string-array name="companies">
-        <item>AAPL</item>
-        <item>GOOG</item>
-        <item>MSFT</item>
-        <item>IBM</item>
+        <item>EVIL Everline-ilk</item>
+        <item>BDST Shell-Beignet Dust</item>
+        <item>WMC Wal-Mark Comestibles</item>
     </string-array>
 
 </resources>

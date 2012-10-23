@@ -52,13 +52,7 @@ class ChartView extends View {
 		super.onDraw(canvas);
 
 		if (currentFrame.getNextFrame() != null) {
-			System.out.println("Frame before: " + currentFrame);
-			System.out.println("Getting next frame...");
 			currentFrame = currentFrame.getNextFrame();
-			System.out.println("Frame after: " + currentFrame);
-			System.out.println("The next frame will be "
-					+ currentFrame.getNextFrame());
-
 		}
 
 		Log.d(this.toString(), "Inside ChartView.  currentFrame: "

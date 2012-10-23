@@ -131,8 +131,6 @@ public class StockActivity extends Activity {
 				// Invalidate the StockPriceView so that it can be reset
 				stockPriceView.invalidate();
 
-		        Log.d(this.toString(), "Starting stock activity");
-
 				// Invalidate the ChartView so that it can be reset
 				chartView.invalidate();
 				
@@ -159,11 +157,8 @@ public class StockActivity extends Activity {
 
 				player.buy(price);
 
-				Log.d(this.toString(), player.toString());
-
 				// Get and set the player's updated balance
 				balance = roundToTwoPlaces(player.getBalance());
-				Log.d(this.toString(), "Balance: " + balance);
 				balanceView.setText(balance + "");
 
 				// Get and set the player's updated sharesOwned
@@ -177,7 +172,6 @@ public class StockActivity extends Activity {
 				// Sell!!!!
 				player.sell(price);
 
-				Log.d(this.toString(), player.toString());
 
 				// Get and set the player's updated balance
 				balance = roundToTwoPlaces(player.getBalance());
@@ -185,7 +179,6 @@ public class StockActivity extends Activity {
 
 				// Get and set the player's updated sharesOwned
 				sharesOwned = player.getSharesOwned(stockTicker);
-				System.out.println(sharesOwned);
 
 				sharesOwnedView.setText(sharesOwned + "");
 			}
