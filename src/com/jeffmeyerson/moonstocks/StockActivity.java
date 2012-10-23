@@ -14,6 +14,7 @@ import plain_java.SongDataProcessor;
 import plain_java.Stock;
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -43,6 +44,9 @@ public class StockActivity extends Activity {
 	private Stock stock;
 	private double price;
 
+	// Plays appropriate music for the level
+	private MediaPlayer mp;
+	
 	private int time;
 	private Player player;
 	private Button buyButton;
@@ -60,6 +64,9 @@ public class StockActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stock);
 
+        mp = MediaPlayer.create(this, R.raw.everline_ilk);
+        mp.setLooping(true);
+		
 		stockPriceView = (TextView) findViewById(R.id.stock_price_view);
 		sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
 		balanceView = (TextView) findViewById(R.id.balance_view);
@@ -186,6 +193,26 @@ public class StockActivity extends Activity {
 
 	}
 
+	
+	@Override
+	protected void onResume() {		
+		super.onResume();
+		mp.start();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();		
+		mp.pause();
+
+	}
+	
+	@Override
+	protected void onDestroy(){
+		super.onDestroy();
+		mp.release();
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
