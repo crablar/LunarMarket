@@ -68,11 +68,11 @@ public class StockActivity extends Activity {
 		// Get the dataz from the Intent
 		Bundle extras = getIntent().getExtras();
 
-		stockTickerView = (TextView) findViewById(R.id.stock_ticker);
+		stockTickerView = (TextView) findViewById(R.id.stock_ticker_text);
 		stockPriceView = (TextView) findViewById(R.id.stock_price_view);
 		sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
 		balanceView = (TextView) findViewById(R.id.balance_view);
-
+		
 		chartView = (ChartView) findViewById(R.id.chart);
 
 		buyButton = (Button) findViewById(R.id.buy_button);
@@ -132,15 +132,16 @@ public class StockActivity extends Activity {
 
 		// Create the Stock object out of the SongData
 		stock = new Stock(songData);
+		
+		price = stock.getPrice(time);
+		
+		stockPriceView.setText("$" + price);
 
 		// Create ArrayList of ChartFrames
 		ArrayList<ChartFrame> chartFrames = stock
 				.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
 
 		chartView.setCurrentFrame(chartFrames.get(0));
-
-		// Set the initial price as a function of time
-		price = stock.getPrice(time);
 
 		// Initialize the ChartFrame and give it a data point
 		currentFrame = chartFrames.get(0);
@@ -153,7 +154,7 @@ public class StockActivity extends Activity {
 				// Get the stock price for the current time and set the TextView
 				double rawPrice = stock.getPrice(time);
 				price = roundToTwoPlaces(rawPrice);
-				stockPriceView.setText("$" + price + "");
+				stockPriceView.setText("$" + price);
 
 				// Invalidate the StockPriceView so that it can be reset
 				stockPriceView.invalidate();

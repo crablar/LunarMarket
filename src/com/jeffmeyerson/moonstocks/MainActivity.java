@@ -27,8 +27,6 @@ public class MainActivity extends Activity {
 
 	// Plays launchpad music
 	private MediaPlayer mp;
-	// private SoundPool mSounds;
-	// private HashMap<Integer, Integer> mSoundIDMap;
 
 	// The object representing the person playing the game
 	private Player player;
@@ -85,25 +83,6 @@ public class MainActivity extends Activity {
 
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		mp.start();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		mp.pause();
-
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		mp.release();
-	}
-
 	/**
 	 * Create a list of CompanyModels as defined by the companies.xml file.
 	 * 
@@ -124,4 +103,24 @@ public class MainActivity extends Activity {
 		}
 		return result;
 	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mp.start();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mp.pause();
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mp.release();
+	}
+
 }

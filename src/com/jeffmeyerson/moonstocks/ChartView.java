@@ -55,9 +55,6 @@ class ChartView extends View {
 			currentFrame = currentFrame.getNextFrame();
 		}
 
-		Log.d(this.toString(), "Inside ChartView.  currentFrame: "
-				+ currentFrame.toString());
-
 		// Get the list of dataPoints
 		List<DataPoint> dataPoints = currentFrame.getDataPoints();
 
