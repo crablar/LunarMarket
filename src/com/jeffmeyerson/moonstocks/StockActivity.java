@@ -182,7 +182,7 @@ public class StockActivity extends Activity {
 			public void onClick(View v) {
 				// Buy!!!!
 
-				player.buy(price);
+				player.buy(stockTicker, price);
 
 				// Get and set the player's updated balance
 				balance = roundToTwoPlaces(player.getBalance());
@@ -190,6 +190,7 @@ public class StockActivity extends Activity {
 
 				// Get and set the player's updated sharesOwned
 				sharesOwned = player.getSharesOwned(stockTicker);
+				System.out.println("sharesOwned: " + sharesOwned);
 				sharesOwnedView.setText(sharesOwned + "");
 			}
 		});
@@ -197,7 +198,7 @@ public class StockActivity extends Activity {
 			public void onClick(View v) {
 
 				// Sell!!!!
-				player.sell(price);
+				player.sell(stockTicker, price);
 
 				// Get and set the player's updated balance
 				balance = roundToTwoPlaces(player.getBalance());
@@ -205,7 +206,6 @@ public class StockActivity extends Activity {
 
 				// Get and set the player's updated sharesOwned
 				sharesOwned = player.getSharesOwned(stockTicker);
-
 				sharesOwnedView.setText(sharesOwned + "");
 			}
 		});

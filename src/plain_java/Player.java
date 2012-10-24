@@ -18,14 +18,13 @@ public class Player {
 	}
 
 	// Buy a share
-	public void buy(double price) {
-		account.buyShare("AAPL", price);
-		
+	public void buy(String stockTicker, double price) {
+		account.buyShare(stockTicker, price);
 	}
 	
 	// Sell a share
-	public void sell(double price) {
-		account.sellShare("AAPL", price);
+	public void sell(String stockTicker, double price) {
+		account.sellShare(stockTicker, price);
 	}
 
 	public double getBalance() {

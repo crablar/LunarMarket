@@ -24,27 +24,27 @@ public class Account {
 	}
 	
 	// Perform the operations within an account to buy a share
-	public void buyShare(String stockName, double price){
+	public void buyShare(String stockTicker, double price){
 		numDollars -= price;
-		Integer currentShares = stockShares.get(stockName);
+		Integer currentShares = stockShares.get(stockTicker);
 		if(currentShares == null)
-			stockShares.put(stockName, 1);
+			stockShares.put(stockTicker, 1);
 		else{
 			currentShares++;
-			stockShares.put(stockName, currentShares);
+			stockShares.put(stockTicker, currentShares);
 		}
 	}
 
 	// Perform the operations within an account to sell a share
-	public void sellShare(String stockName, double price) {
-		Integer sharesOwned = stockShares.get(stockName);
-		Log.d(this.toString(), "SELLING A SHARE OF " + stockName );
+	public void sellShare(String stockTicker, double price) {
+		Integer sharesOwned = stockShares.get(stockTicker);
+		Log.d(this.toString(), "SELLING A SHARE OF " + stockTicker );
 		Log.d(this.toString(), "Account before sale: " + this.toString() );
 
 		if(sharesOwned != null && sharesOwned > 0){
 			sharesOwned--;
 			numDollars += price;
-			stockShares.put(stockName, sharesOwned);
+			stockShares.put(stockTicker, sharesOwned);
 			Log.d(this.toString(), "Account after sale: " + this.toString() );
 
 			
@@ -57,12 +57,12 @@ public class Account {
 	}
 
 	// Get the number of shares for a particular stock
-	public int getSharesOwned(String tickerSymbol) {
-		Integer sharesOwned = stockShares.get(tickerSymbol);
+	public int getSharesOwned(String stockTicker) {
+		Integer sharesOwned = stockShares.get(stockTicker);
 
 		if(sharesOwned == null){
 			sharesOwned = 0;
-			stockShares.put(tickerSymbol, sharesOwned);
+			stockShares.put(stockTicker, sharesOwned);
 		}
 		return sharesOwned;
 	}
