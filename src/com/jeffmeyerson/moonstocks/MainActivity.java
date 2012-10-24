@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
 	private Button evilButton;
 	private Button bdstButton;
 	private Button wmcButton;
+	private Button newsButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,11 +51,13 @@ public class MainActivity extends Activity {
 		mp = MediaPlayer.create(this, R.raw.main_menu);
 		mp.setLooping(true);
 
-		// Initialize buttons
-		// TODO: make this programmatic
+		// Initialize company buttons
 		evilButton = (Button) findViewById(R.id.evilButton);
 		bdstButton = (Button) findViewById(R.id.bdstButton);
 		wmcButton = (Button) findViewById(R.id.wmcButton);
+		
+		// Initialize news button
+		newsButton = (Button) findViewById(R.id.newsButton);
 
 		// Add onclick listeners to existing buttons
 		evilButton.setOnClickListener(new OnClickListener() {
@@ -79,6 +82,14 @@ public class MainActivity extends Activity {
 				intent.putExtra("EXTRA_TICKER_ID", "WMC");
 				startActivity(intent);
 			}
+		});
+		
+		newsButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(context, NewsActivity.class);
+				startActivity(intent);
+			}
+			
 		});
 
 	}

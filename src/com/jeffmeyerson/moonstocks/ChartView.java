@@ -15,7 +15,7 @@ import android.view.View;
 
 class ChartView extends View {
 
-	final float scale = 20;// getWidth() / 20;
+	final float scale = 30;// getWidth() / 20;
 	private Paint paint;
 
 	private ChartFrame currentFrame;

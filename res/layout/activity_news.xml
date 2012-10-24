@@ -25,22 +25,6 @@
                 android:layout_gravity="center_horizontal"
                 android:text="Company"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/market_header_price"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:text="Price"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/market_header_shares"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Shares Owned"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
         </TableRow>
 
         <TableRow
@@ -59,22 +43,6 @@
                     android:layout_gravity="center_horizontal"
                     android:text="EVIL" />
             </FrameLayout>
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="$7"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="0"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
         </TableRow>
 
         <TableRow
@@ -93,22 +61,6 @@
                     android:layout_gravity="center_horizontal"
                     android:text="BDST" />
             </FrameLayout>
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="$8"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="0"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
         </TableRow>
         
         
@@ -122,28 +74,12 @@
                 android:layout_height="wrap_content" >
 
                 <Button
-                    android:id="@+id/wmcButton"
-                    android:layout_width="90dp"
+                    android:id="@+id/lunar_market_opens_button"
+                    android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:text="WMC" />
+                    android:text="Lunar Market Opens" />
             </FrameLayout>
-
-            <TextView
-                android:id="@+id/TextView01"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="$11"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/TextView02"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="0"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
         </TableRow>
     </TableLayout>
 
@@ -153,13 +89,13 @@
         android:layout_gravity="bottom" >
 
         <Button
-            android:id="@+id/newsButton"
+            android:id="@+id/accountButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="false"
-            android:text="Latest News" />
+            android:text="Go To Account" />
     </RelativeLayout>
 
 </LinearLayout>

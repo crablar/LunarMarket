@@ -88,8 +88,6 @@ public class StockActivity extends Activity {
 			stockTicker = extras.getString("EXTRA_TICKER_ID");
 		}
 
-		System.out.println("StockTicker ISSSS " + stockTicker);
-
 		stockTickerView.setText(stockTicker);
 
 		InputStream inputStream = null;
@@ -190,7 +188,6 @@ public class StockActivity extends Activity {
 
 				// Get and set the player's updated sharesOwned
 				sharesOwned = player.getSharesOwned(stockTicker);
-				System.out.println("sharesOwned: " + sharesOwned);
 				sharesOwnedView.setText(sharesOwned + "");
 			}
 		});
