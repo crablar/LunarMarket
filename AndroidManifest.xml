@@ -18,6 +18,10 @@
             android:name=".StockActivity"
             android:label="@string/title_activity_stock" >
         </activity>
+        <activity
+            android:name=".NewsActivity"
+            android:label="@string/title_activity_news" >
+        </activity>
     </application>
 
 </manifest>

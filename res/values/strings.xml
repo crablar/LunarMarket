@@ -4,8 +4,9 @@
     <string name="app_name">LunarStocks</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_stock">StockActivity</string>
-	<string name="stock_name">main_menu</string>
-	<string name="player_balance">1000</string>
-    
-    
+    <string name="title_activity_news">NewsActivity</string>
+    <string name="stock_name">main_menu</string>
+    <string name="player_balance">1000</string>
+    <string name="lunar_market_opens">Bloomberg Business News\nJuly 4, 2082\n7:42 PM\n\nLunar Market Opens For Business\n\nThe IPOs were presented as follows:\n\nWal-Mark Comestibles: 1,000,000 shares at a cost of 280g/share/nShell-Beignet Dust: 5,000,000 shares at a cost of 300g/share/nEverline-ilk Financial: 8,000,000 shares at a cost of 330g/share</string>
+
 </resources>

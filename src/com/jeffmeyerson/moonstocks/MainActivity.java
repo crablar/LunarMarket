@@ -18,8 +18,6 @@ public class MainActivity extends Activity {
 
 	public final static String EXTRA_PLAYER = "com.jeffmeyerson.moonstocks.plain_java.Player";
 
-	private static final String TAG = "Debugging";
-
 	private Context context = this;
 
 	// The amount of money the player has upon beginning a new game
@@ -86,7 +84,10 @@ public class MainActivity extends Activity {
 		
 		newsButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+
 				Intent intent = new Intent(context, NewsActivity.class);
+				System.out.println(intent.toString());
+
 				startActivity(intent);
 			}
 			

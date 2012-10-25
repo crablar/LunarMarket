@@ -15,28 +15,30 @@ public class NewsActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-
-		TextView articleTextView = (TextView) findViewById(R.id.article_text);
-
-		InputStream inputStream = this.getResources().openRawResource(
-				R.raw.lunar_market_opens);
-
-		// Create a BufferedReader for the InputStream
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-				inputStream));
-
-		String line = null;
-		try {
-			while (br.readLine() != null) {
-				line = br.readLine();
-				articleTextView.append(line);
-				articleTextView.append("\n");
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		setContentView(R.layout.activity_news);
+//		System.out.println("Hello");
+//
+//		TextView articleTextView = (TextView) findViewById(R.id.article_text);
+//
+//		
+//		InputStream inputStream = this.getResources().openRawResource(
+//				R.raw.lunar_market_opens);
+//
+//		// Create a BufferedReader for the InputStream
+//		BufferedReader br = new BufferedReader(new InputStreamReader(
+//				inputStream));
+//
+//		String line = null;
+//		try {
+//			while (br.readLine() != null) {
+//				line = br.readLine();
+//				articleTextView.append(line);
+//				articleTextView.append("\n");
+//			}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }
