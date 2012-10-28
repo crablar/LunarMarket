@@ -25,9 +25,7 @@ public class NewsStandActivity extends Activity {
 		lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
 		carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
 		buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
-		
-		System.out.println("HELLO");
-		
+				
 		lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(context, NewsActivity.class);

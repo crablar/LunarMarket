@@ -6,6 +6,7 @@ import java.util.List;
 import plain_java.ChartFrame;
 import plain_java.DataPoint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -26,10 +27,6 @@ class ChartView extends View {
 
 	void initialize() {
 		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		if (currentFrame == null) {
-			currentFrame = new ChartFrame();
-		} else
-			currentFrame.update();
 	}
 
 	public ChartView(Context context) {
@@ -50,20 +47,13 @@ class ChartView extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
-		// TODO: Why is this here?
-		if (currentFrame.getNextFrame() != null) {
-			currentFrame = currentFrame.getNextFrame();
-		}
-
-
+		
 		// Points to be drawn on the canvas
 		ArrayList<Integer> integerPoints = currentFrame.getRoundedPrices();
 
 		paint.setStrokeWidth(3);
 
 		for (int i = 1; i < integerPoints.size(); i++) {
-			System.out.println("THE POINT WE ARE AT: " + integerPoints.get(i));
 			if (integerPoints.get(i) < integerPoints.get(i - 1)) {
 				paint.setColor(Color.GREEN);
 			} else {
@@ -72,5 +62,6 @@ class ChartView extends View {
 			canvas.drawLine((i - 1) * scale, integerPoints.get(i - 1), i
 					* scale, integerPoints.get(i), paint);
 		}
+
 	}
 }

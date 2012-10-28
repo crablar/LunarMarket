@@ -20,6 +20,7 @@ public class ChartFrame {
 	private ChartFrame nextFrame;
 	private boolean dataPointWillBeDeletedFromViewWhenFrameAdvances;
 	private int numPointsDefined;
+	private boolean deprecatedStatus;
 
 
 	public ChartFrame() {
@@ -27,6 +28,7 @@ public class ChartFrame {
 		numPointsDefined = 0;
 		dataPointWillBeDeletedFromViewWhenFrameAdvances = false;
 		dataPoints = new ArrayList<DataPoint>();
+		deprecatedStatus = true;
 	}
 
 	public void appendDataPoint(DataPoint dataPoint) {
@@ -45,15 +47,6 @@ public class ChartFrame {
 		return dataPoints.size();
 	}
 
-	/**Advance this ChartFrame to the next ChartFrame
-	 * 
-	 */
-	public void update() {
-		dataPoints = nextFrame.dataPoints;
-		dataPointWillBeDeletedFromViewWhenFrameAdvances = nextFrame.dataPointWillBeDeletedFromViewWhenFrameAdvances;
-		numPointsDefined = nextFrame.numPointsDefined;
-		nextFrame = nextFrame.nextFrame;
-	}
 
 	public ArrayList<DataPoint> getDataPoints() {
 		return dataPoints;
@@ -73,6 +66,14 @@ public class ChartFrame {
 	
 	public String toString(){
 		return "Prices represented: " + dataPoints.toString();
+	}
+
+	public boolean getDeprecatedStatus() {
+		return deprecatedStatus;
+	}
+	
+	public void setDeprecatedStatus(boolean deprecated){
+		this.deprecatedStatus = deprecated;
 	}
 
 }

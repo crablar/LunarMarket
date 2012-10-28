@@ -7,17 +7,16 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import plain_java.ChartFrame;
-import plain_java.DataPoint;
 import plain_java.Player;
 import plain_java.SongData;
 import plain_java.SongDataProcessor;
 import plain_java.Stock;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,7 +56,8 @@ public class StockActivity extends Activity {
 	private String stockTicker;
 	private DecimalFormat twoDForm = new DecimalFormat("#.00");
 	private ChartFrame currentFrame;
-
+	private int currentFrameNumber;
+	
 	private Runnable priceFlux;
 
 	@Override
@@ -67,6 +67,12 @@ public class StockActivity extends Activity {
 
 		// Get the data from the Intent
 		Bundle extras = getIntent().getExtras();
+		
+		// Get the resources
+		final Resources res = getResources();
+		//final int timeBetweenPriceChangeMs = res.getInteger(R.string.time_between_price_change_ms);
+		final int timeBetweenPriceChangeMs = 1000;
+		System.out.println(timeBetweenPriceChangeMs + "is the pc");
 
 		stockTickerView = (TextView) findViewById(R.id.stock_ticker_text);
 		stockPriceView = (TextView) findViewById(R.id.stock_price_view);
@@ -138,11 +144,12 @@ public class StockActivity extends Activity {
 		ArrayList<ChartFrame> chartFrames = stock
 				.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
 
-		chartView.setCurrentFrame(chartFrames.get(0));
-
-		// Initialize the ChartFrame and give it a data point
 		currentFrame = chartFrames.get(0);
-
+		
+		currentFrame.setDeprecatedStatus(false);
+		
+		chartView.setCurrentFrame(currentFrame);
+		
 		// The function that repeatedly updates the stock price and the
 		// ChartView
 		priceFlux = new Runnable() {
@@ -152,15 +159,21 @@ public class StockActivity extends Activity {
 				double rawPrice = stock.getPrice(time);
 				price = roundToTwoPlaces(rawPrice);
 				stockPriceView.setText("$" + price);
-
+								
 				// Invalidate the StockPriceView so that it can be reset
 				stockPriceView.invalidate();
 
 				// Invalidate the ChartView so that it can be reset
 				chartView.invalidate();
-
+				
+				currentFrame.setDeprecatedStatus(true);
+				
+				currentFrame = currentFrame.getNextFrame();
+				
+				chartView.setCurrentFrame(currentFrame);
+				
 				// Put this function on the message queue
-				mHandler.postDelayed(priceFlux, 2000);
+				mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);
 
 				// Move to the next time interval
 				time++;
@@ -168,7 +181,7 @@ public class StockActivity extends Activity {
 		};
 
 		// Begin running the function
-		mHandler.postDelayed(priceFlux, 2000);
+		mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);
 
 		// Initialize buttons
 		buyButton = (Button) findViewById(R.id.buy_button);

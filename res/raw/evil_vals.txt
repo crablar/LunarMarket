@@ -1,2 +1,2 @@
-high_freq_values 5 6 6 7 7 8 8 9 9 52 3 32 3 2 
-low_freq_values 5 6 5 5 4 5 3 4 3 3 2 3 1 6 
+high_freq_values 15 16 17 18 19 20 16 12 16 20 26 38 17 19 
+low_freq_values 1 1 1 1 1 1 1 1 1 1 1 1 1 1

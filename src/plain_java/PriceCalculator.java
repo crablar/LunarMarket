@@ -39,7 +39,7 @@ public class PriceCalculator {
 			double y = timeInterval.getValueOf("low_freq_values");
 
 			// Assign the price to the function
-			prices[i] = priceFunction.getPrice(x, y, 275);
+			prices[i] = priceFunction.getPrice(x, y, 299);
 		}
 
 	}

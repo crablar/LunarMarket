@@ -8,5 +8,6 @@
     <string name="title_activity_news">NewsActivity</string>
     <string name="stock_name">main_menu</string>
     <string name="player_balance">1000</string>
-
+    <string name="time_between_price_change_ms">2000</string>
+    
 </resources>
