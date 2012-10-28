@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 	private Button evilButton;
 	private Button bdstButton;
 	private Button wmcButton;
-	private Button newsButton;
+	private Button newsStandButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
 		wmcButton = (Button) findViewById(R.id.wmcButton);
 		
 		// Initialize news button
-		newsButton = (Button) findViewById(R.id.newsButton);
+		newsStandButton = (Button) findViewById(R.id.newsStandButton);
 
 		// Add onclick listeners to existing buttons
 		evilButton.setOnClickListener(new OnClickListener() {
@@ -82,12 +82,10 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		newsButton.setOnClickListener(new OnClickListener() {
+		newsStandButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-
-				Intent intent = new Intent(context, NewsActivity.class);
-				System.out.println(intent.toString());
-
+				Intent intent = new Intent(context, NewsStandActivity.class);
+				System.out.println("hllllo");
 				startActivity(intent);
 			}
 			

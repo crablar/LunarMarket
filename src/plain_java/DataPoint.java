@@ -8,14 +8,22 @@ package plain_java;
 public class DataPoint {
 	
 	private double price;
+	private int roundedPrice;
 	
+	// Rounds the price
 	public DataPoint(double price){
 		this.price = price;
+		this.roundedPrice = (int)price;
+	}
+	
+	public int getRoundedPrice(){
+		return roundedPrice;
 	}
 	
 	public double getPrice(){
 		return price;
 	}
+
 	
 	public String toString(){
 		return "" + price;

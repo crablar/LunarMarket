@@ -51,25 +51,19 @@ class ChartView extends View {
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
+		// TODO: Why is this here?
 		if (currentFrame.getNextFrame() != null) {
 			currentFrame = currentFrame.getNextFrame();
 		}
 
-		// Get the list of dataPoints
-		List<DataPoint> dataPoints = currentFrame.getDataPoints();
 
 		// Points to be drawn on the canvas
-		ArrayList<Integer> integerPoints = new ArrayList<Integer>();
+		ArrayList<Integer> integerPoints = currentFrame.getRoundedPrices();
 
-		// Convert the DataPoints to rounded Integers
-		for (int i = 0; i < dataPoints.size(); i++) {
-			double pricePoint = dataPoints.get(i).getPrice() * scale;
-			Integer roundedPrice = new Integer((int) (pricePoint / 1));
-			integerPoints.add(roundedPrice);
-		}
 		paint.setStrokeWidth(3);
 
 		for (int i = 1; i < integerPoints.size(); i++) {
+			System.out.println("THE POINT WE ARE AT: " + integerPoints.get(i));
 			if (integerPoints.get(i) < integerPoints.get(i - 1)) {
 				paint.setColor(Color.GREEN);
 			} else {

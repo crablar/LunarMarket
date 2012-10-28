@@ -35,7 +35,6 @@ public class SongDataProcessor {
 				break;
 			
 			// line example: "low_freq_values 5 6 6 7 7 8 8 9 9 10 10 11 11 12"
-			
 			String[] lineArr = line.split(" ");
 			
 			// The key in the above example is "low_freq_values"

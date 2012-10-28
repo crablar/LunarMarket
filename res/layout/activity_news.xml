@@ -19,12 +19,13 @@
             android:layout_height="fill_parent" >
 
             <TextView
-                android:id="@+id/lunarMarketOpensTextView"
-                android:layout_width="100dp"
+                android:id="@+id/article_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@+string/lunar_market_opens"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:maxLines="86"
+                android:scrollbars="vertical"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </TableRow>
 
         <TableRow
@@ -48,8 +49,7 @@
                 android:layout_height="wrap_content" >
             </FrameLayout>
         </TableRow>
-        
-        
+
         <TableRow
             android:id="@+id/tableRow4"
             android:layout_width="wrap_content"

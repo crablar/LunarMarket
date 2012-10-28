@@ -16,12 +16,14 @@ public class ChartFrame {
 
 	private final int NUM_POINTS_ALLOWED_IN_FRAME = 14;
 	private ArrayList<DataPoint> dataPoints;
+	private ArrayList<Integer> roundedPrices;
 	private ChartFrame nextFrame;
 	private boolean dataPointWillBeDeletedFromViewWhenFrameAdvances;
 	private int numPointsDefined;
 
 
 	public ChartFrame() {
+		roundedPrices = new ArrayList<Integer>();
 		numPointsDefined = 0;
 		dataPointWillBeDeletedFromViewWhenFrameAdvances = false;
 		dataPoints = new ArrayList<DataPoint>();
@@ -29,6 +31,7 @@ public class ChartFrame {
 
 	public void appendDataPoint(DataPoint dataPoint) {
 		dataPoints.add(dataPoint);
+		roundedPrices.add(new Integer(dataPoint.getRoundedPrice()));
 		numPointsDefined++;
 		if(numPointsDefined == NUM_POINTS_ALLOWED_IN_FRAME)
 			dataPointWillBeDeletedFromViewWhenFrameAdvances = true;
@@ -54,6 +57,10 @@ public class ChartFrame {
 
 	public ArrayList<DataPoint> getDataPoints() {
 		return dataPoints;
+	}
+	
+	public ArrayList<Integer> getRoundedPrices(){
+		return roundedPrices;
 	}
 
 	public void setNextFrame(ChartFrame next) {

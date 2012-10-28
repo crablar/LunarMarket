@@ -65,7 +65,7 @@ public class StockActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stock);
 
-		// Get the dataz from the Intent
+		// Get the data from the Intent
 		Bundle extras = getIntent().getExtras();
 
 		stockTickerView = (TextView) findViewById(R.id.stock_ticker_text);
@@ -84,7 +84,6 @@ public class StockActivity extends Activity {
 
 		// TODO: Get the ticker symbol
 		if (extras != null) {
-			System.out.println("Extras contains: " + extras.size());
 			stockTicker = extras.getString("EXTRA_TICKER_ID");
 		}
 

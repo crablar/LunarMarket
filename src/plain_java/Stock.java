@@ -27,7 +27,7 @@ public class Stock {
 	public double getPrice(int currentTime) {
 
 		/*
-		 * Time within StockActivity steadily increases, but there* is only a
+		 * Time within StockActivity steadily increases, but there is only a
 		 * price for each defined time interval.
 		 */
 		return prices[currentTime % prices.length];
@@ -78,7 +78,6 @@ public class Stock {
 			for (int j = 0; j < numDataPointsAfterWrapAround; j++)
 				chartFrame.appendDataPoint(new DataPoint(prices[j]));
 
-			Log.d(this.toString(), chartFrame.toString());
 			result.set(i, chartFrame);
 
 			if (numDataPointsToDiscloseToChartFrame != maxNumberDataPoints)
@@ -99,16 +98,6 @@ public class Stock {
 			ChartFrame next = result.get(indexToPointTo);
 			temp.setNextFrame(next);
 			result.set(i, temp);
-		}
-
-		for (int i = 0; i < result.size(); i++) {
-			Log.d("RESULT_OF_CREATE_CHART_FRAMES", "ChartFrame number " + i
-					+ ": ");
-			Log.d("RESULT_OF_CREATE_CHART_FRAMES",
-					"DataPoints: " + result.get(i).getDataPoints().toString());
-			Log.d("RESULT_OF_CREATE_CHART_FRAMES", "next.DataPoints: "
-					+ result.get(i).getNextFrame().getDataPoints().toString());
-
 		}
 
 		return result;

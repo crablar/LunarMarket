@@ -15,7 +15,7 @@ public class UptrendWithUpperBound implements PriceFunction{
 	public UptrendWithUpperBound(){}
 	
 	public double getPrice(double x, double y, int upperBound){
-		double result = ( 2 * x ) / y;
+		double result = x * y % 275;
 		if(result < upperBound)
 			return result;
 		else

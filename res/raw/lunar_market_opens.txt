@@ -4,7 +4,14 @@ July 4, 2082
 
 Lunar Market Opens For Business
 
-Today marked the opening day for the International Lunar Market (ILM), with the only three agents of commerce on the moon who were big enough to enter the market all announcing their IPOs in units of globus, the global currency created specifically for the new market ($3.72 : 1g).  Though each of these companies have Earth-based market presence, the moon market has a unique set of rules, such that preexisting companies that want to have a moon IPO are required to splinter off an amount of their Earth company to represent that of their lunar presence.
+Today marked the opening day for the International Lunar Market (ILM),
+with the only three agents of commerce on the moon who were big enough
+to enter the market all announcing their IPOs in units of globus, the
+global currency created specifically for the new market ($3.72 : 1g). 
+Though each of these companies have Earth-based market presence, the
+moon market has a unique set of rules, such that preexisting companies
+that want to have a moon IPO are required to splinter off an amount of
+their Earth company to represent that of their lunar presence.
 
 The IPOs were presented as follows:
 
@@ -12,16 +19,68 @@ Wal-Mark Comestibles: 1,000,000 shares at a cost of 280g/share
 Shell-Beignet Dust: 5,000,000 shares at a cost of 300g/share
 Everline-ilk Financial: 8,000,000 shares at a cost of 330g/share
 
-The groundbreaking day evoked a timid start, with investors still unsure how to approach the market despite three years of preparation since its planning was announced in early 2079.  However, the market received a jolt of activity in the afternoon, when price fluctuations were triggered by incriminating news of France-founded moon-dust harvesting and energy distribution company Shell-Beignet Dust (ILM: BDST ).  In statements that were mandatorily disclosed by Shell-Beignet upon going public, the company claimed to have access to more dust-rich craters than SEC-sponsored lunar analysts could confirm, a fact which the SEC publicized at 1:20 PM EST, much to the chagrin of French Parliament, who were not consulted before the SEC's report was released.
+The groundbreaking day evoked a timid start, with investors still unsure
+how to approach the market despite three years of preparation since its
+planning was announced in early 2079.  However, the market received a
+jolt of activity in the afternoon, when price fluctuations were
+triggered by incriminating news of France-founded moon-dust harvesting
+and energy distribution company Shell-Beignet Dust (ILM: BDST ).  In
+statements that were mandatorily disclosed by Shell-Beignet upon going
+public, the company claimed to have access to more dust-rich craters
+than SEC-sponsored lunar analysts could confirm, a fact which the SEC
+publicized at 1:20 PM EST, much to the chagrin of French Parliament, who
+were not consulted before the SEC's report was released.
 
-BDST dropped forty points of globus from 310 to 270 between 1 PM and 2 PM EST trading on heavy volume, and creating a dampened, similar effect on Everline-ilk Financial (ILM: EVIL ) which dropped from 333 to 319 due in part to EVIL's heavy investment in BDST.
+BDST dropped forty points of globus from 310 to 270 between 1 PM and 2
+PM EST trading on heavy volume, and creating a dampened, similar effect
+on Everline-ilk Financial (ILM: EVIL ) which dropped from 333 to 319 due
+in part to EVIL's heavy investment in BDST.
 
-EVIL also owns billions of globus of low-interest, highly liquidable bonds sold to it by Wal-Mark Comestibles (ILM: WMC ), which needed funding for its ambitious plan to have a ten-year monopoly on food provision for the moon. The permission for this temporary monopoly took aggressive international lobbying to acquire, and the eventual UN stipulations allowing Wal-Mark to proceed with its monopoly overlapped with the stipulations that allow EVIL to have a similar monopoly on the moon's financial nascence.
+EVIL also owns billions of globus of low-interest, highly liquidable
+bonds sold to it by Wal-Mark Comestibles (ILM: WMC ), which needed
+funding for its ambitious plan to have a ten-year monopoly on food
+provision for the moon. The permission for this temporary monopoly took
+aggressive international lobbying to acquire, and the eventual UN
+stipulations allowing Wal-Mark to proceed with its monopoly overlapped
+with the stipulations that allow EVIL to have a similar monopoly on the
+moon's financial nascence.
 
-In an unprecedented arrangement, EVIL was given financial dominion over the first decade of lunar settlement on the condition that it bought several billion dollars worth of highly liquidable bonds from WMC, the liquidity of which was something EVIL lobbied heavily for.  Under the negotiation, should WMC begin to show certain calculable signs of corporate crumbling, EVIL has a right to cash in its bonds.  Of course, this cashing in would threaten to cause a certain amount of moon-wide financial instability, making EVIL seemingly disincentivized to aggressively cash in those bonds for fear of collapsing the very financial market it has a monopoly over.
+In an unprecedented arrangement, EVIL was given financial dominion over
+the first decade of lunar settlement on the condition that it bought
+several billion dollars worth of highly liquidable bonds from WMC, the
+liquidity of which was something EVIL lobbied heavily for.  Under the
+negotiation, should WMC begin to show certain calculable signs of
+corporate crumbling, EVIL has a right to cash in its bonds.  Of course,
+this cashing in would threaten to cause a certain amount of moon-wide
+financial instability, making EVIL seemingly disincentivized to
+aggressively cash in those bonds for fear of collapsing the very
+financial market it has a monopoly over.
 
-Nonetheless, BDST's and EVIL's afternoon stock dips caused investor concern that the moon wasn't quite prepared for capitalism.  Bloomberg sent an e-mail to the computer that houses Warren Buffett's brain to get its opinions on the tumultuous first day of trading.  Seconds later, a response was received:
+Nonetheless, BDST's and EVIL's afternoon stock dips caused investor
+concern that the moon wasn't quite prepared for capitalism.  Bloomberg
+sent an e-mail to the computer that houses Warren Buffett's brain to get
+its opinions on the tumultuous first day of trading.  Seconds later, a
+response was received:
 
-"Berkshire-Hathaway has been short on the International Lunar Market since the beginning.  A trio of interdependent sector monopolies is simply too small to function as a balanced capitalist market.  Just as diversity is an axiom of success and resilience, uniformity is one of failure and instability.  And the worst part of this economy is that you have the notoriously cagey EVIL having everyone in checkmate.  BDST and WMC have tangible stake in the moon, having created buildings, factories, and infrastructure, whereas EVIL has nothing but ATMs and a monolithic skyscraper.  In other words, EVIL is keeping a very light stake in the moon, while at the same time leveraging the stranglehold it has on lunar development to dole out high-interest loans to private businesses and real estate developers--loans which will be very difficult to pay off should the moon's colonization fail.  EVIL is very good at maintaining an image of having a large stake in the moon (you will see its stock generally rise and fall with the rest of the market) but the truth is that it is becoming hedged to the point of immunity.  This means that if the market swings (or is swung by EVIL) in a certain direction, it could be in EVIL's perceived best interest to collapse the moon's economy."
+"Berkshire-Hathaway has been short on the International Lunar Market
+since the beginning.  A trio of interdependent sector monopolies is
+simply too small to function as a balanced capitalist market.  Just as
+diversity is an axiom of success and resilience, uniformity is one of
+failure and instability.  And the worst part of this economy is that you
+have the notoriously cagey EVIL having everyone in checkmate.  BDST and
+WMC have tangible stake in the moon, having created buildings,
+factories, and infrastructure, whereas EVIL has nothing but ATMs and a
+monolithic skyscraper.  In other words, EVIL is keeping a very light
+stake in the moon, while at the same time leveraging the stranglehold it
+has on lunar development to dole out high-interest loans to private
+businesses and real estate developers--loans which will be very
+difficult to pay off should the moon's colonization fail.  EVIL is very
+good at maintaining an image of having a large stake in the moon (you
+will see its stock generally rise and fall with the rest of the market)
+but the truth is that it is becoming hedged to the point of immunity. 
+This means that if the market swings (or is swung by EVIL) in a certain
+direction, it could be in EVIL's perceived best interest to collapse the
+moon's economy."
 
-By the end of the day, the market had rebounded slightly.  Bloomberg waits with bated breath for more news on this strange new economy.
+By the end of the day, the market had rebounded slightly.  Bloomberg
+waits with bated breath for more news on this strange new economy.
