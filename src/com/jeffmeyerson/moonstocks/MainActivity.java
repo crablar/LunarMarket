@@ -16,8 +16,6 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 
-	public final static String EXTRA_PLAYER = "com.jeffmeyerson.moonstocks.plain_java.Player";
-
 	private Context context = this;
 
 	// The amount of money the player has upon beginning a new game
@@ -40,8 +38,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		player = new Player(STARTING_MONEY, "Jeff");
-
 		// Create CompanyModels
 		List<CompanyModel> companyModels = getCompanyModels();
 
@@ -55,6 +51,14 @@ public class MainActivity extends Activity {
 
 		// Initialize news button
 		newsStandButton = (Button) findViewById(R.id.newsStandButton);
+		
+		// Check for a persisted player
+		Bundle extras = this.getIntent().getExtras();
+		if(extras != null && extras.containsKey("EXTRA_PLAYER"))
+			extras.get("EXTRA_PLAYER");
+		else
+			player = new Player(STARTING_MONEY, "Jeff");
+
 
 		// Add onclick listeners to existing buttons
 		evilButton.setOnClickListener(new OnClickListener() {

@@ -33,7 +33,7 @@ import android.widget.TextView;
 public class StockActivity extends Activity {
 
 	// Based on screen size?
-	private final int MAX_NUMBER_OF_DATA_POINTS_FRAMED = 14;
+	private final int MAX_NUMBER_OF_DATA_POINTS_FRAMED = 100;
 
 	private Handler mHandler = new Handler();
 	private TextView stockTickerView;

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class ChartFrame {
 
-	private final int NUM_POINTS_ALLOWED_IN_FRAME = 14;
+	private final int NUM_POINTS_ALLOWED_IN_FRAME = 100;
 	private ArrayList<DataPoint> dataPoints;
 	private ArrayList<Integer> roundedPrices;
 	private ChartFrame nextFrame;

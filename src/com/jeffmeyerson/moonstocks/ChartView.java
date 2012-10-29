@@ -16,7 +16,10 @@ import android.view.View;
 
 class ChartView extends View {
 
-	final float scale = 30;// getWidth() / 20;
+	public static final int NUM_POINTS_ALLOWED_IN_FRAME = 100;
+
+	private static final int SCREEN_HEIGHT = 300;
+	final float scale = 3;// getWidth() / 20;
 	private Paint paint;
 
 	private ChartFrame currentFrame;
@@ -47,20 +50,20 @@ class ChartView extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
+
 		// Points to be drawn on the canvas
 		ArrayList<Integer> integerPoints = currentFrame.getRoundedPrices();
-
+		
 		paint.setStrokeWidth(3);
 
-		for (int i = 1; i < integerPoints.size(); i++) {
-			if (integerPoints.get(i) < integerPoints.get(i - 1)) {
+		for (int i = 1; i < integerPoints.size() && i < NUM_POINTS_ALLOWED_IN_FRAME; i++) {
+			if (integerPoints.get(i - 1) < integerPoints.get(i)) {
 				paint.setColor(Color.GREEN);
 			} else {
 				paint.setColor(Color.RED);
 			}
-			canvas.drawLine((i - 1) * scale, integerPoints.get(i - 1), i
-					* scale, integerPoints.get(i), paint);
+			canvas.drawLine((i - 1) * scale, SCREEN_HEIGHT - integerPoints.get(i - 1), i
+					* scale, SCREEN_HEIGHT - integerPoints.get(i), paint);
 		}
 
 	}
