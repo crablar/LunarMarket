@@ -25,7 +25,7 @@ public class NewsActivity extends Activity {
 		articleTextView.setMovementMethod(new ScrollingMovementMethod());
 
 		mp = null;
-		
+
 		// Get the data from the Intent
 		Bundle extras = getIntent().getExtras();
 		String articleName = "";
@@ -37,17 +37,17 @@ public class NewsActivity extends Activity {
 		if (articleName.equals("lunar_market_opens")) {
 			inputStream = this.getResources().openRawResource(
 					R.raw.lunar_market_opens);
-			mp = MediaPlayer.create(this, R.raw.news_song1);
+			mp = MediaPlayer.create(this, R.raw.ikea_zombies);
 		}
 		if (articleName.equals("careful_with_the_moon")) {
 			inputStream = this.getResources().openRawResource(
 					R.raw.careful_with_the_moon);
-			mp = MediaPlayer.create(this, R.raw.news_song2);
+			mp = MediaPlayer.create(this, R.raw.occupy_wall_suite);
 		}
 		if (articleName.equals("buy_stock_not_globus")) {
 			inputStream = this.getResources().openRawResource(
 					R.raw.buy_stock_not_globus);
-			mp = MediaPlayer.create(this, R.raw.news_song3);
+			mp = MediaPlayer.create(this, R.raw.dotslashgo);
 		}
 		mp.setLooping(true);
 
@@ -68,6 +68,25 @@ public class NewsActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mp.start();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mp.pause();
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mp.release();
 	}
 
 }

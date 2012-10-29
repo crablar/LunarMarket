@@ -3,6 +3,7 @@ package com.jeffmeyerson.moonstocks;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,7 +16,9 @@ public class NewsStandActivity extends Activity {
 	private Button lunarMarketOpensButton;
 	private Button carefulWithTheMoonButton;
 	private Button buyStockNotGlobusButton;
-
+	private MediaPlayer mp;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,7 +28,10 @@ public class NewsStandActivity extends Activity {
 		lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
 		carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
 		buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
-				
+
+		mp = MediaPlayer.create(this, R.raw.fxxx);
+		mp.setLooping(true);
+
 		lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(context, NewsActivity.class);
@@ -48,4 +54,24 @@ public class NewsStandActivity extends Activity {
 			}
 		});
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mp.start();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mp.pause();
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mp.release();
+	}
+	
 }
