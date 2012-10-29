@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 public class NewsActivity extends Activity {
 
 	private Context context = this;
+	private MediaPlayer mp;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,8 @@ public class NewsActivity extends Activity {
 		TextView articleTextView = (TextView) findViewById(R.id.article_text);
 		articleTextView.setMovementMethod(new ScrollingMovementMethod());
 
+		mp = null;
+		
 		// Get the data from the Intent
 		Bundle extras = getIntent().getExtras();
 		String articleName = "";
@@ -30,17 +34,23 @@ public class NewsActivity extends Activity {
 		}
 
 		InputStream inputStream = null;
-		if (articleName.equals("lunar_market_opens"))
+		if (articleName.equals("lunar_market_opens")) {
 			inputStream = this.getResources().openRawResource(
 					R.raw.lunar_market_opens);
-		if (articleName.equals("careful_with_the_moon"))
+			mp = MediaPlayer.create(this, R.raw.news_song1);
+		}
+		if (articleName.equals("careful_with_the_moon")) {
 			inputStream = this.getResources().openRawResource(
 					R.raw.careful_with_the_moon);
-		if (articleName.equals("buy_stock_not_globus"))
+			mp = MediaPlayer.create(this, R.raw.news_song2);
+		}
+		if (articleName.equals("buy_stock_not_globus")) {
 			inputStream = this.getResources().openRawResource(
 					R.raw.buy_stock_not_globus);
-		
-		
+			mp = MediaPlayer.create(this, R.raw.news_song3);
+		}
+		mp.setLooping(true);
+
 		// Create a BufferedReader for the InputStream
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				inputStream));
