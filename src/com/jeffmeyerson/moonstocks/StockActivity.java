@@ -71,8 +71,7 @@ public class StockActivity extends Activity {
 		// Get the resources
 		final Resources res = getResources();
 		//final int timeBetweenPriceChangeMs = res.getInteger(R.string.time_between_price_change_ms);
-		final int timeBetweenPriceChangeMs = 1000;
-		System.out.println(timeBetweenPriceChangeMs + "is the pc");
+		final int timeBetweenPriceChangeMs = 320;
 
 		stockTickerView = (TextView) findViewById(R.id.stock_ticker_text);
 		stockPriceView = (TextView) findViewById(R.id.stock_price_view);

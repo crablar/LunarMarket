@@ -40,11 +40,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		player = new Player(STARTING_MONEY, "Jeff");
+
 		// Create CompanyModels
 		List<CompanyModel> companyModels = getCompanyModels();
-
-		// Initialize player
-		player = new Player(STARTING_MONEY, "Jeff");
 
 		mp = MediaPlayer.create(this, R.raw.main_menu);
 		mp.setLooping(true);
@@ -53,7 +52,7 @@ public class MainActivity extends Activity {
 		evilButton = (Button) findViewById(R.id.evilButton);
 		bdstButton = (Button) findViewById(R.id.bdstButton);
 		wmcButton = (Button) findViewById(R.id.wmcButton);
-		
+
 		// Initialize news button
 		newsStandButton = (Button) findViewById(R.id.newsStandButton);
 
@@ -81,14 +80,14 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
 		newsStandButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(context, NewsStandActivity.class);
 				System.out.println("hllllo");
 				startActivity(intent);
 			}
-			
+
 		});
 
 	}
