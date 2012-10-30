@@ -17,6 +17,7 @@ import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -230,13 +231,14 @@ public class StockActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		mp.pause();
-
+		Log.d("Time", "time: " + time);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		mp.release();
+		Log.d("Time", "time: " + time);
 	}
 
 	@Override
@@ -254,15 +256,9 @@ public class StockActivity extends Activity {
 		Double result = new Double(twoDForm.format(rawPrice));
 		return result.doubleValue();
 	}
-	//
-	// @Override
-	// public void onPause(){
-	// super.onPause();
-	// }
-	//
-	// @Override
-	// public void onResume(){
-	// super.onResume();
-	// setContentView(R.layout.activity_stock);
-	// }
+	
+	public int getTime(){
+		return time;
+	}
+	
 }

@@ -8,6 +8,28 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
+    <HorizontalScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/stock_scroller"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/scroll_text"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:text="evil 0.0\t bdst 0.0\t wmc 0.0\t other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks" />
+
+	</HorizontalScrollView>
+	
+     <Button
+         android:id="@+id/restart_stock"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="left"
+         android:gravity="left|center_vertical|center_horizontal"
+         android:text="Restart Stock Prices" />
+    
     <TableLayout
         android:id="@+id/market_table"
         android:layout_width="match_parent"
@@ -38,13 +60,15 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
+
                 <Button
                     android:id="@+id/lunar_market_opens_button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
+                    android:gravity="left|center_vertical|center_horizontal"
                     android:text="Lunar Market Opens" />
+
             </FrameLayout>
         </TableRow>
 
@@ -57,13 +81,15 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
+
                 <Button
                     android:id="@+id/buy_stock_not_globus_button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
+                    android:gravity="left|center_vertical|center_horizontal"
                     android:text="Buy Stock, Not Globus" />
+
             </FrameLayout>
         </TableRow>
         
@@ -75,13 +101,15 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
+
                 <Button
                     android:id="@+id/careful_with_the_moon_button"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
+                    android:gravity="left|center_vertical|center_horizontal"
                     android:text="Careful With The Moon" />
+
             </FrameLayout>
         </TableRow>
     </TableLayout>
