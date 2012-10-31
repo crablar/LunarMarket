@@ -7,28 +7,21 @@
     android:gravity="right"
     android:orientation="vertical"
     tools:context=".MainActivity" >
-
+
     <HorizontalScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/stock_scroller"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+
     <TextView
         android:id="@+id/scroll_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="38dp"
-        android:text="evil 0.0\t bdst 0.0\t wmc 0.0\t other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks" />
+        android:text="evil 0.0\t bdst 0.0\t wmc 0.0\t other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks" />
 
 	</HorizontalScrollView>
-	
-     <Button
-         android:id="@+id/restart_stock"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_gravity="left"
-         android:gravity="left|center_vertical|center_horizontal"
-         android:text="Restart Stock Prices" />
+	
     
     <TableLayout
         android:id="@+id/market_table"

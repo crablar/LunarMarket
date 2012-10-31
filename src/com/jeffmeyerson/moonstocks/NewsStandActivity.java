@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
-import android.widget.ScrollView;
+import android.widget.TextView;
 
 public class NewsStandActivity extends Activity {
 
@@ -20,10 +21,9 @@ public class NewsStandActivity extends Activity {
 	private Button lunarMarketOpensButton;
 	private Button carefulWithTheMoonButton;
 	private Button buyStockNotGlobusButton;
-	private Button restart_stock;
 	private MediaPlayer mp;
-	private long scrollTime = 2000;
-	private long scrollTimeInterval = 20;
+	private long scrollTime = 20000;
+	private long scrollTimeInterval = 50;
 	
 	
 	@Override
@@ -35,40 +35,18 @@ public class NewsStandActivity extends Activity {
 		lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
 		carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
 		buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
-		restart_stock = (Button) findViewById(R.id.restart_stock);
 
 		mp = MediaPlayer.create(this, R.raw.fxxx);
 		mp.setLooping(true);
-
-		lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent(context, NewsActivity.class);
-				intent.putExtra("EXTRA_ARTICLE_NAME", "lunar_market_opens");
-				startActivity(intent);
-			}
-		});
-		carefulWithTheMoonButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent(context, NewsActivity.class);
-				intent.putExtra("EXTRA_ARTICLE_NAME", "careful_with_the_moon");
-				startActivity(intent);
-			}
-		});
-		buyStockNotGlobusButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent(context, NewsActivity.class);
-				intent.putExtra("EXTRA_ARTICLE_NAME", "buy_stock_not_globus");
-				startActivity(intent);
-			}
-		});
 		
-		final HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.stock_scroller);		
+		final HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.stock_scroller);	
+		final TextView tv = (TextView) findViewById(R.id.scroll_text);
 		
-		scrollRight(hsv);
+		scrollRight(hsv, tv);
 		
-		restart_stock.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				//should really use enum for holding all the different companies...
+//		restart_stock.setOnClickListener(new OnClickListener() {
+//			public void onClick(View v) {
+//				//should really use enum for holding all the different companies...
 //				
 //				InputStream inputStream = null;
 //				
@@ -80,26 +58,55 @@ public class NewsStandActivity extends Activity {
 //				
 //				inputStream = getResources().openRawResource(R.raw.wmc_vals);
 //				
-				hsv.scrollTo(0, 0);
-				scrollRight(hsv);
-			}
-			
-		});
+//				hsv.scrollTo(0, 0);
+//				scrollRight(hsv, tv);
+//			}
+//			
+//		});
 	}
 	
-	public void scrollRight(final HorizontalScrollView h){
+	public void scrollRight(final HorizontalScrollView h, final TextView tv){
 		new CountDownTimer(scrollTime, scrollTimeInterval) { 
 			
-		    public void onTick(long millisUntilFinished) { 
-		    	Log.d("width", "width: " + h.getWidth());
-		    	int pos = (int) (1.0 * (scrollTime - millisUntilFinished) / scrollTime * h.getWidth());
+		    public void onTick(long millisUntilFinished) {
+		    	
+		    	// Disable Scrolling by setting up an OnTouchListener to do nothing
+		    	h.setOnTouchListener( new OnTouchListener(){ 
+		    	    @Override
+		    	    public boolean onTouch(View v, MotionEvent event) {
+		    	        return true; 
+		    	    }
+		    	});
+		    	
+		    	lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						Intent intent = new Intent(context, NewsActivity.class);
+						intent.putExtra("EXTRA_ARTICLE_NAME", "lunar_market_opens");
+						startActivity(intent);
+					}
+				});
+				carefulWithTheMoonButton.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						Intent intent = new Intent(context, NewsActivity.class);
+						intent.putExtra("EXTRA_ARTICLE_NAME", "careful_with_the_moon");
+						startActivity(intent);
+					}
+				});
+				buyStockNotGlobusButton.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						Intent intent = new Intent(context, NewsActivity.class);
+						intent.putExtra("EXTRA_ARTICLE_NAME", "buy_stock_not_globus");
+						startActivity(intent);
+					}
+				});
+		    	
+		    	int pos = (int) (1.0 * (scrollTime - millisUntilFinished) / scrollTime * (tv.getWidth() - h.getWidth()));
 		        h.scrollTo(pos, 0);
-		        Log.d("Seconds", "At pixel: " + pos);
 		    } 
 
-		    public void onFinish() { 
-		    	//Log.d("Finish", "Finish: " + h.getMaxScrollAmount());
-		    	h.fullScroll(ScrollView.FOCUS_RIGHT);
+		    public void onFinish() {
+		    	h.scrollTo(0, 0);
+				scrollRight(h, tv);
 		    } 
 		 }.start(); 
 	}
