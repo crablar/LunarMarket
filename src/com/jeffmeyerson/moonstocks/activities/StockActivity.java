@@ -4,11 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
-import java.util.List;
 
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.pojos.Player;
-import com.jeffmeyerson.moonstocks.pojos.ChartFrame;
 import com.jeffmeyerson.moonstocks.pojos.SongData;
 import com.jeffmeyerson.moonstocks.pojos.SongDataProcessor;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
@@ -34,10 +32,6 @@ import android.widget.TextView;
  * 
  */
 public class StockActivity extends Activity {
-
-    // Based on screen size?
-    private final int MAX_NUMBER_OF_DATA_POINTS_FRAMED = 100;
-
     private Handler mHandler = new Handler();
     private TextView stockPriceView;
     private TextView balanceView;
@@ -53,7 +47,6 @@ public class StockActivity extends Activity {
     private int time;
     private Player player;
     private DecimalFormat twoDForm = new DecimalFormat("#.00");
-    private ChartFrame currentFrame;
 
     private Runnable priceFlux;
 
@@ -125,9 +118,6 @@ public class StockActivity extends Activity {
         price = stock.getPrice(time);
 
         stockPriceView.setText("$" + price);
-
-        // Create List of ChartFrames
-        List<ChartFrame> chartFrames = stock.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
 
         //chartView.setCurrentFrame(currentFrame);
 

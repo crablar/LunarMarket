@@ -1,6 +1,6 @@
 package com.jeffmeyerson.moonstocks.views;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -23,7 +23,8 @@ public class ChartView extends View {
 
     void initialize() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        points = new LinkedList<Float>();
+        // TODO: evaluate performance of using ArrayList vs. LinkedList here
+        points = new ArrayList<Float>();
     }
 
     public ChartView(Context context) {
