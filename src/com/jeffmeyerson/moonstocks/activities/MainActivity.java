@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
             row.addView(stockPrice);
 
             TextView sharesOwned = new TextView(this);
-            sharesOwned.setText(player.getSharesOwned(c.getTicker()));
+            sharesOwned.setText(String.valueOf(player.getSharesOwned(c.getTicker())));
             sharesOwned.setGravity(Gravity.CENTER);
             sharesOwned.setTextAppearance(this, android.R.style.TextAppearance_Large);
             row.addView(sharesOwned);

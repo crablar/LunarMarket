@@ -57,7 +57,7 @@
         android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <com.jeffmeyerson.moonstocks.ChartView
+    <com.jeffmeyerson.moonstocks.views.ChartView
         android:id="@+id/chart"
         android:layout_width="300dp"
         android:layout_height="300dp"

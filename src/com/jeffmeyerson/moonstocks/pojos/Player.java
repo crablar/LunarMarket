@@ -32,6 +32,9 @@ public class Player {
         }
         balance -= price * quantity;
         Integer sharesOwned = stockShares.get(stockTicker);
+        if (sharesOwned == null) {
+            sharesOwned = Integer.valueOf(0);
+        }
         sharesOwned += quantity;
         stockShares.put(stockTicker, sharesOwned);
         return true;
@@ -46,6 +49,10 @@ public class Player {
      */
     public boolean sell(String stockTicker, int quantity, double price) {
         Integer sharesOwned = stockShares.get(stockTicker);
+        if (sharesOwned == null) {
+            sharesOwned = Integer.valueOf(0);
+            stockShares.put(stockTicker, sharesOwned);
+        }
         if (sharesOwned < quantity) {
             return false;
         }
@@ -65,8 +72,11 @@ public class Player {
         this.balance = balance;
     }
 
-    public int getSharesOwned(String stockTicker) {
-        return stockShares.get(stockTicker);
+    public int getSharesOwned(String ticker) {
+        if (stockShares.get(ticker) == null) {
+            stockShares.put(ticker, Integer.valueOf(0));
+        }
+        return stockShares.get(ticker);
     }
 
     public String getName() {

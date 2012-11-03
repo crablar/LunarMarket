@@ -35,231 +35,213 @@ import android.widget.TextView;
  */
 public class StockActivity extends Activity {
 
-	// Based on screen size?
-	private final int MAX_NUMBER_OF_DATA_POINTS_FRAMED = 100;
+    // Based on screen size?
+    private final int MAX_NUMBER_OF_DATA_POINTS_FRAMED = 100;
 
-	private Handler mHandler = new Handler();
-	private TextView stockTickerView;
-	private TextView stockPriceView;
-	private TextView balanceView;
-	private TextView sharesOwnedView;
-	private ChartView chartView;
-	private Stock stock;
-	private double price;
+    private Handler mHandler = new Handler();
+    private TextView stockPriceView;
+    private TextView balanceView;
+    private TextView sharesOwnedView;
+    private ChartView chartView;
+    private Stock stock;
+    private double price;
+    private String stockTicker;
 
-	// Plays appropriate music for the level
-	private MediaPlayer mp;
+    // Plays appropriate music for the level
+    private MediaPlayer mp;
 
-	private int time;
-	private Player player;
-	private Button buyButton;
-	private Button sellButton;
-	private double balance;
-	private int sharesOwned;
-	private String stockTicker;
-	private DecimalFormat twoDForm = new DecimalFormat("#.00");
-	private ChartFrame currentFrame;
-	
-	private Runnable priceFlux;
+    private int time;
+    private Player player;
+    private DecimalFormat twoDForm = new DecimalFormat("#.00");
+    private ChartFrame currentFrame;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_stock);
+    private Runnable priceFlux;
 
-		// Get the data from the Intent
-		Bundle extras = getIntent().getExtras();
-		
-		// Get the resources
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_stock);
+
+        // Get the data from the Intent
+        Bundle extras = getIntent().getExtras();
+
+        // Get the resources
         // TODO: pull this from config rather than hardcoding it
-		final int timeBetweenPriceChangeMs = 320;
+        final int timeBetweenPriceChangeMs = 320;
 
-		stockTickerView = (TextView) findViewById(R.id.stock_ticker_text);
-		stockPriceView = (TextView) findViewById(R.id.stock_price_view);
-		sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
-		balanceView = (TextView) findViewById(R.id.balance_view);
-		
-		chartView = (ChartView) findViewById(R.id.chart);
+        stockPriceView = (TextView) findViewById(R.id.stock_price_view);
+        sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
+        balanceView = (TextView) findViewById(R.id.balance_view);
 
-		buyButton = (Button) findViewById(R.id.buy_button);
-		sellButton = (Button) findViewById(R.id.sell_button);
+        chartView = (ChartView) findViewById(R.id.chart);
 
-		// TODO: Get the Player object from our activity
-		player = new Player();
-		player.setBalance(1000);
-		player.setName("Jeff");
+        // TODO: Get the Player object from our activity
+        player = new Player();
+        player.setBalance(1000);
+        player.setName("Jeff");
 
-		// TODO: Get the ticker symbol
-		if (extras != null) {
-			stockTicker = extras.getString("EXTRA_TICKER_ID");
-		}
+        // TODO: Get the ticker symbol
+        if (extras != null) {
+            stockTicker = extras.getString("EXTRA_TICKER_ID");
+        }
 
-		stockTickerView.setText(stockTicker);
+        // Set the ticker name in the TextView
+        TextView stockTickerView = (TextView) findViewById(R.id.stock_ticker_text);
+        stockTickerView.setText(stockTicker);
 
-		InputStream inputStream = null;
-		
-		// TODO: Make programmatic
-		{
-			// Put the raw text file into an InputStream
-			if (stockTicker.equals("EVIL")) {
-				inputStream = this.getResources().openRawResource(
-						R.raw.evil_vals);
-				mp = MediaPlayer.create(this, R.raw.evil);
-				mp.setLooping(true);
-			}
-			if (stockTicker.equals("BDST")) {
-				inputStream = this.getResources().openRawResource(
-						R.raw.bdst_vals);
-				mp = MediaPlayer.create(this, R.raw.bdst);
-				mp.setLooping(true);
-			}
-			if (stockTicker.equals("WMC")) {
-				inputStream = this.getResources().openRawResource(
-						R.raw.wmc_vals);
-				mp = MediaPlayer.create(this, R.raw.wmc);
-				mp.setLooping(true);
-			}
+        InputStream inputStream = null;
 
-		}
+        // TODO: Make programmatic
+        // Put the raw text file into an InputStream
+        if (stockTicker.equals("EVIL")) {
+            inputStream = this.getResources().openRawResource(R.raw.evil_vals);
+            mp = MediaPlayer.create(this, R.raw.evil);
+            mp.setLooping(true);
+        } else if (stockTicker.equals("BDST")) {
+            inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
+            mp = MediaPlayer.create(this, R.raw.bdst);
+            mp.setLooping(true);
+        } else if (stockTicker.equals("WMC")) {
+            inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
+            mp = MediaPlayer.create(this, R.raw.wmc);
+            mp.setLooping(true);
+        }
 
-		// Start at t = 0
-		time = 0;
+        // Start at t = 0
+        time = 0;
 
-		// Create a BufferedReader for the InputStream
-		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        // Create a BufferedReader for the InputStream
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
-		// Create the SongDataProcessor, which parses the raw text file
-		SongDataProcessor songDataProcessor = new SongDataProcessor(br);
+        // Create the SongDataProcessor, which parses the raw text file
+        SongDataProcessor songDataProcessor = new SongDataProcessor(br);
 
-		// Create the SongData using the SongDataProcessor
-		SongData songData = new SongData(songDataProcessor);
+        // Create the SongData using the SongDataProcessor
+        SongData songData = new SongData(songDataProcessor);
 
-		// Create the Stock object out of the SongData
-		stock = new Stock(songData);
-		
-		price = stock.getPrice(time);
-		
-		stockPriceView.setText("$" + price);
+        // Create the Stock object out of the SongData
+        stock = new Stock(songData);
 
-		// Create ArrayList of ChartFrames
-		ArrayList<ChartFrame> chartFrames = stock
-				.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
+        price = stock.getPrice(time);
 
-		currentFrame = chartFrames.get(0);
-		
-		currentFrame.setDeprecatedStatus(false);
-		
-		chartView.setCurrentFrame(currentFrame);
-		
-		// The function that repeatedly updates the stock price and the
-		// ChartView
-		priceFlux = new Runnable() {
-			public void run() {
+        stockPriceView.setText("$" + price);
 
-				// Get the stock price for the current time and set the TextView
-				double rawPrice = stock.getPrice(time);
-				price = roundToTwoPlaces(rawPrice);
-				stockPriceView.setText("$" + price);
-								
-				// Invalidate the StockPriceView so that it can be reset
-				stockPriceView.invalidate();
+        // Create ArrayList of ChartFrames
+        ArrayList<ChartFrame> chartFrames = stock.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
 
-				// Invalidate the ChartView so that it can be reset
-				chartView.invalidate();
-				
-				currentFrame.setDeprecatedStatus(true);
-				
-				currentFrame = currentFrame.getNextFrame();
-				
-				chartView.setCurrentFrame(currentFrame);
-				
-				// Put this function on the message queue
-				mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);
+        currentFrame = chartFrames.get(0);
 
-				// Move to the next time interval
-				time++;
-			}
-		};
+        currentFrame.setDeprecatedStatus(false);
 
-		// Begin running the function
-		mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);
+        chartView.setCurrentFrame(currentFrame);
 
-		// Initialize buttons
-		buyButton = (Button) findViewById(R.id.buy_button);
-		sellButton = (Button) findViewById(R.id.sell_button);
+        // The function that repeatedly updates the stock price and the ChartView
+        priceFlux = new Runnable() {
+            public void run() {
+                // Get the stock price for the current time and set the TextView
+                double rawPrice = stock.getPrice(time);
+                price = roundToTwoPlaces(rawPrice);
+                stockPriceView.setText("$" + price);
 
-		// Add onclick listeners to existing buttons
-		buyButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				// Buy!!!!
+                // Invalidate the StockPriceView so that it can be reset
+                stockPriceView.invalidate();
 
-				player.buy(stockTicker, 1, price);
+                // Invalidate the ChartView so that it can be reset
+                chartView.invalidate();
 
-				// Get and set the player's updated balance
-				balance = roundToTwoPlaces(player.getBalance());
-				balanceView.setText(balance + "");
+                currentFrame.setDeprecatedStatus(true);
 
-				// Get and set the player's updated sharesOwned
-				sharesOwned = player.getSharesOwned(stockTicker);
-				sharesOwnedView.setText(sharesOwned + "");
-			}
-		});
-		sellButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
+                currentFrame = currentFrame.getNextFrame();
 
-				// Sell!!!!
-				player.sell(stockTicker, 1, price);
+                chartView.setCurrentFrame(currentFrame);
 
-				// Get and set the player's updated balance
-				balance = roundToTwoPlaces(player.getBalance());
-				balanceView.setText(balance + "");
+                // Put this function on the message queue
+                mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);
 
-				// Get and set the player's updated sharesOwned
-				sharesOwned = player.getSharesOwned(stockTicker);
-				sharesOwnedView.setText(sharesOwned + "");
-			}
-		});
+                // Move to the next time interval
+                time++;
+            }
+        };
 
-	}
+        // Begin running the function
+        mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		mp.start();
-	}
+        // Initialize buttons
+        Button buyButton = (Button) findViewById(R.id.buy_button);
+        Button sellButton = (Button) findViewById(R.id.sell_button);
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		mp.pause();
-		Log.d("Time", "time: " + time);
-	}
+        // Add onclick listeners to existing buttons
+        buyButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                // Buy!!!!
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		mp.release();
-		Log.d("Time", "time: " + time);
-	}
+                player.buy(stockTicker, 1, price);
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_stock, menu);
-		return true;
-	}
+                // Get and set the player's updated balance
+                double balance = roundToTwoPlaces(player.getBalance());
+                balanceView.setText(balance + "");
 
-	public void quitToMarket(View view) {
-		Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
-	}
+                // Get and set the player's updated sharesOwned
+                int sharesOwned = player.getSharesOwned(stockTicker);
+                sharesOwnedView.setText(sharesOwned + "");
+            }
+        });
+        sellButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
 
-	public double roundToTwoPlaces(double rawPrice) {
-		Double result = Double.valueOf(twoDForm.format(rawPrice));
-		return result.doubleValue();
-	}
-	
-	public int getTime(){
-		return time;
-	}
-	
+                // Sell!!!!
+                player.sell(stockTicker, 1, price);
+
+                // Get and set the player's updated balance
+                double balance = roundToTwoPlaces(player.getBalance());
+                balanceView.setText(balance + "");
+
+                // Get and set the player's updated sharesOwned
+                int sharesOwned = player.getSharesOwned(stockTicker);
+                sharesOwnedView.setText(sharesOwned + "");
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mp.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mp.pause();
+        Log.d("Time", "time: " + time);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mp.release();
+        Log.d("Time", "time: " + time);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_stock, menu);
+        return true;
+    }
+
+    public void quitToMarket(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public double roundToTwoPlaces(double rawPrice) {
+        Double result = Double.valueOf(twoDForm.format(rawPrice));
+        return result.doubleValue();
+    }
+
+    public int getTime(){
+        return time;
+    }
+
 }

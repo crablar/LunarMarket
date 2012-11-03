@@ -2,7 +2,6 @@ package com.jeffmeyerson.moonstocks.pojos;
 
 import java.util.ArrayList;
 
-
 /**
  * The ChartFrame class. Describes a frame of data for the ChartView to
  * represent. Each ChartFrame contains a pointer to the next ChartFrame that

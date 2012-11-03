@@ -2,8 +2,6 @@ package com.jeffmeyerson.moonstocks.pojos;
 
 import java.text.DecimalFormat;
 
-
-
 /**
  * @author jeffreymeyerson
  * 
@@ -11,7 +9,6 @@ import java.text.DecimalFormat;
  *         the prices over time for a Stock using a SongData.
  * 
  */
-
 public class PriceCalculator {
 	private DecimalFormat twoDForm = new DecimalFormat("#.00");
 	private double[] prices;
@@ -51,7 +48,7 @@ public class PriceCalculator {
 	}
 
 	public double roundToTwoPlaces(double rawPrice) {
-		Double result = new Double(twoDForm.format(rawPrice));
+		Double result = Double.valueOf(twoDForm.format(rawPrice));
 		return result.doubleValue();
 	}
 
