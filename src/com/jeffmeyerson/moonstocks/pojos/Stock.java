@@ -10,13 +10,21 @@ package com.jeffmeyerson.moonstocks.pojos;
 public class Stock {
 
     private double[] prices;
-    private PriceCalculator priceCalculator;
 
     public Stock(SongData songData) {
-        // Create a PriceCalculator for calculating the price from variables
-        // taken out of the SongData
-        this.priceCalculator = new PriceCalculator(songData);
-        prices = priceCalculator.getPriceArray();
+        // Use a PriceFunction to calculate the prices.
+        PriceFunction fn = new UptrendWithUpperBound();
+
+        prices = new double[songData.getNumIntervals()];
+
+        for (int i = 0; i < prices.length; i++) {
+            TimeInterval interval = songData.getTimeInterval(i);
+
+            double x = interval.getValueOf("high_freq_values");
+            double y = interval.getValueOf("low_freq_values");
+
+            prices[i] = fn.getPrice(x, y, 299);
+        }
     }
 
     public double getPrice(int currentTime) {
