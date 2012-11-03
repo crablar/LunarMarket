@@ -1,6 +1,7 @@
-package plain_java;
+package com.jeffmeyerson.moonstocks.pojos;
 
 import java.util.ArrayList;
+
 
 /**
  * The ChartFrame class. Describes a frame of data for the ChartView to
@@ -14,29 +15,20 @@ import java.util.ArrayList;
  */
 public class ChartFrame {
 
-	private final int NUM_POINTS_ALLOWED_IN_FRAME = 100;
 	private ArrayList<DataPoint> dataPoints;
 	private ArrayList<Integer> roundedPrices;
 	private ChartFrame nextFrame;
-	private boolean dataPointWillBeDeletedFromViewWhenFrameAdvances;
-	private int numPointsDefined;
 	private boolean deprecatedStatus;
-
 
 	public ChartFrame() {
 		roundedPrices = new ArrayList<Integer>();
-		numPointsDefined = 0;
-		dataPointWillBeDeletedFromViewWhenFrameAdvances = false;
 		dataPoints = new ArrayList<DataPoint>();
 		deprecatedStatus = true;
 	}
 
 	public void appendDataPoint(DataPoint dataPoint) {
 		dataPoints.add(dataPoint);
-		roundedPrices.add(new Integer(dataPoint.getRoundedPrice()));
-		numPointsDefined++;
-		if(numPointsDefined == NUM_POINTS_ALLOWED_IN_FRAME)
-			dataPointWillBeDeletedFromViewWhenFrameAdvances = true;
+		roundedPrices.add(Integer.valueOf(dataPoint.getRoundedPrice()));
 	}
 	
 	/**
@@ -46,7 +38,6 @@ public class ChartFrame {
 	public int getNumPointsDefined() {
 		return dataPoints.size();
 	}
-
 
 	public ArrayList<DataPoint> getDataPoints() {
 		return dataPoints;

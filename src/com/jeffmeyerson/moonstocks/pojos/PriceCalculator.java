@@ -1,8 +1,8 @@
-package plain_java;
+package com.jeffmeyerson.moonstocks.pojos;
 
 import java.text.DecimalFormat;
 
-import PriceFunctions.UptrendWithUpperBound;
+
 
 /**
  * @author jeffreymeyerson

@@ -1,4 +1,6 @@
-package com.jeffmeyerson.moonstocks;
+package com.jeffmeyerson.moonstocks.activities;
+
+import com.jeffmeyerson.moonstocks.R;
 
 import android.app.Activity;
 import android.content.Context;

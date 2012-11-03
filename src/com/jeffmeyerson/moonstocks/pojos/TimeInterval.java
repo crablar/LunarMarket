@@ -1,4 +1,4 @@
-package plain_java;
+package com.jeffmeyerson.moonstocks.pojos;
 
 import java.util.HashMap;
 
@@ -10,10 +10,6 @@ import java.util.HashMap;
  *
  */
 public class TimeInterval {
-		
-	// This is the same entity as the i in t(i) in my notation
-	private final int INTERVAL_NUMBER;
-	private final int INTERVAL_LENGTH_IN_MS;
 
 	// Map from properties to their values in this Time Interval		
 	private HashMap<String, Double> properties;
@@ -26,9 +22,7 @@ public class TimeInterval {
 	 *
 	 */
 	
-	public TimeInterval (int intervalNumber, int intervalLength){
-		this.INTERVAL_NUMBER = intervalNumber;
-		this.INTERVAL_LENGTH_IN_MS = intervalLength;
+	public TimeInterval (){
 		properties = new HashMap<String, Double>();
 	}
 

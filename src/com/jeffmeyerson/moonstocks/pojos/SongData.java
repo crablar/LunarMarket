@@ -1,4 +1,4 @@
-package plain_java;
+package com.jeffmeyerson.moonstocks.pojos;
 import java.util.Set;
 
 /**
@@ -30,7 +30,7 @@ public class SongData {
     	int numTimeIntervals = songDataProcessor.getNumTimeIntervals();
     	timeIntervals = new TimeInterval[numTimeIntervals];
     	for(int i = 0; i < numTimeIntervals; i++){
-			timeIntervals[i] = new TimeInterval(i, 2000);
+			timeIntervals[i] = new TimeInterval();
     	}
     	    	
     	// For each property, iterate through the time intervals and describe that property at that time interval

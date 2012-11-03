@@ -1,9 +1,12 @@
-package com.jeffmeyerson.moonstocks;
+package com.jeffmeyerson.moonstocks.activities;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import plain_java.Player;
+import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.pojos.CompanyModel;
+import com.jeffmeyerson.moonstocks.pojos.Player;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +18,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -54,10 +56,13 @@ public class MainActivity extends Activity {
 		
 		// Check for a persisted player
 		Bundle extras = this.getIntent().getExtras();
-		if(extras != null && extras.containsKey("EXTRA_PLAYER"))
+		if (extras != null && extras.containsKey("EXTRA_PLAYER")) {
 			extras.get("EXTRA_PLAYER");
-		else
-			player = new Player(STARTING_MONEY, "Jeff");
+		} else {
+			player = new Player();
+			player.setBalance(STARTING_MONEY);
+			player.setName("Jeff");
+		}
 
 		newsStandButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {

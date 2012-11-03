@@ -1,20 +1,17 @@
-package com.jeffmeyerson.moonstocks;
+package com.jeffmeyerson.moonstocks.views;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import plain_java.ChartFrame;
-import plain_java.DataPoint;
+import com.jeffmeyerson.moonstocks.pojos.ChartFrame;
+
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
-class ChartView extends View {
+public class ChartView extends View {
 
 	public static final int NUM_POINTS_ALLOWED_IN_FRAME = 100;
 

@@ -1,4 +1,4 @@
-package plain_java;
+package com.jeffmeyerson.moonstocks.pojos;
 /**
  * The DataPoint class.  Used to represent points within a ChartFrame.
  * 

@@ -1,12 +1,13 @@
-package com.jeffmeyerson.moonstocks;
+package com.jeffmeyerson.moonstocks.activities;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import com.jeffmeyerson.moonstocks.R;
+
 import android.app.Activity;
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 
 public class NewsActivity extends Activity {
 
-	private Context context = this;
 	private MediaPlayer mp;
 
 	@Override

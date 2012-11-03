@@ -1,4 +1,4 @@
-package com.jeffmeyerson.moonstocks;
+package com.jeffmeyerson.moonstocks.pojos;
 
 /**
  * The CompanyModel class. A POJO for representing some basic data about a

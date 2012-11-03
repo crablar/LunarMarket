@@ -1,4 +1,4 @@
-package com.jeffmeyerson.moonstocks;
+package com.jeffmeyerson.moonstocks.activities;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -6,14 +6,16 @@ import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import plain_java.ChartFrame;
-import plain_java.Player;
-import plain_java.SongData;
-import plain_java.SongDataProcessor;
-import plain_java.Stock;
+import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.pojos.Player;
+import com.jeffmeyerson.moonstocks.pojos.ChartFrame;
+import com.jeffmeyerson.moonstocks.pojos.SongData;
+import com.jeffmeyerson.moonstocks.pojos.SongDataProcessor;
+import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.views.ChartView;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,7 +59,6 @@ public class StockActivity extends Activity {
 	private String stockTicker;
 	private DecimalFormat twoDForm = new DecimalFormat("#.00");
 	private ChartFrame currentFrame;
-	private int currentFrameNumber;
 	
 	private Runnable priceFlux;
 
@@ -70,8 +71,7 @@ public class StockActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		
 		// Get the resources
-		final Resources res = getResources();
-		//final int timeBetweenPriceChangeMs = res.getInteger(R.string.time_between_price_change_ms);
+        // TODO: pull this from config rather than hardcoding it
 		final int timeBetweenPriceChangeMs = 320;
 
 		stockTickerView = (TextView) findViewById(R.id.stock_ticker_text);
@@ -85,8 +85,9 @@ public class StockActivity extends Activity {
 		sellButton = (Button) findViewById(R.id.sell_button);
 
 		// TODO: Get the Player object from our activity
-		// this.getIntent().getComponent().getClass();
-		player = new Player(1000, "Jeff");
+		player = new Player();
+		player.setBalance(1000);
+		player.setName("Jeff");
 
 		// TODO: Get the ticker symbol
 		if (extras != null) {
@@ -192,7 +193,7 @@ public class StockActivity extends Activity {
 			public void onClick(View v) {
 				// Buy!!!!
 
-				player.buy(stockTicker, price);
+				player.buy(stockTicker, 1, price);
 
 				// Get and set the player's updated balance
 				balance = roundToTwoPlaces(player.getBalance());
@@ -207,7 +208,7 @@ public class StockActivity extends Activity {
 			public void onClick(View v) {
 
 				// Sell!!!!
-				player.sell(stockTicker, price);
+				player.sell(stockTicker, 1, price);
 
 				// Get and set the player's updated balance
 				balance = roundToTwoPlaces(player.getBalance());
@@ -253,7 +254,7 @@ public class StockActivity extends Activity {
 	}
 
 	public double roundToTwoPlaces(double rawPrice) {
-		Double result = new Double(twoDForm.format(rawPrice));
+		Double result = Double.valueOf(twoDForm.format(rawPrice));
 		return result.doubleValue();
 	}
 	

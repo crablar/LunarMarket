@@ -1,8 +1,7 @@
-package plain_java;
+package com.jeffmeyerson.moonstocks.pojos;
 
 import java.util.ArrayList;
 
-import android.util.Log;
 
 /**
  * @author jeffreymeyerson

@@ -1,6 +1,5 @@
-package PriceFunctions;
+package com.jeffmeyerson.moonstocks.pojos;
 
-import plain_java.PriceFunction;
 
 /**
 *

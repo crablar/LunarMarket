@@ -1,4 +1,4 @@
-package plain_java;
+package com.jeffmeyerson.moonstocks.pojos;
 
 import java.io.BufferedReader;
 import java.io.IOException;
