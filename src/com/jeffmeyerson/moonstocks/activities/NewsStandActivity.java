@@ -32,7 +32,6 @@ public class NewsStandActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_stand);
-		System.out.println("HELLO");
 
 		lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
 		carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
