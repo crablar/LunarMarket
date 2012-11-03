@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.pojos.Player;
@@ -126,14 +126,10 @@ public class StockActivity extends Activity {
 
         stockPriceView.setText("$" + price);
 
-        // Create ArrayList of ChartFrames
-        ArrayList<ChartFrame> chartFrames = stock.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
+        // Create List of ChartFrames
+        List<ChartFrame> chartFrames = stock.createChartFrames(MAX_NUMBER_OF_DATA_POINTS_FRAMED);
 
-        currentFrame = chartFrames.get(0);
-
-        currentFrame.setDeprecatedStatus(false);
-
-        chartView.setCurrentFrame(currentFrame);
+        //chartView.setCurrentFrame(currentFrame);
 
         // The function that repeatedly updates the stock price and the ChartView
         priceFlux = new Runnable() {
@@ -143,17 +139,13 @@ public class StockActivity extends Activity {
                 price = roundToTwoPlaces(rawPrice);
                 stockPriceView.setText("$" + price);
 
+                chartView.addPoint(Float.valueOf(twoDForm.format(rawPrice)));
+
                 // Invalidate the StockPriceView so that it can be reset
                 stockPriceView.invalidate();
 
                 // Invalidate the ChartView so that it can be reset
                 chartView.invalidate();
-
-                currentFrame.setDeprecatedStatus(true);
-
-                currentFrame = currentFrame.getNextFrame();
-
-                chartView.setCurrentFrame(currentFrame);
 
                 // Put this function on the message queue
                 mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);

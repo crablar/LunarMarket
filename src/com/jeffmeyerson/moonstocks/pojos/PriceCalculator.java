@@ -7,7 +7,6 @@ import java.text.DecimalFormat;
  * 
  *         The PriceCalculator class. This class is responsible for calculating
  *         the prices over time for a Stock using a SongData.
- * 
  */
 public class PriceCalculator {
 	private DecimalFormat twoDForm = new DecimalFormat("#.00");

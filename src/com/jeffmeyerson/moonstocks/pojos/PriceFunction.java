@@ -8,7 +8,7 @@ package com.jeffmeyerson.moonstocks.pojos;
  *
  */
 public interface PriceFunction {
-		
-	double getPrice(double x, double y, int upperBound);
-    
+
+    double getPrice(double x, double y, int upperBound);
+
 }

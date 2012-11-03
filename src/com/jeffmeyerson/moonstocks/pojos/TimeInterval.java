@@ -1,6 +1,7 @@
 package com.jeffmeyerson.moonstocks.pojos;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author jeffreymeyerson
@@ -12,7 +13,7 @@ import java.util.HashMap;
 public class TimeInterval {
 
 	// Map from properties to their values in this Time Interval		
-	private HashMap<String, Double> properties;
+	private Map<String, Double> properties;
 
 	/**
 	 *
@@ -22,7 +23,7 @@ public class TimeInterval {
 	 *
 	 */
 	
-	public TimeInterval (){
+	public TimeInterval() {
 		properties = new HashMap<String, Double>();
 	}
 
@@ -34,7 +35,7 @@ public class TimeInterval {
 		return properties.get(key);
 	}
 	
-	public HashMap<String, Double> getProperties(){
+	public Map<String, Double> getProperties(){
 		return properties;
 	}
    	

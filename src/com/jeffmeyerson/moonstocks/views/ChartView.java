@@ -1,8 +1,7 @@
 package com.jeffmeyerson.moonstocks.views;
 
-import java.util.ArrayList;
-
-import com.jeffmeyerson.moonstocks.pojos.ChartFrame;
+import java.util.LinkedList;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,55 +12,60 @@ import android.view.View;
 
 public class ChartView extends View {
 
-	public static final int NUM_POINTS_ALLOWED_IN_FRAME = 100;
+    // constants
+    private static final int MAX_POINTS = 100;
+    private static final int SCREEN_HEIGHT = 300;
+    private static final float SCALE = 3;// getWidth() / 20;
 
-	private static final int SCREEN_HEIGHT = 300;
-	final float scale = 3;// getWidth() / 20;
-	private Paint paint;
+    // member variables
+    private List<Float> points;
+    private Paint paint;
 
-	private ChartFrame currentFrame;
+    void initialize() {
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        points = new LinkedList<Float>();
+    }
 
-	public void setCurrentFrame(ChartFrame frame) {
-		currentFrame = frame;
-	}
+    public ChartView(Context context) {
+        super(context);
+        initialize();
+    }
 
-	void initialize() {
-		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	}
+    public ChartView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initialize();
+    }
 
-	public ChartView(Context context) {
-		super(context);
-		initialize();
-	}
+    public ChartView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initialize();
+    }
 
-	public ChartView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		initialize();
-	}
+    /**
+     * Adds a point to the ChartView. This automatically scrolls the ChartView
+     * and deletes the point that falls off the edge.
+     * @param point
+     */
+    public void addPoint(Float point) {
+        points.add(point);
+        if (points.size() > MAX_POINTS) {
+            points.remove(0);
+        }
+    }
 
-	public ChartView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		initialize();
-	}
+    @Override
+    public void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
 
-	@Override
-	public void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
+        paint.setStrokeWidth(3);
 
-		// Points to be drawn on the canvas
-		ArrayList<Integer> integerPoints = currentFrame.getRoundedPrices();
-		
-		paint.setStrokeWidth(3);
-
-		for (int i = 1; i < integerPoints.size() && i < NUM_POINTS_ALLOWED_IN_FRAME; i++) {
-			if (integerPoints.get(i - 1) < integerPoints.get(i)) {
-				paint.setColor(Color.GREEN);
-			} else {
-				paint.setColor(Color.RED);
-			}
-			canvas.drawLine((i - 1) * scale, SCREEN_HEIGHT - integerPoints.get(i - 1), i
-					* scale, SCREEN_HEIGHT - integerPoints.get(i), paint);
-		}
-
-	}
+        for (int i = 1; i < points.size(); i++) {
+            if (points.get(i - 1) < points.get(i)) {
+                paint.setColor(Color.GREEN);
+            } else {
+                paint.setColor(Color.RED);
+            }
+            canvas.drawLine((i - 1) * SCALE, SCREEN_HEIGHT - points.get(i - 1), i * SCALE, SCREEN_HEIGHT - points.get(i), paint);
+        }
+    }
 }
