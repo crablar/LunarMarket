@@ -1,4 +1,4 @@
-package com.jeffmeyerson.moonstocks.pojos;
+package com.jeffmeyerson.moonstocks.pricefunctions;
 
 
 /**
@@ -9,7 +9,7 @@ package com.jeffmeyerson.moonstocks.pojos;
 * frequency (x) and negatively correlated with low frequency (y).
 *
 **/
-public class UptrendWithUpperBound implements PriceFunction{
+public class UptrendWithUpperBound implements PriceFunction {
 	
 	public UptrendWithUpperBound(){}
 	

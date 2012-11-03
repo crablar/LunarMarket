@@ -1,4 +1,4 @@
-package com.jeffmeyerson.moonstocks.pojos;
+package com.jeffmeyerson.moonstocks.pricefunctions;
 
 /**
  * @author jeffreymeyerson

@@ -1,11 +1,13 @@
 package com.jeffmeyerson.moonstocks.pojos;
 
+import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
+import com.jeffmeyerson.moonstocks.pricefunctions.UptrendWithUpperBound;
+
 /**
  * @author jeffreymeyerson
  * 
  *         The Stock class. This class maps a stock like a finite state machine
  *         with each state being represented by a time interval.
- * 
  */
 public class Stock {
 
