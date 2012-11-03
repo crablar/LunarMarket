@@ -10,9 +10,15 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -27,10 +33,8 @@ public class MainActivity extends Activity {
 	// The object representing the person playing the game
 	private Player player;
 
-	// Buttons for companies
-	private Button evilButton;
-	private Button bdstButton;
-	private Button wmcButton;
+    // Navigation buttons
+    // TODO: switch to using ActionBar for navigation between activities
 	private Button newsStandButton;
 
 	@Override
@@ -41,13 +45,9 @@ public class MainActivity extends Activity {
 		// Create CompanyModels
 		List<CompanyModel> companyModels = getCompanyModels();
 
+        // Start playing music
 		mp = MediaPlayer.create(this, R.raw.main_menu);
 		mp.setLooping(true);
-
-		// Initialize company buttons
-		evilButton = (Button) findViewById(R.id.evilButton);
-		bdstButton = (Button) findViewById(R.id.bdstButton);
-		wmcButton = (Button) findViewById(R.id.wmcButton);
 
 		// Initialize news button
 		newsStandButton = (Button) findViewById(R.id.newsStandButton);
@@ -59,40 +59,48 @@ public class MainActivity extends Activity {
 		else
 			player = new Player(STARTING_MONEY, "Jeff");
 
-
-		// Add onclick listeners to existing buttons
-		evilButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent(context, StockActivity.class);
-				intent.putExtra("EXTRA_TICKER_ID", "EVIL");
-				startActivity(intent);
-			}
-		});
-		// Add onclick listeners to existing buttons
-		bdstButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent(context, StockActivity.class);
-				intent.putExtra("EXTRA_TICKER_ID", "BDST");
-				startActivity(intent);
-			}
-		});
-		// Add onclick listeners to existing buttons
-		wmcButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Intent intent = new Intent(context, StockActivity.class);
-				intent.putExtra("EXTRA_TICKER_ID", "WMC");
-				startActivity(intent);
-			}
-		});
-
 		newsStandButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(context, NewsStandActivity.class);
-				System.out.println("hllllo");
 				startActivity(intent);
 			}
 
 		});
+
+        // Iterate through the companies on the market and add a row to the table for each one.
+        TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
+        for (final CompanyModel cm : companyModels) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+            // Add a button to take the player to the StockActivity for that company.
+            Button companyButton = new Button(this);
+            companyButton.setText(cm.getTickerName());
+            companyButton.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, StockActivity.class);
+                    intent.putExtra("EXTRA_TICKER_ID", cm.getTickerName());
+                    startActivity(intent);
+                }
+            });
+            row.addView(companyButton);
+
+            TextView stockPrice = new TextView(this);
+            stockPrice.setText("$7");   // TODO: hardcode this for now until stock prices are tracked
+            stockPrice.setGravity(Gravity.CENTER);
+            stockPrice.setTextAppearance(this, android.R.style.TextAppearance_Large);
+            row.addView(stockPrice);
+
+            TextView sharesOwned = new TextView(this);
+            sharesOwned.setText("1");
+            // TODO: this crashes the program for some reason
+            //sharesOwned.setText(player.getSharesOwned(cm.getTickerName()));
+            sharesOwned.setGravity(Gravity.CENTER);
+            sharesOwned.setTextAppearance(this, android.R.style.TextAppearance_Large);
+            row.addView(sharesOwned);
+
+            marketTable.addView(row, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        }
 
 	}
 
