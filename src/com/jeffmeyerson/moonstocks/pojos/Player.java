@@ -86,4 +86,8 @@ public class Player {
     public void setName(String name) {
         playerName = name;
     }
+    
+    public String toString(){
+    	return "Name: " + playerName + " balance: " + balance;
+    }
 }

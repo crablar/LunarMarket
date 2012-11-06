@@ -49,6 +49,12 @@ public class NewsActivity extends Activity {
 					R.raw.buy_stock_not_globus);
 			mp = MediaPlayer.create(this, R.raw.dotslashgo);
 		}
+		if (articleName.equals("freeze_and_thaw")) {
+			inputStream = this.getResources().openRawResource(
+					R.raw.freeze_and_thaw);
+			mp = MediaPlayer.create(this, R.raw.hardtymzcafe);
+		}
+		
 		mp.setLooping(true);
 
 		// Create a BufferedReader for the InputStream

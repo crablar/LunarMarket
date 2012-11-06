@@ -23,6 +23,8 @@ public class NewsStandActivity extends Activity {
 	private Button lunarMarketOpensButton;
 	private Button carefulWithTheMoonButton;
 	private Button buyStockNotGlobusButton;
+	private Button freezeAndThawButton;
+
 	private MediaPlayer mp;
 	private long scrollTime = 20000;
 	private long scrollTimeInterval = 50;
@@ -36,7 +38,9 @@ public class NewsStandActivity extends Activity {
 		lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
 		carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
 		buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
+		freezeAndThawButton = (Button) findViewById(R.id.freeze_and_thaw_button);
 
+		
 		mp = MediaPlayer.create(this, R.raw.fxxx);
 		mp.setLooping(true);
 		
@@ -97,6 +101,14 @@ public class NewsStandActivity extends Activity {
 					public void onClick(View v) {
 						Intent intent = new Intent(context, NewsActivity.class);
 						intent.putExtra("EXTRA_ARTICLE_NAME", "buy_stock_not_globus");
+						startActivity(intent);
+					}
+				});
+				
+				freezeAndThawButton.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						Intent intent = new Intent(context, NewsActivity.class);
+						intent.putExtra("EXTRA_ARTICLE_NAME", "freeze_and_thaw");
 						startActivity(intent);
 					}
 				});

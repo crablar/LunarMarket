@@ -105,6 +105,28 @@
 
             </FrameLayout>
         </TableRow>
+        
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+
+                <Button
+                    android:id="@+id/freeze_and_thaw_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="left|center_vertical|center_horizontal"
+                    android:text="The Freeze and the Thaw" />
+
+            </FrameLayout>
+        </TableRow>
+        
     </TableLayout>
 
     <RelativeLayout
