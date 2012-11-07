@@ -1,16 +1,15 @@
 package com.jeffmeyerson.moonstocks.activities;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
-
-import com.jeffmeyerson.moonstocks.R;
-import com.jeffmeyerson.moonstocks.pojos.Player;
-import com.jeffmeyerson.moonstocks.pojos.SongData;
-import com.jeffmeyerson.moonstocks.pojos.SongDataProcessor;
-import com.jeffmeyerson.moonstocks.pojos.Stock;
-import com.jeffmeyerson.moonstocks.views.ChartView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,6 +22,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.pojos.Player;
+import com.jeffmeyerson.moonstocks.pojos.SongData;
+import com.jeffmeyerson.moonstocks.pojos.SongDataProcessor;
+import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.views.ChartView;
 
 /**
  * @author jeffreymeyerson
@@ -68,15 +74,13 @@ public class StockActivity extends Activity {
 
         chartView = (ChartView) findViewById(R.id.chart);
 
-        // TODO: Get the Player object from our activity
-        player = new Player();
-        player.setBalance(1000);
-        player.setName("Jeff");
+        // TODO: Get the Player object from our activity: DONE
+        player = (Player) deserializeObject(extras.getByteArray("player"));
+        ((TextView) findViewById(R.id.balance_view)).setText("" + player.getBalance());
+//        Log.d("onCreate", "player: " + player.getName() + " balance: " + player.getBalance());
 
-        // TODO: Get the ticker symbol
-        if (extras != null) {
-            stockTicker = extras.getString("EXTRA_TICKER_ID");
-        }
+        // TODO: Get the ticker symbol :DONE
+        stockTicker = extras.getString("EXTRA_TICKER_ID");
 
         // Set the ticker name in the TextView
         TextView stockTickerView = (TextView) findViewById(R.id.stock_ticker_text);
@@ -185,6 +189,67 @@ public class StockActivity extends Activity {
         });
 
     }
+    
+    public static byte[] serializeObject(Object o) { 
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+     
+        try { 
+          ObjectOutput out = new ObjectOutputStream(bos); 
+          out.writeObject(o); 
+          out.close(); 
+     
+          // Get the bytes of the serialized object 
+          byte[] buf = bos.toByteArray(); 
+     
+          return buf; 
+        } catch(IOException ioe) { 
+          Log.e("serializeObject", "error", ioe); 
+     
+          return null; 
+        } 
+      } 
+    
+    public static Object deserializeObject(byte[] b) { 
+        try { 
+          ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(b)); 
+          Object object = in.readObject(); 
+          in.close(); 
+     
+          return object; 
+        } catch(ClassNotFoundException cnfe) { 
+          Log.e("deserializeObject", "class not found error", cnfe); 
+     
+          return null; 
+        } catch(IOException ioe) { 
+          Log.e("deserializeObject", "io error", ioe); 
+     
+          return null; 
+        } 
+      } 
+    
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+  	super.onSaveInstanceState(outState);
+  
+  	outState.putByteArray("player", serializeObject(player));
+  	outState.putString("stock", stockTicker);
+  	
+//  	outState.putDouble("balance", player.getBalance());
+//  	outState.putInt("shares", player.getSharesOwned(stockTicker));
+  	
+  }
+  
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+	  super.onRestoreInstanceState(savedInstanceState);
+	  
+	  player = (Player) deserializeObject(savedInstanceState.getByteArray("player"));
+	  stockTicker = savedInstanceState.getString("stock");
+  
+//  	outState.putDouble("balance", player.getBalance());
+//  	outState.putInt("shares", player.getSharesOwned(stockTicker));
+  	
+  }
 
     @Override
     protected void onResume() {

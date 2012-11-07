@@ -1,5 +1,7 @@
 package com.jeffmeyerson.moonstocks.pojos;
 
+import java.io.Serializable;
+
 /**
  * The Company class. A POJO for representing some basic data about a
  * company needed to form the StockActivity.
@@ -7,7 +9,7 @@ package com.jeffmeyerson.moonstocks.pojos;
  * @author jeffreymeyerson
  * 
  */
-public class Company {
+public class Company implements Serializable{
 
     private final String ticker;
     private final String name;

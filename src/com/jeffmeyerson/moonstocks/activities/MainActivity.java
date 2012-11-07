@@ -1,17 +1,20 @@
 package com.jeffmeyerson.moonstocks.activities;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.jeffmeyerson.moonstocks.R;
-import com.jeffmeyerson.moonstocks.pojos.Company;
-import com.jeffmeyerson.moonstocks.pojos.Player;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,12 +24,16 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.pojos.Company;
+import com.jeffmeyerson.moonstocks.pojos.Player;
+
 public class MainActivity extends Activity {
 
     private Context context = this;
 
     // The amount of money the player has upon beginning a new game
-    private final int STARTING_MONEY = 1000;
+    private final int STARTING_MONEY = 5000;
 
     // Plays launchpad music
     private MediaPlayer mp;
@@ -58,9 +65,11 @@ public class MainActivity extends Activity {
         if (extras != null && extras.containsKey("EXTRA_PLAYER")) {
             extras.get("EXTRA_PLAYER");
         } else {
+        	Log.d("onCreate", "creating new player");
             player = new Player();
             player.setBalance(STARTING_MONEY);
             player.setName("Jeff");
+            //this.getIntent().putExtra("player", serializeObject(player));
         }
 
         newsStandButton.setOnClickListener(new OnClickListener() {
@@ -83,6 +92,7 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
                     Intent intent = new Intent(context, StockActivity.class);
                     intent.putExtra("EXTRA_TICKER_ID", c.getTicker());
+                    intent.putExtra("player", serializeObject(player));
                     startActivity(intent);
                 }
             });
@@ -123,6 +133,52 @@ public class MainActivity extends Activity {
         }
         return result;
     }
+    
+    public static byte[] serializeObject(Object o) { 
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+     
+        try { 
+          ObjectOutput out = new ObjectOutputStream(bos); 
+          out.writeObject(o); 
+          out.close(); 
+     
+          // Get the bytes of the serialized object 
+          byte[] buf = bos.toByteArray(); 
+     
+          return buf; 
+        } catch(IOException ioe) { 
+          Log.e("serializeObject", "error", ioe); 
+     
+          return null; 
+        } 
+      }
+    
+    public static Object deserializeObject(byte[] b) { 
+        try { 
+          ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(b)); 
+          Object object = in.readObject(); 
+          in.close(); 
+     
+          return object; 
+        } catch(ClassNotFoundException cnfe) { 
+          Log.e("deserializeObject", "class not found error", cnfe); 
+     
+          return null; 
+        } catch(IOException ioe) { 
+          Log.e("deserializeObject", "io error", ioe); 
+     
+          return null; 
+        } 
+      }
+//    
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//    	super.onSaveInstanceState(outState);
+//    
+//    	outState.putByteArray("companies", serializeObject(getCompanies()));
+//    	outState.putString("player", player.getName());
+//    	
+//    }
 
     @Override
     protected void onResume() {

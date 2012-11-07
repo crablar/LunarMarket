@@ -1,5 +1,6 @@
 package com.jeffmeyerson.moonstocks.pojos;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import java.util.Map;
  * The Player class.  This class is responsible for keeping all the data of a user.
  * 
  */
-public class Player {
+public class Player implements Serializable{
 
     private String playerName;
     private double balance;
