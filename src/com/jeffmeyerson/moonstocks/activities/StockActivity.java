@@ -74,12 +74,11 @@ public class StockActivity extends Activity {
 
         chartView = (ChartView) findViewById(R.id.chart);
 
-        // TODO: Get the Player object from our activity: DONE
+        //Get the Player object from our activity
         player = (Player) deserializeObject(extras.getByteArray("player"));
         ((TextView) findViewById(R.id.balance_view)).setText("" + player.getBalance());
-//        Log.d("onCreate", "player: " + player.getName() + " balance: " + player.getBalance());
 
-        // TODO: Get the ticker symbol :DONE
+        //Get the ticker symbol
         stockTicker = extras.getString("EXTRA_TICKER_ID");
 
         // Set the ticker name in the TextView
@@ -151,6 +150,10 @@ public class StockActivity extends Activity {
 
         // Begin running the function
         mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);
+        
+        //initialize the stock shares owned
+        int sharesOwned = player.getSharesOwned(stockTicker);
+        sharesOwnedView.setText(sharesOwned + "");
 
         // Initialize buttons
         Button buyButton = (Button) findViewById(R.id.buy_button);
@@ -278,8 +281,13 @@ public class StockActivity extends Activity {
     }
 
     public void quitToMarket(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, MainActivity.class);
+//        
+//        startActivity(intent);
+    	Intent returnIntent = new Intent();
+    	returnIntent.putExtra("player", serializeObject(player));
+    	setResult(RESULT_OK,returnIntent);     
+    	finish();
     }
 
     public double roundToTwoPlaces(double rawPrice) {

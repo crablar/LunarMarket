@@ -54,7 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/shares_owned_text"
         android:layout_below="@+id/shares_owned_text"
-        android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <com.jeffmeyerson.moonstocks.views.ChartView

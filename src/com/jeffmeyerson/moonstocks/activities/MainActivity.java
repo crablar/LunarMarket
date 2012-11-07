@@ -31,7 +31,7 @@ import com.jeffmeyerson.moonstocks.pojos.Player;
 public class MainActivity extends Activity {
 
     private Context context = this;
-
+    
     // The amount of money the player has upon beginning a new game
     private final int STARTING_MONEY = 5000;
 
@@ -49,9 +49,8 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        // Load company data from XML.
-        List<Company> companies = getCompanies();
+        
+        Log.d("Running", "onCreate");
 
         // Start playing music
         mp = MediaPlayer.create(this, R.raw.main_menu);
@@ -65,14 +64,16 @@ public class MainActivity extends Activity {
         if (extras != null && extras.containsKey("EXTRA_PLAYER")) {
             extras.get("EXTRA_PLAYER");
         } else {
-        	Log.d("onCreate", "creating new player");
+        	//Log.d("onCreate", "creating new player");
             player = new Player();
             player.setBalance(STARTING_MONEY);
             player.setName("Jeff");
-            //this.getIntent().putExtra("player", serializeObject(player));
         }
 
-        newsStandButton.setOnClickListener(new OnClickListener() {
+     // Load company data from XML.
+        List<Company> companies = getCompanies();
+    	
+    	newsStandButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewsStandActivity.class);
                 startActivity(intent);
@@ -93,7 +94,7 @@ public class MainActivity extends Activity {
                     Intent intent = new Intent(context, StockActivity.class);
                     intent.putExtra("EXTRA_TICKER_ID", c.getTicker());
                     intent.putExtra("player", serializeObject(player));
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);                    
                 }
             });
             row.addView(companyButton);
@@ -184,6 +185,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         mp.start();
+        Log.d("Running", "onResume");
     }
 
     @Override
@@ -197,4 +199,41 @@ public class MainActivity extends Activity {
         super.onDestroy();
         mp.release();
     }
+    
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    	if (requestCode == 1) {
+
+    	     if(resultCode == RESULT_OK){
+
+    	      updateTable(data);
+    	      
+    	     }
+
+    	     if (resultCode == RESULT_CANCELED) {
+
+    	     //Write your code on no result return 
+
+    	     }
+    	
+    	}//onAcrivityResult
+    }
+
+	private void updateTable(Intent data) {
+		// TODO Auto-generated method stub
+		TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
+		
+		player = (Player) deserializeObject(data.getByteArrayExtra("player"));
+		
+		for(int i = 1; i <= getCompanies().size(); i++){
+			TableRow row = (TableRow) marketTable.getChildAt(i); //gets the row
+			String company = (String) ((Button) row.getChildAt(0)).getText();
+			Log.d("market", "market " + i + " name: " + company);
+			Log.d("market", "market " + i + " shares: " + ((TextView) row.getChildAt(2)).getText().toString());
+			Log.d("market", "market " + i + " updated shares: " + (player.getSharesOwned(company)));
+			((TextView) row.getChildAt(2)).setText(String.valueOf(player.getSharesOwned(company)));
+		}
+		
+	}
+	
 }
