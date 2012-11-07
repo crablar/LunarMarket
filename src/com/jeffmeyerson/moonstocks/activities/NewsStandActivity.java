@@ -24,6 +24,7 @@ public class NewsStandActivity extends Activity {
     private Button carefulWithTheMoonButton;
     private Button buyStockNotGlobusButton;
     private Button freezeAndThawButton;
+    private Button bankInitializationButton;
 
     private MediaPlayer mp;
     private long scrollTime = 20000;
@@ -35,7 +36,7 @@ public class NewsStandActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_stand);
 
-        mp = MediaPlayer.create(this, R.raw.fxxx);
+        mp = MediaPlayer.create(this, R.raw.austin_hambrick);
         mp.setLooping(true);
 
         // Set up the scrolling stock ticker at the top.
@@ -48,7 +49,9 @@ public class NewsStandActivity extends Activity {
         carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
         buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
         freezeAndThawButton = (Button) findViewById(R.id.freeze_and_thaw_button);
+        bankInitializationButton = (Button) findViewById(R.id.bank_initialization_button);
 
+        
         lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewsActivity.class);
@@ -75,6 +78,13 @@ public class NewsStandActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewsActivity.class);
                 intent.putExtra("EXTRA_ARTICLE_NAME", "freeze_and_thaw");
+                startActivity(intent);
+            }
+        });
+        bankInitializationButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(context, NewsActivity.class);
+                intent.putExtra("EXTRA_ARTICLE_NAME", "bank_initialization");
                 startActivity(intent);
             }
         });

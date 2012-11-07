@@ -1,6 +1,8 @@
 Bloomberg Weekend Edition
-Financial Fiends: Profiles of the World's Most Successful Banks
 October 12, 2078
+
+Bank Initialization
+
 
 Last year, Everline Financial's byzantine transaction system was discovered to have a rather serious bug. The company's massive server architecture in Antarctica was experiencing unexplained load balancing issues, implying an increase in the amount of data being sent to the servers from Everline's main offices in New York.  The unstructured data store in Antarctica had long since become too unstructured for human engineers to understand exactly how the RAID scheme was keeping data intact, but the automated battery of test queries never returned anything but 100% green results.  Until the load balancing issues, the state of disarray was a low-profile issue because it didn't harm performance.
 
