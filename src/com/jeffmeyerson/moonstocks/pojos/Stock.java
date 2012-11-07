@@ -1,7 +1,6 @@
 package com.jeffmeyerson.moonstocks.pojos;
 
-import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
-import com.jeffmeyerson.moonstocks.pricefunctions.UptrendWithUpperBound;
+import com.jeffmeyerson.moonstocks.pricefunctions.WorkaroundFunction;
 
 /**
  * @author jeffreymeyerson
@@ -15,17 +14,30 @@ public class Stock {
 
     public Stock(SongData songData) {
         // Use a PriceFunction to calculate the prices.
-        PriceFunction fn = new UptrendWithUpperBound();
+        WorkaroundFunction fn = new WorkaroundFunction();
 
         prices = new double[songData.getNumIntervals()];
+        
+        // TODO: Calculate price at t(0)
+        TimeInterval interval = songData.getTimeInterval(0);
+        double x = interval.getValueOf("high_freq_values");
+        double y = interval.getValueOf("low_freq_values");
+        double averageFrequency = x * y / 2;
+        double previousAverageFrequency = 0.0;
+        
+        prices[0] = 150.0;
+        
+        for (int i = 1; i < prices.length; i++) {
+            interval = songData.getTimeInterval(i);
 
-        for (int i = 0; i < prices.length; i++) {
-            TimeInterval interval = songData.getTimeInterval(i);
+            x = interval.getValueOf("high_freq_values");
+            y = interval.getValueOf("low_freq_values");
+            
+            previousAverageFrequency = averageFrequency;
+            averageFrequency = x * y / 2;
 
-            double x = interval.getValueOf("high_freq_values");
-            double y = interval.getValueOf("low_freq_values");
-
-            prices[i] = fn.getPrice(x, y, 299);
+            prices[i] = fn.getPrice(prices[i - 1], previousAverageFrequency,
+        			averageFrequency, 150, 299);
         }
     }
 
