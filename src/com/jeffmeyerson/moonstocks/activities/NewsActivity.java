@@ -54,6 +54,11 @@ public class NewsActivity extends Activity {
 					R.raw.freeze_and_thaw);
 			mp = MediaPlayer.create(this, R.raw.hardtymzcafe);
 		}
+		if (articleName.equals("bank_initialization")) {
+			inputStream = this.getResources().openRawResource(
+					R.raw.bank_initialization);
+			mp = MediaPlayer.create(this, R.raw.fxxx);
+		}
 		
 		mp.setLooping(true);
 
