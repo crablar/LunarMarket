@@ -20,6 +20,8 @@ public class NewsStandActivity extends Activity {
 
     private Context context = this;
 
+    private Button backButton;
+    
     private Button lunarMarketOpensButton;
     private Button carefulWithTheMoonButton;
     private Button buyStockNotGlobusButton;
@@ -132,4 +134,11 @@ public class NewsStandActivity extends Activity {
         super.onDestroy();
         mp.release();
     }
+    
+    public void quitToMarket(View view) {
+  	Intent returnIntent = new Intent();
+  	setResult(RESULT_OK,returnIntent);     
+  	finish();
+  }
+    
 }

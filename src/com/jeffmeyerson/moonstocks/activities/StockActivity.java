@@ -266,6 +266,14 @@ public class StockActivity extends Activity {
         getMenuInflater().inflate(R.menu.activity_stock, menu);
         return true;
     }
+    
+    @Override
+    public void onBackPressed() {
+    	Intent returnIntent = new Intent();
+    	returnIntent.putExtra("player", serializeObject(player));
+    	setResult(RESULT_OK,returnIntent);     
+    	finish();
+    }
 
     public void quitToMarket(View view) {
 //        Intent intent = new Intent(this, MainActivity.class);
