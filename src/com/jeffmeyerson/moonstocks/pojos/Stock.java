@@ -22,7 +22,7 @@ public class Stock {
         TimeInterval interval = songData.getTimeInterval(0);
         double x = interval.getValueOf("high_freq_values");
         double y = interval.getValueOf("low_freq_values");
-        double averageFrequency = x * y / 2;
+        double averageFrequency = (x + y) / 2;
         double previousAverageFrequency = 0.0;
         
         prices[0] = 150.0;
@@ -34,7 +34,7 @@ public class Stock {
             y = interval.getValueOf("low_freq_values");
             
             previousAverageFrequency = averageFrequency;
-            averageFrequency = x * y / 2;
+            averageFrequency = (x + y) / 2;
 
             prices[i] = fn.getPrice(prices[i - 1], previousAverageFrequency,
         			averageFrequency, 150, 299);
