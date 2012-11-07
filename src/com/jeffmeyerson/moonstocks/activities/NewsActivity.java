@@ -52,7 +52,7 @@ public class NewsActivity extends Activity {
 		if (articleName.equals("freeze_and_thaw")) {
 			inputStream = this.getResources().openRawResource(
 					R.raw.freeze_and_thaw);
-			mp = MediaPlayer.create(this, R.raw.hardtymzcafe);
+			mp = MediaPlayer.create(this, R.raw.hovercraft);
 		}
 		if (articleName.equals("bank_initialization")) {
 			inputStream = this.getResources().openRawResource(
