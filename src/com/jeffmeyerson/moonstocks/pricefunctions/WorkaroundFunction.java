@@ -10,9 +10,6 @@ import java.util.Random;
 
 public class WorkaroundFunction {
 
-	public WorkaroundFunction() {
-	}
-
 	/**
 	 * @param previousPrice
 	 * 			  the previous price

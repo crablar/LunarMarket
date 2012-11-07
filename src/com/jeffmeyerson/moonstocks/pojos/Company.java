@@ -9,8 +9,9 @@ import java.io.Serializable;
  * @author jeffreymeyerson
  * 
  */
-public class Company implements Serializable{
+public class Company implements Serializable {
 
+    private static final long serialVersionUID = -878415599490397998L;
     private final String ticker;
     private final String name;
     private double price; 

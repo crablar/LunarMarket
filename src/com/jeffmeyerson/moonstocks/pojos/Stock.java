@@ -1,6 +1,13 @@
 package com.jeffmeyerson.moonstocks.pojos;
 
-import com.jeffmeyerson.moonstocks.pricefunctions.WorkaroundFunction;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.jeffmeyerson.moonstocks.pojos.SongElement.SongElementType;
 
 /**
  * @author jeffreymeyerson
@@ -10,42 +17,66 @@ import com.jeffmeyerson.moonstocks.pricefunctions.WorkaroundFunction;
  */
 public class Stock {
 
-    private double[] prices;
+    private List<SongElement> song;
 
-    public Stock(SongData songData) {
-        // Use a PriceFunction to calculate the prices.
-        WorkaroundFunction fn = new WorkaroundFunction();
+    public Stock(InputStream songData) {
 
-        prices = new double[songData.getNumIntervals()];
-        
-        // TODO: Calculate price at t(0)
-        TimeInterval interval = songData.getTimeInterval(0);
-        double x = interval.getValueOf("high_freq_values");
-        double y = interval.getValueOf("low_freq_values");
-        double averageFrequency = x * y / 2;
-        double previousAverageFrequency = 0.0;
-        
-        prices[0] = 150.0;
-        
-        for (int i = 1; i < prices.length; i++) {
-            interval = songData.getTimeInterval(i);
+        song = new ArrayList<SongElement>();
 
-            x = interval.getValueOf("high_freq_values");
-            y = interval.getValueOf("low_freq_values");
-            
-            previousAverageFrequency = averageFrequency;
-            averageFrequency = x * y / 2;
+        // Read the song data from the InputStream
+        BufferedReader br = new BufferedReader(new InputStreamReader(songData));
+        String line = "";
+        while (true) {
+            try {
+                line = br.readLine();
+            } catch (IOException e) {
+                // error :(
+                assert(false);
+                e.printStackTrace();
+            }
 
-            prices[i] = fn.getPrice(prices[i - 1], previousAverageFrequency,
-        			averageFrequency, 150, 299);
+            if (line == null) {
+                break;
+            }
+
+            // line example: "low_freq_values 5 6 6 7 7 8 8 9 9 10 10 11 11 12"
+            String[] lineArr = line.split(" ");
+
+            // The key in the above example is "low_freq_values"
+            String key = lineArr[0];
+            SongElement element;
+            if (key.equals("low_freq_values")) {
+                element = new SongElement(SongElementType.LOW_FREQUENCY_NOTES);
+            } else if (key.equals("mid_freq_values")) {
+                element = new SongElement(SongElementType.MID_FREQUENCY_NOTES);
+            } else if (key.equals("high_freq_values")) {
+                element = new SongElement(SongElementType.HIGH_FREQUENCY_NOTES);
+            } else {
+                // error :(
+                element = null;
+            }
+
+            assert(element != null);
+
+            for (int i = 1; i < lineArr.length; i++) {
+                element.add(Integer.valueOf(lineArr[i]));
+            }
+
+            song.add(element);
         }
     }
 
-    public double getPrice(int currentTime) {
-        /*
-         * Time within StockActivity steadily increases, but there is only a
-         * price for each defined time interval.
-         */
-        return prices[currentTime % prices.length];
+    /**
+     * Gets the price of the stock at the given point in time.
+     * @param time
+     * @return
+     */
+    public double getPrice(int time) {
+        // Take the average of the returned values for each SongElement.
+        int total = 0;
+        for (SongElement element : song) {
+            total += element.getValue(time);
+        }
+        return total / song.size();
     }
 }

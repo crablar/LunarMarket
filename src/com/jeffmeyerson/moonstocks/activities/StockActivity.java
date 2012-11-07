@@ -1,11 +1,9 @@
 package com.jeffmeyerson.moonstocks.activities;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
@@ -25,8 +23,6 @@ import android.widget.TextView;
 
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.pojos.Player;
-import com.jeffmeyerson.moonstocks.pojos.SongData;
-import com.jeffmeyerson.moonstocks.pojos.SongDataProcessor;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
 import com.jeffmeyerson.moonstocks.views.ChartView;
 
@@ -106,17 +102,8 @@ public class StockActivity extends Activity {
         // Start at t = 0
         time = 0;
 
-        // Create a BufferedReader for the InputStream
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-
-        // Create the SongDataProcessor, which parses the raw text file
-        SongDataProcessor songDataProcessor = new SongDataProcessor(br);
-
-        // Create the SongData using the SongDataProcessor
-        SongData songData = new SongData(songDataProcessor);
-
         // Create the Stock object out of the SongData
-        stock = new Stock(songData);
+        stock = new Stock(inputStream);
 
         price = stock.getPrice(time);
 

@@ -1,5 +1,7 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
+import java.util.List;
+
 
 /**
 *
@@ -10,15 +12,17 @@ package com.jeffmeyerson.moonstocks.pricefunctions;
 *
 **/
 public class UptrendWithUpperBound implements PriceFunction {
-	
-	public UptrendWithUpperBound(){}
-	
-	public double getPrice(double x, double y, int upperBound){
-		double result = x * y * 10;
-		if(result < upperBound)
-			return result;
-		else
-			return upperBound;
-	}
+
+    @Override
+    public int getValue(int time, List<Integer> values) {
+        if (time < 0 || time > values.size()) {
+            return 0;
+        }
+        if (time == 0) {
+            return values.get(time) * 10;
+        } else {
+            return values.get(time) * values.get(time - 1) * 10;
+        }
+    }
 
 }

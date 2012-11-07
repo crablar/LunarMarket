@@ -10,8 +10,9 @@ import java.util.Map;
  * The Player class.  This class is responsible for keeping all the data of a user.
  * 
  */
-public class Player implements Serializable{
+public class Player implements Serializable {
 
+    private static final long serialVersionUID = 5885032670865723288L;
     private String playerName;
     private double balance;
     private Map<String, Integer> stockShares;
