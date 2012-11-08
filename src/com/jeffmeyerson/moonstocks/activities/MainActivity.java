@@ -3,6 +3,7 @@ package com.jeffmeyerson.moonstocks.activities;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Player;
+import com.jeffmeyerson.moonstocks.pojos.Stock;
 
 public class MainActivity extends Activity {
 
@@ -44,6 +46,8 @@ public class MainActivity extends Activity {
     // Navigation buttons
     // TODO: switch to using ActionBar for navigation between activities
     private Button newsStandButton;
+    
+    private int time;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,8 @@ public class MainActivity extends Activity {
         
         Log.d("Running", "onCreate");
 
+        time = 0;
+        
         // Start playing music
         mp = MediaPlayer.create(this, R.raw.main_menu);
         mp.setLooping(true);
@@ -76,6 +82,7 @@ public class MainActivity extends Activity {
     	newsStandButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewsStandActivity.class);
+                intent.putExtra("time", time);
                 startActivity(intent);
             }
         });
@@ -206,7 +213,7 @@ public class MainActivity extends Activity {
 
     	     if(resultCode == RESULT_OK){
 
-    	      updateTable(data);
+    	    	 updateTable(data);
     	      
     	     }
 
@@ -220,17 +227,32 @@ public class MainActivity extends Activity {
     }
 
 	private void updateTable(Intent data) {
-		// TODO Auto-generated method stub
 		TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
 		
 		player = (Player) deserializeObject(data.getByteArrayExtra("player"));
+		time = data.getExtras().getInt("time");
+		
+		InputStream inputStream = null;	        
 		
 		for(int i = 1; i <= getCompanies().size(); i++){
 			TableRow row = (TableRow) marketTable.getChildAt(i); //gets the row
 			String company = (String) ((Button) row.getChildAt(0)).getText();
-			Log.d("market", "market " + i + " name: " + company);
-			Log.d("market", "market " + i + " shares: " + ((TextView) row.getChildAt(2)).getText().toString());
-			Log.d("market", "market " + i + " updated shares: " + (player.getSharesOwned(company)));
+			
+			// TODO: Make programmatic
+	        // Put the raw text file into an InputStream
+			if(company.equals("EVIL")){
+				inputStream = this.getResources().openRawResource(R.raw.evil_vals);
+			}
+			else if(company.equals("BDST")){
+				inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
+			}
+			else if(company.equals("WMC")){
+				inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
+			}
+			
+			Stock stock = new Stock(inputStream);
+			((TextView) row.getChildAt(1)).setText("$" + String.valueOf
+					(stock.getPrice(data.getExtras().getInt("time"))));
 			((TextView) row.getChildAt(2)).setText(String.valueOf(player.getSharesOwned(company)));
 		}
 		

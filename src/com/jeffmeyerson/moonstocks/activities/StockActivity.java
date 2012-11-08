@@ -224,9 +224,6 @@ public class StockActivity extends Activity {
   	outState.putByteArray("player", serializeObject(player));
   	outState.putString("stock", stockTicker);
   	
-//  	outState.putDouble("balance", player.getBalance());
-//  	outState.putInt("shares", player.getSharesOwned(stockTicker));
-  	
   }
   
   @Override
@@ -235,9 +232,6 @@ public class StockActivity extends Activity {
 	  
 	  player = (Player) deserializeObject(savedInstanceState.getByteArray("player"));
 	  stockTicker = savedInstanceState.getString("stock");
-  
-//  	outState.putDouble("balance", player.getBalance());
-//  	outState.putInt("shares", player.getSharesOwned(stockTicker));
   	
   }
 
@@ -271,18 +265,13 @@ public class StockActivity extends Activity {
     public void onBackPressed() {
     	Intent returnIntent = new Intent();
     	returnIntent.putExtra("player", serializeObject(player));
+    	returnIntent.putExtra("time", getTime());
     	setResult(RESULT_OK,returnIntent);     
     	finish();
     }
 
     public void quitToMarket(View view) {
-//        Intent intent = new Intent(this, MainActivity.class);
-//        
-//        startActivity(intent);
-    	Intent returnIntent = new Intent();
-    	returnIntent.putExtra("player", serializeObject(player));
-    	setResult(RESULT_OK,returnIntent);     
-    	finish();
+    	onBackPressed();
     }
 
     public double roundToTwoPlaces(double rawPrice) {

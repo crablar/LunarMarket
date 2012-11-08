@@ -1,6 +1,8 @@
 package com.jeffmeyerson.moonstocks.activities;
 
-import com.jeffmeyerson.moonstocks.R;
+import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +10,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +19,10 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
+
+import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.pojos.Company;
+import com.jeffmeyerson.moonstocks.pojos.Stock;
 
 public class NewsStandActivity extends Activity {
 
@@ -37,13 +45,18 @@ public class NewsStandActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_stand);
+        
+        // Get the data from the Intent
+        Bundle extras = getIntent().getExtras();
 
         mp = MediaPlayer.create(this, R.raw.austin_hambrick);
         mp.setLooping(true);
 
         // Set up the scrolling stock ticker at the top.
-        final HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.stock_scroller);    
-        final TextView tv = (TextView) findViewById(R.id.scroll_text);
+        HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.stock_scroller);    
+        TextView tv = (TextView) findViewById(R.id.scroll_text);
+        int time = extras.getInt("time");
+        tv.setText(makeTextView(time));
         scrollRight(hsv, tv);
 
         // Set up buttons for the articles.
@@ -92,7 +105,49 @@ public class NewsStandActivity extends Activity {
         });
     }
 
-    public void scrollRight(final HorizontalScrollView h, final TextView tv){
+    private String makeTextView(int time) {
+    	InputStream inputStream = null;
+    	String marketScroll = "";
+    	for (final Company company : getCompanies()) {
+			
+			// TODO: Make programmatic
+	        // Put the raw text file into an InputStream
+			if(company.getTicker().equals("EVIL")){
+				inputStream = this.getResources().openRawResource(R.raw.evil_vals);
+			}
+			else if(company.getTicker().equals("BDST")){
+				inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
+			}
+			else if(company.getTicker().equals("WMC")){
+				inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
+			}
+			
+			marketScroll += company.getTicker();
+			marketScroll += " " + getUpdate(inputStream, time);
+			marketScroll += "     ";
+    	}
+		return marketScroll + marketScroll + marketScroll;
+	}
+
+	private String getUpdate(InputStream inputStream, int time) {
+		String update = "";
+		Stock stock = new Stock(inputStream);
+
+		if(time == 0)
+			return "0.0";
+		
+        Double priceNew = stock.getPrice(time);
+        Double priceOld = stock.getPrice(time - 1);
+        Double change = priceNew - priceOld;
+        
+        if(change > 0){
+        	update += "+";
+        }
+        update += change;
+		return update;		
+	}
+
+	public void scrollRight(final HorizontalScrollView h, final TextView tv){
         new CountDownTimer(scrollTime, scrollTimeInterval) { 
 
             public void onTick(long millisUntilFinished) {
@@ -110,8 +165,14 @@ public class NewsStandActivity extends Activity {
             } 
 
             public void onFinish() {
-                h.scrollTo(0, 0);
-                scrollRight(h, tv);
+            	Handler handler = new Handler();
+            	handler.postDelayed(new Runnable() {
+	            	public void run() {
+	            		 h.scrollTo(0, 0);
+	            		 scrollRight(h, tv);
+	            	}
+            	}, 2000);
+               
             } 
          }.start(); 
     }
@@ -136,9 +197,20 @@ public class NewsStandActivity extends Activity {
     }
     
     public void quitToMarket(View view) {
-  	Intent returnIntent = new Intent();
-  	setResult(RESULT_OK,returnIntent);     
-  	finish();
+	  	finish();
   }
     
+   private List<Company> getCompanies() {
+        List<Company> result = new LinkedList<Company>();
+        String[] companyStrings = getResources().getStringArray(R.array.companies);
+
+        for (String companyString : companyStrings) {
+            String[] companyArr = companyString.split(" ");
+            String ticker = companyArr[0];
+            String name = companyArr[1];
+            Company company = new Company(ticker, name);
+            result.add(company);
+        }
+        return result;
+   } 
 }
