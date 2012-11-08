@@ -2,6 +2,9 @@ package com.jeffmeyerson.moonstocks.activities;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -13,6 +16,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,7 +52,13 @@ public class MainActivity extends Activity {
     private Button newsStandButton;
     
     private int time;
-
+    
+    private int size;
+    
+    private String fileName = "mainactivity";
+    
+    private SharedPreferences mPrefs;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +68,10 @@ public class MainActivity extends Activity {
 
         time = 0;
         
+        mPrefs = getSharedPreferences("mainactivity_prefs", MODE_PRIVATE);
+        
+        size = mPrefs.getInt("fileSize", 0);
+
         // Start playing music
         mp = MediaPlayer.create(this, R.raw.main_menu);
         mp.setLooping(true);
@@ -66,9 +80,30 @@ public class MainActivity extends Activity {
         newsStandButton = (Button) findViewById(R.id.newsStandButton);
 
         // Check for a persisted player
-        Bundle extras = this.getIntent().getExtras();
-        if (extras != null && extras.containsKey("EXTRA_PLAYER")) {
-            extras.get("EXTRA_PLAYER");
+        
+        FileInputStream fin;
+        byte[] buffer = new byte[size];
+		try {
+			Log.d("fileError", "reading file");
+			fin = openFileInput(fileName);
+			//InputStreamReader isReader = new InputStreamReader(fin);			
+	        // Fill the buffer with data from file
+			fin.read(buffer);
+			Log.d("fileError", "read buffer size: " + buffer.length);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			Log.d("fileError", "read file not found");
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			Log.d("fileError", "read IO exception");
+			e.printStackTrace();
+		}  
+		
+		if(size > 0){
+			player = (Player) deserializeObject(buffer);
+			Log.d("playerinfo", "balance: " + player.getBalance());
+			Log.d("playerinfo", "name: " + player.getName());
         } else {
         	//Log.d("onCreate", "creating new player");
             player = new Player();
@@ -178,15 +213,18 @@ public class MainActivity extends Activity {
           return null; 
         } 
       }
-//    
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//    	super.onSaveInstanceState(outState);
-//    
-//    	outState.putByteArray("companies", serializeObject(getCompanies()));
-//    	outState.putString("player", player.getName());
-//    	
-//    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	super.onSaveInstanceState(outState);    
+    	outState.putByteArray("player", serializeObject(player));    	
+    }
+    
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    	super.onRestoreInstanceState(savedInstanceState);
+    	player = (Player) deserializeObject(savedInstanceState.getByteArray("player"));    	
+    }
 
     @Override
     protected void onResume() {
@@ -199,12 +237,23 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
         mp.pause();
+        Log.d("Running", "onPause");
+        update();
+    }
+    
+    @Override
+    protected void onStop() {
+    	super.onStop();
+    	mp.release();
+    	Log.d("Running", "onStop");
+    	update();    
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mp.release();
+        Log.d("running", "onDestroy");
     }
     
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -214,6 +263,7 @@ public class MainActivity extends Activity {
     	     if(resultCode == RESULT_OK){
 
     	    	 updateTable(data);
+    	    	 update();
     	      
     	     }
 
@@ -225,6 +275,33 @@ public class MainActivity extends Activity {
     	
     	}//onAcrivityResult
     }
+
+	private void update() {
+		// TODO Auto-generated method stub
+		Log.d("Running", "update()");
+		
+		SharedPreferences.Editor ed = mPrefs.edit();
+		
+		try {
+			Log.d("fileError", "writing file");
+			FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+			fos.write(serializeObject(player));			
+			size = serializeObject(player).length;
+			Log.d("fileError", "buffer size in write: " + size);
+			ed.putInt("fileSize", size);
+			ed.commit();					
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			Log.d("fileError", "writing file not found");
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			Log.d("fileError", "writing IO exception");
+			e.printStackTrace();
+		}
+		
+	}
 
 	private void updateTable(Intent data) {
 		TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
