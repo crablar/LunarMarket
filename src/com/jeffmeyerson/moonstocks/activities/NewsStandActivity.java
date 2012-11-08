@@ -11,7 +11,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,8 +27,6 @@ public class NewsStandActivity extends Activity {
 
     private Context context = this;
 
-    private Button backButton;
-    
     private Button lunarMarketOpensButton;
     private Button carefulWithTheMoonButton;
     private Button buyStockNotGlobusButton;

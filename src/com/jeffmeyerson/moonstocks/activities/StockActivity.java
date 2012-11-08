@@ -48,9 +48,7 @@ public class StockActivity extends Activity {
 
     private int time;
     private Player player;
-    private DecimalFormat twoDForm = new DecimalFormat("#.00");
-
-    private Runnable priceFlux;
+    private final DecimalFormat twoDForm = new DecimalFormat("#.00");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,9 +59,6 @@ public class StockActivity extends Activity {
         Bundle extras = getIntent().getExtras();
 
         // Get the resources
-        // TODO: pull this from config rather than hardcoding it
-        final int timeBetweenPriceChangeMs = 320;
-
         stockPriceView = (TextView) findViewById(R.id.stock_price_view);
         sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
         balanceView = (TextView) findViewById(R.id.balance_view);
@@ -112,7 +107,7 @@ public class StockActivity extends Activity {
         //chartView.setCurrentFrame(currentFrame);
 
         // The function that repeatedly updates the stock price and the ChartView
-        priceFlux = new Runnable() {
+        Runnable priceFlux = new Runnable() {
             public void run() {
                 // Get the stock price for the current time and set the TextView
                 double rawPrice = stock.getPrice(time);
@@ -128,16 +123,16 @@ public class StockActivity extends Activity {
                 chartView.invalidate();
 
                 // Put this function on the message queue
-                mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);
+                mHandler.postDelayed(this, Stock.TIMESTEP);
 
                 // Move to the next time interval
-                time++;
+                time += Stock.TIMESTEP;
             }
         };
 
         // Begin running the function
-        mHandler.postDelayed(priceFlux, timeBetweenPriceChangeMs);
-        
+        mHandler.postDelayed(priceFlux, Stock.TIMESTEP);
+
         //initialize the stock shares owned
         int sharesOwned = player.getSharesOwned(stockTicker);
         sharesOwnedView.setText(sharesOwned + "");
@@ -216,23 +211,23 @@ public class StockActivity extends Activity {
           return null; 
         } 
       } 
-    
+
   @Override
   protected void onSaveInstanceState(Bundle outState) {
   	super.onSaveInstanceState(outState);
-  
+
   	outState.putByteArray("player", serializeObject(player));
   	outState.putString("stock", stockTicker);
-  	
+
   }
-  
+
   @Override
   protected void onRestoreInstanceState(Bundle savedInstanceState) {
-	  super.onRestoreInstanceState(savedInstanceState);
-	  
-	  player = (Player) deserializeObject(savedInstanceState.getByteArray("player"));
-	  stockTicker = savedInstanceState.getString("stock");
-  	
+      super.onRestoreInstanceState(savedInstanceState);
+
+      player = (Player) deserializeObject(savedInstanceState.getByteArray("player"));
+      stockTicker = savedInstanceState.getString("stock");
+
   }
 
     @Override
@@ -260,7 +255,7 @@ public class StockActivity extends Activity {
         getMenuInflater().inflate(R.menu.activity_stock, menu);
         return true;
     }
-    
+
     @Override
     public void onBackPressed() {
     	Intent returnIntent = new Intent();
