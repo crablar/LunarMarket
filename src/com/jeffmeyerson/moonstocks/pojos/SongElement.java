@@ -31,6 +31,6 @@ public class SongElement {
     }
 
     int getValue(int time) {
-        return fn.getValue(time, values);
+        return fn.getValue(time % values.size(), values);
     }
 }

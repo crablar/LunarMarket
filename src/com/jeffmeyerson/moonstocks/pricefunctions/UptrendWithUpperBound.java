@@ -13,6 +13,8 @@ import java.util.List;
 **/
 public class UptrendWithUpperBound implements PriceFunction {
 
+	private static final int UPPER_BOUND = 299;
+	
     @Override
     public int getValue(int time, List<Integer> values) {
         if (time < 0 || time > values.size()) {
@@ -21,7 +23,7 @@ public class UptrendWithUpperBound implements PriceFunction {
         if (time == 0) {
             return values.get(time) * 10;
         } else {
-            return values.get(time) * values.get(time - 1) * 10;
+            return Math.min(UPPER_BOUND, values.get(time) * values.get(time - 1) * 10);
         }
     }
 
