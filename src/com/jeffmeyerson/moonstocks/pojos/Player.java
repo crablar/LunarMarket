@@ -16,9 +16,12 @@ public class Player implements Serializable {
     private String playerName;
     private double balance;
     private Map<String, Integer> stockShares;
+    private Protocol protocol;
 
     public Player() {
+    	balance = 0.0;
         stockShares = new HashMap<String, Integer>();
+        protocol = new Protocol();
     }
 
     /**
@@ -92,4 +95,9 @@ public class Player implements Serializable {
     public String toString(){
     	return "Name: " + playerName + " balance: " + balance;
     }
+
+	public Protocol getProtocol() {
+		// TODO Auto-generated method stub
+		return this.protocol;
+	}
 }

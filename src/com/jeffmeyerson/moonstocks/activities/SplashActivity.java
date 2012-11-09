@@ -36,7 +36,7 @@ public class SplashActivity extends Activity {
  
             }
  
-        }, 5000); // time in milliseconds (1 second = 1000 milliseconds) until the run() method will be called
+        }, 2000); // time in milliseconds (1 second = 1000 milliseconds) until the run() method will be called
  
     }
  

@@ -128,6 +128,8 @@ public class MainActivity extends Activity {
 		systemDetailsButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(context, SystemDetailsActivity.class);
+				intent.putExtra("player", serializeObject(player));
+				intent.putExtra("time", time);
 				startActivity(intent);
 			}
 		});
@@ -307,7 +309,6 @@ public class MainActivity extends Activity {
 	}
 
 	private void update() {
-		// TODO Auto-generated method stub
 		Log.d("Running", "update()");
 
 		SharedPreferences.Editor ed = mPrefs.edit();
