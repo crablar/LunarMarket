@@ -21,6 +21,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -237,10 +240,11 @@ public class MainActivity extends Activity {
 		super.onResume();
 
 		// Start playing music
+		if(mp == null){
+			mp = MediaPlayer.create(this, R.raw.main_menu);
 
-		mp = MediaPlayer.create(this, R.raw.main_menu);
-
-		mp.setLooping(true);
+			mp.setLooping(true);
+		}
 
 		mp.start();
 
@@ -259,6 +263,7 @@ public class MainActivity extends Activity {
 	protected void onStop() {
 		super.onStop();
 		mp.release();
+		mp = null;
 		Log.d("Running", "onStop");
 		update();
 	}
@@ -266,7 +271,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		mp.release();
+		//mp.release();
 		Log.d("running", "onDestroy");
 	}
 
@@ -351,6 +356,26 @@ public class MainActivity extends Activity {
 					.getSharesOwned(company)));
 		}
 
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_options, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+		case R.id.reset_game:
+			player = new Player();
+			player.setBalance(STARTING_MONEY);
+			player.setName("Jeff");
+		return true;		
+		}
+		return false;
 	}
 
 }
