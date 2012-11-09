@@ -53,6 +53,7 @@ public class MainActivity extends Activity {
 	// Navigation buttons
 	// TODO: switch to using ActionBar for navigation between activities
 	private Button newsStandButton;
+	private Button systemDetailsButton;
 
 	private int time;
 
@@ -77,6 +78,9 @@ public class MainActivity extends Activity {
 
 		// Initialize news button
 		newsStandButton = (Button) findViewById(R.id.newsStandButton);
+
+		// Initialize systemDetails button
+		systemDetailsButton = (Button) findViewById(R.id.systemDetailsButton);
 
 		// Check for a persisted player
 
@@ -117,6 +121,13 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(context, NewsStandActivity.class);
 				intent.putExtra("time", time);
+				startActivity(intent);
+			}
+		});
+		
+		systemDetailsButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(context, SystemDetailsActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -240,7 +251,7 @@ public class MainActivity extends Activity {
 		super.onResume();
 
 		// Start playing music
-		if(mp == null){
+		if (mp == null) {
 			mp = MediaPlayer.create(this, R.raw.main_menu);
 
 			mp.setLooping(true);
@@ -271,7 +282,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		//mp.release();
+		// mp.release();
 		Log.d("running", "onDestroy");
 	}
 
@@ -357,7 +368,7 @@ public class MainActivity extends Activity {
 		}
 
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -365,15 +376,15 @@ public class MainActivity extends Activity {
 		inflater.inflate(R.menu.main_options, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	switch (item.getItemId()) {
+		switch (item.getItemId()) {
 		case R.id.reset_game:
 			player = new Player();
 			player.setBalance(STARTING_MONEY);
 			player.setName("Jeff");
-		return true;		
+			return true;
 		}
 		return false;
 	}

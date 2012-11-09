@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_layout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="false"
@@ -54,10 +54,17 @@
             android:id="@+id/newsStandButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/systemDetailsButton"
+            android:text="Latest News" />
+
+        <Button
+            android:id="@+id/systemDetailsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="false"
-            android:text="Latest News" />
+            android:text="System Details" />
     </RelativeLayout>
 
 </LinearLayout>
