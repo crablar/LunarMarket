@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">LunarStocks</string>
+    <string name="app_name">MoonStocks</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_stock">StockActivity</string>
     <string name="title_activity_news_stand">NewsStandActivity</string>
     <string name="title_activity_news">NewsActivity</string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash">MoonStocks</string>
     <string name="title_activity_system_details">SystemDetailsActivity</string>
     <string name="stock_name">main_menu</string>
     <string name="player_balance">1000</string>
