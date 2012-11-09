@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jeffmeyerson.moonstocks.pojos.SongElement.SongElementType;
-import com.jeffmeyerson.moonstocks.pricefunctions.UptrendWithUpperBound;
+import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
+import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunctionFactory;
 
 /**
  * @author jeffreymeyerson
@@ -30,6 +31,15 @@ public class Stock {
         // Read the song data from the InputStream
         BufferedReader br = new BufferedReader(new InputStreamReader(songData));
         String line = "";
+        String stockName = "";
+
+        try {
+			stockName = br.readLine();
+		} catch (IOException e) {
+			// error :(
+			e.printStackTrace();
+		}
+        
         while (true) {
             try {
                 line = br.readLine();
@@ -65,7 +75,9 @@ public class Stock {
                 values.add(Integer.valueOf(lineArr[i]));
             }
 
-            SongElement element = new SongElement(type, values, new UptrendWithUpperBound());
+            PriceFunction priceFunction = PriceFunctionFactory.getPriceFunctionForStock(stockName);
+            
+            SongElement element = new SongElement(type, values, priceFunction);
 
             assert(element != null);
 
