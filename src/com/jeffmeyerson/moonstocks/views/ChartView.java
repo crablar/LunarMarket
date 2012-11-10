@@ -15,7 +15,7 @@ public class ChartView extends View {
     // constants
     private static final int MAX_POINTS = 100;
     private static final int SCREEN_HEIGHT = 300;
-    private static final float SCALE = 3;// getWidth() / 20;
+    private static final float SCALE = 7;// getWidth() / 20;
 
     // member variables
     private List<Float> points;

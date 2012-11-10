@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 public class TimerView extends TextView {
 
+	private String time;
+	
 	public TimerView(Context context, int time_ms) {
 		super(context);
 	}
@@ -29,7 +31,7 @@ public class TimerView extends TextView {
 		int ms_remaining = 3600000 - time;
 		int sec_remaining = (ms_remaining / 1000) % 60;
 		int min_remaining = ms_remaining / 60000;
-		super.setText(min_remaining + ":" + sec_remaining);
+		this.time = min_remaining + ":" + sec_remaining;
 	}
 
 	public TimerView(Context context, AttributeSet attrs, int defStyle) {
@@ -42,6 +44,12 @@ public class TimerView extends TextView {
 
 	public TimerView(Context context) {
 		super(context);
+	}
+	
+	@Override
+	public void onDraw(Canvas canvas){
+		super.onDraw(canvas);
+		super.setText(time);
 	}
 
 }
