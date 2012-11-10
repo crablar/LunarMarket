@@ -2,6 +2,7 @@ package com.jeffmeyerson.moonstocks.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -21,9 +22,14 @@ public class TimerView extends TextView {
 		super(context);
 	}
 
-	// Convert to seconds, then set
+	// Convert to minutes:seconds, then set
 	public void setTime(int time) {
-		super.setText("" + time / 1000.0);
+		if(time > 600000)
+			this.setTextColor(Color.RED);
+		int ms_remaining = 3600000 - time;
+		int sec_remaining = (ms_remaining / 1000) % 60;
+		int min_remaining = ms_remaining / 60000;
+		super.setText(min_remaining + ":" + sec_remaining);
 	}
 
 	public TimerView(Context context, AttributeSet attrs, int defStyle) {

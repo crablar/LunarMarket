@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 
 	// The amount of money the player has upon beginning a new game
 	private final int STARTING_MONEY = 5000;
-
+	
 	// Plays launchpad music
 	private MediaPlayer mp;
 
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 	private Button systemDetailsButton;
 
 	private int time;
-
+	
 	private int size;
 
 	private String fileName = "mainactivity";

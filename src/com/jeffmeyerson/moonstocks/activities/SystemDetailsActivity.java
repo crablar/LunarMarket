@@ -46,11 +46,11 @@ public class SystemDetailsActivity extends Activity {
 
         player = (Player) deserializeObject(extras.getByteArray("player"));
 
-		playerNameView = (TextView) findViewById(R.id.playerNameText);
+		playerNameView = (TextView) findViewById(R.id.playerText);
 
 		balanceView = (TextView) findViewById(R.id.balanceText);
 
-		netProfitsView = (TextView) findViewById(R.id.playerNameText);
+		netProfitsView = (TextView) findViewById(R.id.netProfitText);
 
 		protocolView = (TextView) findViewById(R.id.protocolText);
 		
@@ -59,7 +59,7 @@ public class SystemDetailsActivity extends Activity {
 		double netProfits = player.getBalance() - 5000;
 		
 		//Fill TextViews with information
-		playerNameView.setText(player.getName());
+		playerNameView.setText("TradeBot Class xF4D2: " + player.getName());
 
 		balanceView.setText("Balance: $" + + player.getBalance());
 
