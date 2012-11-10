@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -15,15 +16,19 @@ import android.widget.TextView;
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Protocol;
+import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.views.TimerView;
 
 public class SystemDetailsActivity extends Activity {
-
+	private Handler mHandler = new Handler();
 	private Player player;
 	private TextView playerNameView;
 	private TextView balanceView;
 	private TextView netProfitsView;
 	private TextView protocolView;
+	private TimerView timerView;
     private MediaPlayer mp;
+    private int time;
 
 
 	@Override
@@ -33,11 +38,11 @@ public class SystemDetailsActivity extends Activity {
 
 	    mp = MediaPlayer.create(this, R.raw.withering_gaze);
         mp.setLooping(true);
-
-		
 		
         // Get the data from the Intent
         Bundle extras = getIntent().getExtras();
+        
+        time = extras.getInt("time");
 
         player = (Player) deserializeObject(extras.getByteArray("player"));
 
@@ -48,6 +53,8 @@ public class SystemDetailsActivity extends Activity {
 		netProfitsView = (TextView) findViewById(R.id.playerNameText);
 
 		protocolView = (TextView) findViewById(R.id.protocolText);
+		
+		timerView = (TimerView) findViewById(R.id.timerView);
 
 		double netProfits = player.getBalance() - 5000;
 		
@@ -60,11 +67,29 @@ public class SystemDetailsActivity extends Activity {
 
 		protocolView.setText(Protocol.getProtocolVerbose());
 		
+		Runnable timeFlux = new Runnable() {
+			public void run() {
+
+				timerView.setTime(time);
+
+				// Put this function on the message queue
+				mHandler.postDelayed(this, 1000);
+
+				// Move to the next time interval
+				time += 1000;
+			}
+		};
+
+		
+		// Begin running the function
+		mHandler.postDelayed(timeFlux, 1000);
+		
 	}
 
 	@Override
 	public void onBackPressed() {
 		Intent returnIntent = new Intent();
+		returnIntent.putExtra("time", time);
 		setResult(RESULT_OK, returnIntent);
 		finish();
 	}

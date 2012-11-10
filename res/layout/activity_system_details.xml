@@ -10,53 +10,67 @@
         android:text="TradeBot Class xF4D2"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/playerNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/headerText"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <com.jeffmeyerson.moonstocks.views.TimerView
+        android:id="@+id/timerView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="100dp"
+        android:layout_toRightOf="@+id/headerText"
+        android:text="10:32" />
 
-    <TextView
-        android:id="@+id/balanceText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/playerNameText"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/netProfitText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/balanceText"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
         <TextView
-        android:id="@+id/efficiencyText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/netProfitText"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-        
-                <TextView
-        android:id="@+id/protocolText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/efficiencyText"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom" >
-
-        <Button
-            android:id="@+id/back_button"
+            android:id="@+id/playerNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:onClick="quitToMarket"
-            android:text="Back" />
-    </RelativeLayout>
+            android:layout_below="@+id/headerText"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/balanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/playerNameText"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/netProfitText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/balanceText"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/efficiencyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/netProfitText"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/protocolText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/efficiencyText"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom" >
+
+            <Button
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:onClick="quitToMarket"
+                android:text="Back" />
+        </RelativeLayout>
+
+    <com.jeffmeyerson.moonstocks.views.TimerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+</com.jeffmeyerson.moonstocks.views.TimerView>
 
 </RelativeLayout>
