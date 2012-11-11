@@ -30,24 +30,14 @@ public class NewsActivity extends Activity {
 
     private Context context = this;
 
-    private Button lunarMarketOpensButton;
-    private Button carefulWithTheMoonButton;
-    private Button buyStockNotGlobusButton;
-    private Button freezeAndThawButton;
-    private Button bankInitializationButton;
-
     private MediaPlayer mp;
     private long scrollTime = 20000;
     private long scrollTimeInterval = 50;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        
-        // Get the data from the Intent
-        Bundle extras = getIntent().getExtras();
 
         mp = MediaPlayer.create(this, R.raw.evil);
         mp.setLooping(true);
@@ -55,18 +45,23 @@ public class NewsActivity extends Activity {
         // Set up the scrolling stock ticker at the top.
         HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.stock_scroller);    
         TextView tv = (TextView) findViewById(R.id.scroll_text);
-        int time = extras.getInt("time");
+
+        int time = 0;
+        // Get the data from the Intent
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            if (extras.containsKey("time")) {
+                time = extras.getInt("time");
+            }
+        }
+
         tv.setText(makeTextView(time));
         scrollRight(hsv, tv);
 
         // Set up buttons for the articles.
-        lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
-        carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
-        buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
-        freezeAndThawButton = (Button) findViewById(R.id.freeze_and_thaw_button);
-        bankInitializationButton = (Button) findViewById(R.id.bank_initialization_button);
-
-        
+        // TODO: this should totally be programmatic
+        Button lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
         lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(context, ArticleActivity.class);
@@ -74,6 +69,8 @@ public class NewsActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        Button carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
         carefulWithTheMoonButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(context, ArticleActivity.class);
@@ -81,6 +78,8 @@ public class NewsActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        Button buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
         buyStockNotGlobusButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(context, ArticleActivity.class);
@@ -89,6 +88,7 @@ public class NewsActivity extends Activity {
             }
         });
 
+        Button freezeAndThawButton = (Button) findViewById(R.id.freeze_and_thaw_button);
         freezeAndThawButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(context, ArticleActivity.class);
@@ -96,6 +96,8 @@ public class NewsActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        Button bankInitializationButton = (Button) findViewById(R.id.bank_initialization_button);
         bankInitializationButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(context, ArticleActivity.class);
@@ -144,7 +146,7 @@ public class NewsActivity extends Activity {
         	update += "+";
         }
         update += change;
-		return update;		
+		return update;
 	}
 
 	public void scrollRight(final HorizontalScrollView h, final TextView tv){
@@ -195,11 +197,7 @@ public class NewsActivity extends Activity {
         super.onDestroy();
         mp.release();
     }
-    
-    public void quitToMarket(View view) {
-	  	finish();
-  }
-    
+
    private List<Company> getCompanies() {
         List<Company> result = new LinkedList<Company>();
         String[] companyStrings = getResources().getStringArray(R.array.companies);

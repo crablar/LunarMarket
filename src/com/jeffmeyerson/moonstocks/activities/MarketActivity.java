@@ -107,8 +107,7 @@ public class MarketActivity extends Activity {
 		TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
 		for (final Company c : companies) {
 			TableRow row = new TableRow(this);
-			row.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-					LayoutParams.WRAP_CONTENT));
+			row.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 			// Add a button to take the player to the StockActivity for that
 			// company.

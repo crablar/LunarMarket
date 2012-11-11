@@ -20,45 +20,10 @@
 
             <TextView
                 android:id="@+id/article_text"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:maxLines="86"
-                android:scrollbars="vertical"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-            </FrameLayout>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-            </FrameLayout>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-            </FrameLayout>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
         </TableRow>
     </TableLayout>
 
