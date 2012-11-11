@@ -1,8 +1,12 @@
 package com.jeffmeyerson.moonstocks.pojos;
 
-public class Protocol {
+import java.io.Serializable;
 
-	public Protocol() {
+public class Protocol implements Serializable {
+
+    private static final long serialVersionUID = 2986579522968148222L;
+
+    public Protocol() {
 	}
 
 	public static String getProtocolVerbose() {

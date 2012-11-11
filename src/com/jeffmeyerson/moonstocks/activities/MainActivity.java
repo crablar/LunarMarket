@@ -315,8 +315,7 @@ public class MainActivity extends Activity {
 
 		try {
 			Log.d("fileError", "writing file");
-			FileOutputStream fos = openFileOutput(fileName,
-					Context.MODE_PRIVATE);
+			FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
 			fos.write(serializeObject(player));
 			size = serializeObject(player).length;
 			Log.d("fileError", "buffer size in write: " + size);
