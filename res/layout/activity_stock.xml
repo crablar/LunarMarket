@@ -58,7 +58,7 @@
 
     <com.jeffmeyerson.moonstocks.views.ChartView
         android:id="@+id/chart"
-        android:layout_width="700dp"
+        android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/stock_price_view" />
