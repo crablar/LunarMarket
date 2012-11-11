@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_stock_market"
+        android:title="Stock Market"
+        android:showAsAction="ifRoom|withText"
+        />
+    <item android:id="@+id/menu_news"
+        android:title="Market News"
+        android:showAsAction="ifRoom|withText"
+        />
+    <item android:id="@+id/menu_system_details"
+        android:title="System Details"
+        android:showAsAction="ifRoom|withText"
+        />
+    <item android:id="@+id/reset_game"
+        android:title="@string/reset_game"
+        android:showAsAction="never" 
+        />
+</menu>

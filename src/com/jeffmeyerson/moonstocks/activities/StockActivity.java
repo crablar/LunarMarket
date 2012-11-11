@@ -1,12 +1,6 @@
 package com.jeffmeyerson.moonstocks.activities;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 
 import android.app.Activity;
@@ -22,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
 import com.jeffmeyerson.moonstocks.views.ChartView;
@@ -69,7 +64,7 @@ public class StockActivity extends Activity {
 
 
 		// Get the Player object from our activity
-		player = (Player) deserializeObject(extras.getByteArray("player"));
+		player = (Player) Utility.deserialize(extras.getByteArray("player"));
 		((TextView) findViewById(R.id.balance_view)).setText(""
 				+ player.getBalance());
 
@@ -90,11 +85,11 @@ public class StockActivity extends Activity {
 			mp.setLooping(true);
 		} else if (stockTicker.equals("BDST")) {
 			inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
-			mp = MediaPlayer.create(this, R.raw.bdst);
+			mp = MediaPlayer.create(this, R.raw.evil);
 			mp.setLooping(true);
 		} else if (stockTicker.equals("WMC")) {
 			inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
-			mp = MediaPlayer.create(this, R.raw.wmc);
+			mp = MediaPlayer.create(this, R.raw.evil);
 			mp.setLooping(true);
 		}
 
@@ -190,49 +185,11 @@ public class StockActivity extends Activity {
 
 	}
 
-	public static byte[] serializeObject(Object o) {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-		try {
-			ObjectOutput out = new ObjectOutputStream(bos);
-			out.writeObject(o);
-			out.close();
-
-			// Get the bytes of the serialized object
-			byte[] buf = bos.toByteArray();
-
-			return buf;
-		} catch (IOException ioe) {
-			Log.e("serializeObject", "error", ioe);
-
-			return null;
-		}
-	}
-
-	public static Object deserializeObject(byte[] b) {
-		try {
-			ObjectInputStream in = new ObjectInputStream(
-					new ByteArrayInputStream(b));
-			Object object = in.readObject();
-			in.close();
-
-			return object;
-		} catch (ClassNotFoundException cnfe) {
-			Log.e("deserializeObject", "class not found error", cnfe);
-
-			return null;
-		} catch (IOException ioe) {
-			Log.e("deserializeObject", "io error", ioe);
-
-			return null;
-		}
-	}
-
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		outState.putByteArray("player", serializeObject(player));
+		outState.putByteArray("player", Utility.serialize(player));
 		outState.putString("stock", stockTicker);
 
 	}
@@ -241,8 +198,7 @@ public class StockActivity extends Activity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 
-		player = (Player) deserializeObject(savedInstanceState
-				.getByteArray("player"));
+		player = (Player) Utility.deserialize(savedInstanceState.getByteArray("player"));
 		stockTicker = savedInstanceState.getString("stock");
 
 	}
@@ -276,7 +232,7 @@ public class StockActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		Intent returnIntent = new Intent();
-		returnIntent.putExtra("player", serializeObject(player));
+		returnIntent.putExtra("player", Utility.serialize(player));
 		returnIntent.putExtra("time", getTime());
 		setResult(RESULT_OK, returnIntent);
 		finish();

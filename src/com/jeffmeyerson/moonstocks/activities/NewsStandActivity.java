@@ -11,6 +11,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,7 +49,7 @@ public class NewsStandActivity extends Activity {
         // Get the data from the Intent
         Bundle extras = getIntent().getExtras();
 
-        mp = MediaPlayer.create(this, R.raw.austin_hambrick);
+        mp = MediaPlayer.create(this, R.raw.evil);
         mp.setLooping(true);
 
         // Set up the scrolling stock ticker at the top.
@@ -210,4 +213,35 @@ public class NewsStandActivity extends Activity {
         }
         return result;
    } 
+   
+   @Override
+   public boolean onCreateOptionsMenu(Menu menu) {
+       super.onCreateOptionsMenu(menu);
+       MenuInflater inflater = getMenuInflater();
+       inflater.inflate(R.menu.actionbar, menu);
+       return true;
+   }
+
+   @Override
+   public boolean onOptionsItemSelected(MenuItem item) {
+       int id = item.getItemId();
+
+       if (id == R.id.reset_game) {
+           return true;
+       } else if (id == R.id.menu_news) {
+           Intent intent = new Intent(context, NewsStandActivity.class);
+           startActivity(intent);
+           return true;
+       } else if (id == R.id.menu_system_details) {
+           Intent intent = new Intent(context, SystemDetailsActivity.class);
+           startActivity(intent);
+           return true;
+       } else if (id == R.id.menu_stock_market) {
+           Intent intent = new Intent(this, MainActivity.class);
+           startActivity(intent);
+           return true;
+       }
+
+       return false;
+   }
 }

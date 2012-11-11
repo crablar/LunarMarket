@@ -3,8 +3,6 @@ package com.jeffmeyerson.moonstocks.pricefunctions;
 import java.util.List;
 import java.util.Random;
 
-import android.util.Log;
-
 /**
  * A simple uptrend with an upper bound.
  * 
