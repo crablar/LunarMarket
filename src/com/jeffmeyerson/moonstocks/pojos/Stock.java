@@ -20,7 +20,7 @@ import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunctionFactory;
 public class Stock {
 
     /** Time interval between actions measured in ms. */
-    public static final int TIMESTEP = 250;
+    public static final int TIMESTEP = 469;
 
     private List<SongElement> song;
 

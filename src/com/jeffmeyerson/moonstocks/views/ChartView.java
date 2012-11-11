@@ -61,11 +61,12 @@ public class ChartView extends View {
         paint.setStrokeWidth(3);
 
         for (int i = 1; i < points.size(); i++) {
-            if (points.get(i - 1) < points.get(i)) {
+            if (points.get(i - 1) < points.get(i))
                 paint.setColor(Color.GREEN);
-            } else {
+            if (points.get(i - 1) > points.get(i)) 
                 paint.setColor(Color.RED);
-            }
+            if (points.get(i - 1) == points.get(i))
+            	paint.setColor(Color.GRAY);
             canvas.drawLine((i - 1) * SCALE, SCREEN_HEIGHT - points.get(i - 1), i * SCALE, SCREEN_HEIGHT - points.get(i), paint);
         }
     }
