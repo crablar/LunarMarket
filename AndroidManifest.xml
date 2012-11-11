@@ -12,7 +12,7 @@
         android:icon="@drawable/moonstocks_icon"
         android:label="@string/app_name" >
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.MarketActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +27,11 @@
             android:label="@string/title_activity_stock" >
         </activity>
         <activity
-            android:name=".activities.NewsStandActivity"
+            android:name=".activities.NewsActivity"
             android:label="@string/title_activity_news_stand" >
         </activity>
         <activity
-            android:name=".activities.NewsActivity"
+            android:name=".activities.ArticleActivity"
             android:label="@string/title_activity_news" >
         </activity>
         <activity

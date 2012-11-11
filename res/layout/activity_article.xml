@@ -6,7 +6,7 @@
     android:fitsSystemWindows="false"
     android:gravity="right"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".NewsActivity" >
 
     <TableLayout
         android:id="@+id/market_table"
@@ -20,26 +20,46 @@
 
             <TextView
                 android:id="@+id/article_text"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:maxLines="86"
+                android:scrollbars="vertical"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </FrameLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </FrameLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </FrameLayout>
         </TableRow>
     </TableLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom" >
-
-        <Button
-            android:id="@+id/accountButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="false"
-            android:text="Go To Account" />
-    </RelativeLayout>
 
 </LinearLayout>

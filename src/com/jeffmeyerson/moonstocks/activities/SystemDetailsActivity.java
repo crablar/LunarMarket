@@ -63,7 +63,7 @@ public class SystemDetailsActivity extends Activity {
         balanceView.setText("Balance: $" + + player.getBalance());
 
         TextView netProfitsView = (TextView) findViewById(R.id.netProfitText);
-        double netProfits = player.getBalance() - MainActivity.STARTING_MONEY;
+        double netProfits = player.getBalance() - MarketActivity.STARTING_MONEY;
         netProfitsView.setText("Net profits: $" + netProfits);
 
         TextView protocolView = (TextView) findViewById(R.id.protocolText);
@@ -140,11 +140,11 @@ public class SystemDetailsActivity extends Activity {
 
         if (id == R.id.reset_game) {
             player = new Player();
-            player.setBalance(MainActivity.STARTING_MONEY);
+            player.setBalance(MarketActivity.STARTING_MONEY);
             player.setName("Jeff");
             return true;
         } else if (id == R.id.menu_news) {
-            Intent intent = new Intent(this, NewsStandActivity.class);
+            Intent intent = new Intent(this, NewsActivity.class);
             intent.putExtra("time", time);
             startActivity(intent);
             return true;
@@ -154,7 +154,7 @@ public class SystemDetailsActivity extends Activity {
             startActivity(intent);
             return true;
         } else if (id == R.id.menu_stock_market) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, MarketActivity.class);
             startActivity(intent);
             return true;
         }

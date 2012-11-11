@@ -33,7 +33,7 @@ import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
 
-public class MainActivity extends Activity {
+public class MarketActivity extends Activity {
 
 	private Context context = this;
 
@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.activity_market);
 
 		Log.d("Running", "onCreate");
 
@@ -306,7 +306,7 @@ public class MainActivity extends Activity {
             player.setName("Jeff");
             return true;
 	    } else if (id == R.id.menu_news) {
-	        Intent intent = new Intent(context, NewsStandActivity.class);
+	        Intent intent = new Intent(context, NewsActivity.class);
 	        intent.putExtra("time", time);
 	        startActivity(intent);
 	        return true;
@@ -317,7 +317,7 @@ public class MainActivity extends Activity {
             startActivity(intent);
             return true;
 	    } else if (id == R.id.menu_stock_market) {
-	        Intent intent = new Intent(this, MainActivity.class);
+	        Intent intent = new Intent(this, MarketActivity.class);
 	        startActivity(intent);
 	        return true;
 	    }

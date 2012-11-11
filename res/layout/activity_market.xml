@@ -7,7 +7,7 @@
     android:fitsSystemWindows="false"
     android:gravity="right"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MarketActivity" >
 
     <TableLayout
         android:id="@+id/market_table"
