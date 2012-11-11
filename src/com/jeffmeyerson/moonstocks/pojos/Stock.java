@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jeffmeyerson.moonstocks.pojos.SongElement.SongElementType;
+import com.jeffmeyerson.moonstocks.pricefunctions.Interpolation;
 import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
 import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunctionFactory;
 
@@ -20,7 +21,7 @@ import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunctionFactory;
 public class Stock {
 
     /** Time interval between actions measured in ms. */
-    public static final int TIMESTEP = 469;
+    public static final int TIMESTEP = 100;
 
     private List<SongElement> song;
 
@@ -77,7 +78,9 @@ public class Stock {
 
             PriceFunction priceFunction = PriceFunctionFactory.getPriceFunctionForStock(stockName);
             
-            SongElement element = new SongElement(type, values, priceFunction);
+            PriceFunction interpolation = new Interpolation(priceFunction);
+            
+            SongElement element = new SongElement(type, values, interpolation);
 
             assert(element != null);
 

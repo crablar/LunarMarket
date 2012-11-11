@@ -39,6 +39,7 @@ public class StockActivity extends Activity {
 	private TextView balanceView;
 	private TextView sharesOwnedView;
 	private ChartView chartView;
+	private ChartView interpolatedChartView;
 	private Stock stock;
 	private double price;
 	private String stockTicker;
@@ -64,6 +65,8 @@ public class StockActivity extends Activity {
 		balanceView = (TextView) findViewById(R.id.balance_view);
 
 		chartView = (ChartView) findViewById(R.id.chart);
+		chartView = (ChartView) findViewById(R.id.interpolatedChart);
+
 
 		// Get the Player object from our activity
 		player = (Player) deserializeObject(extras.getByteArray("player"));
@@ -117,7 +120,7 @@ public class StockActivity extends Activity {
 				stockPriceView.setText("$" + price);
 
 				chartView.addPoint(Float.valueOf(twoDForm.format(rawPrice)));
-
+				interpolatedChartView = chartView;
 				/**
 				 * My understanding of how this section of our code works is
 				 * that the view is automatically refreshed by the OS on some
@@ -131,6 +134,8 @@ public class StockActivity extends Activity {
 
 				// Invalidate the ChartView so that it can be reset
 				chartView.invalidate();
+				interpolatedChartView.invalidate();
+
 
 				// Put this function on the message queue
 				mHandler.postDelayed(this, Stock.TIMESTEP);
