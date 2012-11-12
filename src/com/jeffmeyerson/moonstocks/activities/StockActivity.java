@@ -2,6 +2,7 @@ package com.jeffmeyerson.moonstocks.activities;
 
 import java.io.InputStream;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.Utility;
@@ -26,6 +28,8 @@ import com.jeffmeyerson.moonstocks.views.ChartView;
  * 
  */
 public class StockActivity extends MoonActivity {
+    Context context = this;
+
 	private Handler mHandler = new Handler();
 	private TextView stockPriceView;
 	private TextView balanceView;
@@ -142,7 +146,9 @@ public class StockActivity extends MoonActivity {
 			public void onClick(View v) {
 				// Buy!!!!
 
-				player.buy(stockTicker, 1, price);
+                if (!player.buy(stockTicker, 1, price)) {
+                    Toast.makeText(context, "Not enough money to buy stock!", Toast.LENGTH_SHORT).show();
+                }
 
 				// Get and set the player's updated balance
 				double balance = Utility.roundCurrency(player.getBalance());
@@ -158,7 +164,9 @@ public class StockActivity extends MoonActivity {
 			public void onClick(View v) {
 
 				// Sell!!!!
-				player.sell(stockTicker, 1, price);
+                if (!player.sell(stockTicker, 1, price)) {
+                    Toast.makeText(context, "You don't own any stock to sell!", Toast.LENGTH_SHORT).show();
+                }
 
 				// Get and set the player's updated balance
 				double balance = Utility.roundCurrency(player.getBalance());
