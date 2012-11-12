@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.jeffmeyerson.moonstocks.activities.MoonActivity;
+
 /**
  * @author jeffreymeyerson
  *
@@ -19,7 +21,7 @@ public class Player implements Serializable {
     private Protocol protocol;
 
     public Player() {
-    	balance = 0.0;
+    	balance = MoonActivity.STARTING_MONEY;
         stockShares = new HashMap<String, Integer>();
         protocol = new Protocol();
     }

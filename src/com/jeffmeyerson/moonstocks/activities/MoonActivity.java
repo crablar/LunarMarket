@@ -49,7 +49,7 @@ public abstract class MoonActivity extends Activity {
     static int globalTime = 0;
 
     // There is only one player
-    static Player player = null;
+    static Player player = new Player();
     
     // Media player data. Hidden from children.
     private MediaPlayer mp;
