@@ -62,20 +62,13 @@
         android:layout_height="300dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/stock_price_view" />
-    
-        <com.jeffmeyerson.moonstocks.views.ChartView
-        android:id="@+id/interpolatedChart"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/chart" />
 
     <Button
         android:id="@+id/buy_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/interpolatedChart"
+        android:layout_below="@+id/chart"
         android:layout_centerVertical="true"
         android:layout_marginRight="34dp"
         android:text="Buy Stock" />
