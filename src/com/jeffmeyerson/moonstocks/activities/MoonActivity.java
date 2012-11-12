@@ -49,7 +49,7 @@ public abstract class MoonActivity extends Activity {
     static int globalTime = 0;
 
     // There is only one player
-    static Player player = new Player();
+    static Player player = null;
     
     // Media player data. Hidden from children.
     private MediaPlayer mp;
@@ -66,28 +66,30 @@ public abstract class MoonActivity extends Activity {
         SharedPreferences mPrefs = getSharedPreferences("moonstocks_prefs", MODE_PRIVATE);
         int size = mPrefs.getInt("fileSize", 0);
         // Read the player from persistence if necessary
-        if (player == null) {
-            if (size > 0) {
-                FileInputStream fin;
-                byte[] buffer = new byte[size];
-                try {
-                    fin = openFileInput(persistenceFile);
-                    fin.read(buffer);
-                } catch (FileNotFoundException e) {
-                    Log.d("MoonActivity", "player file not found");
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    Log.d("MoonActivity", "player file io exception");
-                    e.printStackTrace();
-                }
-
-                player = (Player) Utility.deserialize(buffer);
-            } else {
-                player = new Player();
-                player.setBalance(STARTING_MONEY);
-                player.setName("Jeff");
+        if (player == null && size > 0) {
+            FileInputStream fin;
+            byte[] buffer = new byte[size];
+            try {
+                fin = openFileInput(persistenceFile);
+                fin.read(buffer);
+            } catch (FileNotFoundException e) {
+                Log.d("MoonActivity", "player file not found");
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.d("MoonActivity", "player file io exception");
+                e.printStackTrace();
             }
+
+            player = (Player) Utility.deserialize(buffer);
+            if (player == null) {
+                Log.e("MoonActivity.onCreate", "Player could not be deserialized!");
+            }
+        } else {
+            player = new Player();
+            player.setBalance(STARTING_MONEY);
+            player.setName("Jeff");
         }
+
     }
     
     // ActionBar related things ****************************************
