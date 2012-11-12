@@ -19,7 +19,7 @@
             android:id="@+id/scroll_text"
             android:layout_width="match_parent"
             android:layout_height="38dp"
-            android:text="evil 0.0\t bdst 0.0\t wmc 0.0\t other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks" />
+            android:text="@+string/initialScrollText" />
     </HorizontalScrollView>
 
     <TableLayout

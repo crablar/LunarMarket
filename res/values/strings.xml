@@ -11,6 +11,7 @@
     <string name="stock_name">main_menu</string>
     <string name="player_balance">1000</string>
     <string name="time_between_price_change_ms">2000</string>
+    <string name="initialScrollText">evil 0.0\t bdst 0.0\t wmc 0.0\t other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks other_stocks</string>
     <string name="reset_game">reset (for debugging purposes ONLY!)</string>
 
 </resources>
