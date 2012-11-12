@@ -1,5 +1,8 @@
 package com.jeffmeyerson.moonstocks.activities;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +13,10 @@ import com.jeffmeyerson.moonstocks.pojos.Player;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,6 +50,41 @@ public abstract class MoonActivity extends Activity {
     private MediaPlayer mp;
     private int music_id = 0;
 
+    // Persistence data. Hidden from children.
+    private final String persistenceFile = "moonstocks";
+
+    // Persistence related things **************************************
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        SharedPreferences mPrefs = getSharedPreferences("moonstocks_prefs", MODE_PRIVATE);
+        int size = mPrefs.getInt("fileSize", 0);
+        // Read the player from persistence if necessary
+        if (player == null) {
+            if (size > 0) {
+                FileInputStream fin;
+                byte[] buffer = new byte[size];
+                try {
+                    fin = openFileInput(persistenceFile);
+                    fin.read(buffer);
+                } catch (FileNotFoundException e) {
+                    Log.d("MoonActivity", "player file not found");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.d("MoonActivity", "player file io exception");
+                    e.printStackTrace();
+                }
+
+                player = (Player) Utility.deserialize(buffer);
+            } else {
+                player = new Player();
+                player.setBalance(STARTING_MONEY);
+                player.setName("Jeff");
+            }
+        }
+    }
+    
     // ActionBar related things ****************************************
 
     @Override
