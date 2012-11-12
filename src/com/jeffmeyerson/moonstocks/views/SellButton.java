@@ -38,7 +38,7 @@ public class SellButton extends View {
         super.onDraw(canvas);
 
         paint.setStrokeWidth(3);
-        paint.setColor(Color.GRAY);
+        paint.setColor(Color.argb(128, 255, 64, 64));
 
         final float h = this.getHeight();
         final float w = this.getWidth();
