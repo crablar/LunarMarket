@@ -1,14 +1,9 @@
 package com.jeffmeyerson.moonstocks.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,23 +13,18 @@ import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Protocol;
 import com.jeffmeyerson.moonstocks.views.TimerView;
 
-public class SystemDetailsActivity extends Activity {
+public class SystemDetailsActivity extends MoonActivity {
     private Handler mHandler = new Handler();
-    private MediaPlayer mp;
-
-    // data
-    private Player player;
-    private int time;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_system_details);
 
-        mp = MediaPlayer.create(this, R.raw.evil);
-        mp.setLooping(true);
+        play(R.raw.evil);
 
         // Get the data from the Intent
+        // TODO: Move this to MoonActivity
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
@@ -106,60 +96,4 @@ public class SystemDetailsActivity extends Activity {
         player = (Player) Utility.deserialize(savedInstanceState.getByteArray("player"));
 
     }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mp.start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mp.pause();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mp.release();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.reset_game) {
-            player = new Player();
-            player.setBalance(MarketActivity.STARTING_MONEY);
-            player.setName("Jeff");
-            return true;
-        } else if (id == R.id.menu_news) {
-            Intent intent = new Intent(this, NewsActivity.class);
-            intent.putExtra("time", time);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.menu_system_details) {
-            Intent intent = new Intent(this, SystemDetailsActivity.class);
-            intent.putExtra("time", time);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.menu_stock_market) {
-            Intent intent = new Intent(this, MarketActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        return false;
-    }
-
 }

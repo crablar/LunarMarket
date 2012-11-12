@@ -140,20 +140,4 @@
         </TableRow>
     </TableLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom" >
-
-        <Button
-            android:id="@+id/back_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="false"
-            android:onClick="quitToMarket"
-            android:text="Back" />
-    </RelativeLayout>
-
 </LinearLayout>

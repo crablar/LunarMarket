@@ -5,20 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -33,25 +27,13 @@ import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
 
-public class MarketActivity extends Activity {
+public class MarketActivity extends MoonActivity {
 
-	private Context context = this;
+    private Context context = this;
 
-	// The amount of money the player has upon beginning a new game
-	public final static int STARTING_MONEY = 5000;
-	
-	// Plays launchpad music
-	private MediaPlayer mp;
-
-	// The object representing the person playing the game
-	private Player player;
-
-	private int time;
-	
+    // used for persistence?
 	private int size;
-
 	private String fileName = "mainactivity";
-
 	private SharedPreferences mPrefs;
 
 	@Override
@@ -59,16 +41,11 @@ public class MarketActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_market);
 
-		Log.d("Running", "onCreate");
-
-		time = 0;
-
 		mPrefs = getSharedPreferences("mainactivity_prefs", MODE_PRIVATE);
 
 		size = mPrefs.getInt("fileSize", 0);
 
 		// Check for a persisted player
-
 		FileInputStream fin;
 		byte[] buffer = new byte[size];
 		try {
@@ -107,8 +84,7 @@ public class MarketActivity extends Activity {
 		TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
 		for (final Company c : companies) {
 			TableRow row = new TableRow(this);
-			row.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-					LayoutParams.WRAP_CONTENT));
+			row.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 			// Add a button to take the player to the StockActivity for that
 			// company.
@@ -145,26 +121,6 @@ public class MarketActivity extends Activity {
 
 	}
 
-	/**
-	 * Create a list of CompanyModels as defined by the companies.xml file.
-	 * 
-	 * @return
-	 */
-	private List<Company> getCompanies() {
-		List<Company> result = new LinkedList<Company>();
-		String[] companyStrings = getResources().getStringArray(
-				R.array.companies);
-
-		for (String companyString : companyStrings) {
-			String[] companyArr = companyString.split(" ");
-			String ticker = companyArr[0];
-			String name = companyArr[1];
-			Company company = new Company(ticker, name);
-			result.add(company);
-		}
-		return result;
-	}
-
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -174,48 +130,19 @@ public class MarketActivity extends Activity {
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		player = (Player) Utility.deserialize(savedInstanceState
-				.getByteArray("player"));
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		// Start playing music
-		if (mp == null) {
-			mp = MediaPlayer.create(this, R.raw.evil);
-
-			mp.setLooping(true);
-		}
-
-		mp.start();
-
-		Log.d("Running", "onResume");
+		player = (Player) Utility.deserialize(savedInstanceState.getByteArray("player"));
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mp.pause();
-		Log.d("Running", "onPause");
 		update();
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		mp.release();
-		mp = null;
-		Log.d("Running", "onStop");
 		update();
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		// mp.release();
-		Log.d("running", "onDestroy");
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -230,6 +157,7 @@ public class MarketActivity extends Activity {
 		}  // onActivityResult
 	}
 
+	// TODO: what exactly does this function do and when is it getting called?
 	private void update() {
 		Log.d("Running", "update()");
 
@@ -288,40 +216,5 @@ public class MarketActivity extends Activity {
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.actionbar, menu);
-		return true;
-	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    int id = item.getItemId();
-
-	    if (id == R.id.reset_game) {
-	        player = new Player();
-            player.setBalance(STARTING_MONEY);
-            player.setName("Jeff");
-            return true;
-	    } else if (id == R.id.menu_news) {
-	        Intent intent = new Intent(context, NewsActivity.class);
-	        intent.putExtra("time", time);
-	        startActivity(intent);
-	        return true;
-	    } else if (id == R.id.menu_system_details) {
-	        Intent intent = new Intent(context, SystemDetailsActivity.class);
-            intent.putExtra("player", Utility.serialize(player));
-            intent.putExtra("time", time);
-            startActivity(intent);
-            return true;
-	    } else if (id == R.id.menu_stock_market) {
-	        Intent intent = new Intent(this, MarketActivity.class);
-	        startActivity(intent);
-	        return true;
-	    }
-
-		return false;
-	}
 }
