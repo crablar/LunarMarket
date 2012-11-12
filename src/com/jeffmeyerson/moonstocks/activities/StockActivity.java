@@ -121,6 +121,7 @@ public class StockActivity extends MoonActivity {
 
 				// Move to the next time interval
 				time += Stock.TIMESTEP;
+				globalTime += Stock.TIMESTEP;
 			}
 		};
 

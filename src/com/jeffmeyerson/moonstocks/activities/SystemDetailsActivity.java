@@ -45,17 +45,14 @@ public class SystemDetailsActivity extends MoonActivity {
             player = new Player();
         }
 
-        //Fill TextViews with information
+        // Fill TextViews with information
         TextView playerNameView = (TextView) findViewById(R.id.playerText);
         playerNameView.setText("TradeBot Class xF4D2: " + player.getName());
-
         TextView balanceView = (TextView) findViewById(R.id.balanceText);
         balanceView.setText("Balance: $" + + player.getBalance());
-
         TextView netProfitsView = (TextView) findViewById(R.id.netProfitText);
         double netProfits = player.getBalance() - MarketActivity.STARTING_MONEY;
         netProfitsView.setText("Net profits: $" + netProfits);
-
         TextView protocolView = (TextView) findViewById(R.id.protocolText);
         protocolView.setText(Protocol.getProtocolVerbose());
 
@@ -63,13 +60,14 @@ public class SystemDetailsActivity extends MoonActivity {
             public void run() {
 
                 TimerView timerView = (TimerView) findViewById(R.id.timerView);
-                timerView.setTime(time);
+                timerView.setTime(globalTime);
 
                 // Put this function on the message queue
                 mHandler.postDelayed(this, 1000);
 
                 // Move to the next time interval
                 time += 1000;
+                globalTime += 1000;
             }
         };
 

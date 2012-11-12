@@ -41,11 +41,16 @@ public abstract class MoonActivity extends Activity {
 
     // Constants
     public static final int STARTING_MONEY = 5000;
-
-    // Game data exposed to inheriting classes
-    protected Player player;
+    
+    // The amount of time elapsed since this activity was created
     protected int time;
+    
+    // The amount of time elapsed since the app was started
+    static int globalTime = 0;
 
+    // There is only one player
+    static Player player = new Player();
+    
     // Media player data. Hidden from children.
     private MediaPlayer mp;
     private int music_id = 0;

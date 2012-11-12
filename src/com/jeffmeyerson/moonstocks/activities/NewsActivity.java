@@ -156,6 +156,9 @@ public class NewsActivity extends MoonActivity {
 
                 int pos = (int) (1.0 * (scrollTime - millisUntilFinished) / scrollTime * (tv.getWidth() - h.getWidth()));
                 h.scrollTo(pos, 0);
+                
+                // TODO: is this correct?
+                globalTime += scrollTimeInterval;
             } 
 
             public void onFinish() {
