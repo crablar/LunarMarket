@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -138,7 +137,7 @@ public class StockActivity extends MoonActivity {
 
 		// Initialize buttons
 		View buyButton = (View) findViewById(R.id.buy_button);
-		Button sellButton = (Button) findViewById(R.id.sell_button);
+        View sellButton = (View) findViewById(R.id.sell_button);
 
 		// Add onclick listeners to existing buttons
 		buyButton.setOnClickListener(new View.OnClickListener() {

@@ -8,7 +8,7 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class BuyButton extends View {
+public class SellButton extends View {
 
     private Paint paint;
     private Path arrow;
@@ -18,17 +18,17 @@ public class BuyButton extends View {
         arrow = new Path();
     }
 
-    public BuyButton(Context context) {
+    public SellButton(Context context) {
         super(context);
         initialize();
     }
 
-    public BuyButton(Context context, AttributeSet attrs) {
+    public SellButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize();
     }
 
-    public BuyButton(Context context, AttributeSet attrs, int defStyle) {
+    public SellButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initialize();
     }
@@ -42,13 +42,14 @@ public class BuyButton extends View {
 
         final float h = this.getHeight();
         final float w = this.getWidth();
+        // TODO: draw the sell icon here
         arrow.reset();
         arrow.moveTo(0, h/2);
-        arrow.lineTo(w/2, 0);
+        arrow.lineTo(w/2, h);
         arrow.lineTo(w, h/2);
         arrow.close();
         // draw the up part of the arrow
         canvas.drawPath(arrow, paint);
-        canvas.drawRect(w/4, h/2, 3*(w/4), h, paint);
+        canvas.drawRect(w/4, 0, 3*(w/4), h/2, paint);
     }
 }

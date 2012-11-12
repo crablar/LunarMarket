@@ -69,15 +69,14 @@
         android:layout_centerVertical="true"
         />
 
-    <Button
+    <com.jeffmeyerson.moonstocks.views.SellButton
         android:id="@+id/sell_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chart"
-        android:layout_marginRight="15dp"
-        android:layout_toLeftOf="@+id/buy_button"
-        android:onClick="sellShare"
-        android:text="Sell Stock" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/back_button"
+        android:layout_centerVertical="true"
+        />
 
     <Button
         android:id="@+id/back_button"
