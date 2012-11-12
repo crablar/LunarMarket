@@ -11,7 +11,7 @@ import java.util.List;
 public class Interpolation implements PriceFunction {
 	private static final int UPPER_BOUND = 299;
 
-	private final static int REAL_POINT_FREQUENCY = 5;
+	private final static int REAL_POINT_FREQUENCY = 10;
 	private PriceFunction functionToInterpolateOn;
 
 	public Interpolation(PriceFunction function) {
@@ -32,8 +32,9 @@ public class Interpolation implements PriceFunction {
 				timeAtNextRealPoint, values);
 		int priceDifferenceBetweenRealPoints = nextRealPoint
 				- previousRealPoint;
-		int result = previousRealPoint + timeElapsedSinceLastPoint
-				* priceDifferenceBetweenRealPoints;
+		int result = previousRealPoint
+				+ timeElapsedSinceLastPoint
+				* (int) (1.0 * priceDifferenceBetweenRealPoints / REAL_POINT_FREQUENCY);
 		if (result < 1)
 			return 1;
 		return Math.min(result, UPPER_BOUND);
