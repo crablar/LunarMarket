@@ -133,11 +133,12 @@ public class StockActivity extends MoonActivity {
 		sharesOwnedView.setText(sharesOwned + "");
 
 		// Initialize buttons
-		Button buyButton = (Button) findViewById(R.id.buy_button);
+		View buyButton = (View) findViewById(R.id.buy_button);
 		Button sellButton = (Button) findViewById(R.id.sell_button);
 
 		// Add onclick listeners to existing buttons
-		buyButton.setOnClickListener(new OnClickListener() {
+		buyButton.setOnClickListener(new View.OnClickListener() {
+		    @Override
 			public void onClick(View v) {
 				// Buy!!!!
 
@@ -152,6 +153,7 @@ public class StockActivity extends MoonActivity {
 				sharesOwnedView.setText(sharesOwned + "");
 			}
 		});
+		
 		sellButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 
