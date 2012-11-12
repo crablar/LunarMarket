@@ -1,19 +1,12 @@
 package com.jeffmeyerson.moonstocks.activities;
 
 import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,11 +19,10 @@ import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
 
-public class NewsActivity extends Activity {
+public class NewsActivity extends MoonActivity {
 
     private Context context = this;
 
-    private MediaPlayer mp;
     private long scrollTime = 20000;
     private long scrollTimeInterval = 50;
 
@@ -39,8 +31,8 @@ public class NewsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        mp = MediaPlayer.create(this, R.raw.evil);
-        mp.setLooping(true);
+        // play a lovely little tune
+        play(R.raw.evil);
 
         // Set up the scrolling stock ticker at the top.
         HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.stock_scroller);    
@@ -178,68 +170,4 @@ public class NewsActivity extends Activity {
             } 
          }.start(); 
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mp.start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mp.pause();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mp.release();
-    }
-
-   private List<Company> getCompanies() {
-        List<Company> result = new LinkedList<Company>();
-        String[] companyStrings = getResources().getStringArray(R.array.companies);
-
-        for (String companyString : companyStrings) {
-            String[] companyArr = companyString.split(" ");
-            String ticker = companyArr[0];
-            String name = companyArr[1];
-            Company company = new Company(ticker, name);
-            result.add(company);
-        }
-        return result;
-   } 
-   
-   @Override
-   public boolean onCreateOptionsMenu(Menu menu) {
-       super.onCreateOptionsMenu(menu);
-       MenuInflater inflater = getMenuInflater();
-       inflater.inflate(R.menu.actionbar, menu);
-       return true;
-   }
-
-   @Override
-   public boolean onOptionsItemSelected(MenuItem item) {
-       int id = item.getItemId();
-
-       if (id == R.id.reset_game) {
-           return true;
-       } else if (id == R.id.menu_news) {
-           Intent intent = new Intent(context, NewsActivity.class);
-           startActivity(intent);
-           return true;
-       } else if (id == R.id.menu_system_details) {
-           Intent intent = new Intent(context, SystemDetailsActivity.class);
-           startActivity(intent);
-           return true;
-       } else if (id == R.id.menu_stock_market) {
-           Intent intent = new Intent(this, MarketActivity.class);
-           startActivity(intent);
-           return true;
-       }
-
-       return false;
-   }
 }

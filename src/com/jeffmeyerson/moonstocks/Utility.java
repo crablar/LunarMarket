@@ -6,12 +6,25 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.text.DecimalFormat;
 
 import android.util.Log;
 
 // Let's try not to make this a kitchen sink.
 public class Utility {
 
+    public static double roundCurrency(double amount) {
+        final DecimalFormat twoDForm = new DecimalFormat("#.00");
+        Double result = Double.valueOf(twoDForm.format(amount));
+        return result.doubleValue();
+    }
+
+    public static float roundCurrencyToFloat(double value) {
+        final DecimalFormat twoDForm = new DecimalFormat("#.00");
+        Float result = Float.valueOf(twoDForm.format(value));
+        return result.floatValue();
+    }
+    
     public static byte[] serialize(Object o) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 

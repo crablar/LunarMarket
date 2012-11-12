@@ -1,15 +1,12 @@
 package com.jeffmeyerson.moonstocks.activities;
 
 import java.io.InputStream;
-import java.text.DecimalFormat;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -28,7 +25,7 @@ import com.jeffmeyerson.moonstocks.views.ChartView;
  *         interval in order to get a price to display.
  * 
  */
-public class StockActivity extends Activity {
+public class StockActivity extends MoonActivity {
 	private Handler mHandler = new Handler();
 	private TextView stockPriceView;
 	private TextView balanceView;
@@ -38,13 +35,6 @@ public class StockActivity extends Activity {
 	private Stock stock;
 	private double price;
 	private String stockTicker;
-
-	// Plays appropriate music for the level
-	private MediaPlayer mp;
-
-	private int time;
-	private Player player;
-	private final DecimalFormat twoDForm = new DecimalFormat("#.00");
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -81,16 +71,13 @@ public class StockActivity extends Activity {
 		// Put the raw text file into an InputStream
 		if (stockTicker.equals("EVIL")) {
 			inputStream = this.getResources().openRawResource(R.raw.evil_vals);
-			mp = MediaPlayer.create(this, R.raw.evil);
-			mp.setLooping(true);
+			play(R.raw.evil);
 		} else if (stockTicker.equals("BDST")) {
 			inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
-			mp = MediaPlayer.create(this, R.raw.evil);
-			mp.setLooping(true);
+			play(R.raw.evil);
 		} else if (stockTicker.equals("WMC")) {
 			inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
-			mp = MediaPlayer.create(this, R.raw.evil);
-			mp.setLooping(true);
+			play(R.raw.evil);
 		}
 
 		// Start at t = 0
@@ -111,10 +98,10 @@ public class StockActivity extends Activity {
 			public void run() {
 				// Get the stock price for the current time and set the TextView
 				double rawPrice = stock.getPrice(time);
-				price = roundToTwoPlaces(rawPrice);
+				price = Utility.roundCurrency(rawPrice);
 				stockPriceView.setText("$" + price);
 
-				chartView.addPoint(Float.valueOf(twoDForm.format(rawPrice)));
+				chartView.addPoint(Utility.roundCurrencyToFloat(rawPrice));
 				interpolatedChartView = chartView;
 				/**
 				 * My understanding of how this section of our code works is
@@ -159,7 +146,7 @@ public class StockActivity extends Activity {
 				player.buy(stockTicker, 1, price);
 
 				// Get and set the player's updated balance
-				double balance = roundToTwoPlaces(player.getBalance());
+				double balance = Utility.roundCurrency(player.getBalance());
 				balanceView.setText(balance + "");
 
 				// Get and set the player's updated sharesOwned
@@ -174,7 +161,7 @@ public class StockActivity extends Activity {
 				player.sell(stockTicker, 1, price);
 
 				// Get and set the player's updated balance
-				double balance = roundToTwoPlaces(player.getBalance());
+				double balance = Utility.roundCurrency(player.getBalance());
 				balanceView.setText(balance + "");
 
 				// Get and set the player's updated sharesOwned
@@ -204,30 +191,16 @@ public class StockActivity extends Activity {
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		mp.start();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		mp.pause();
-		Log.d("Time", "time: " + time);
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		mp.release();
-		Log.d("Time", "time: " + time);
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_stock, menu);
 		return true;
 	}
+	
+    // don't use MoonActivity's options menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
+    }
 
 	@Override
 	public void onBackPressed() {
@@ -236,15 +209,6 @@ public class StockActivity extends Activity {
 		returnIntent.putExtra("time", getTime());
 		setResult(RESULT_OK, returnIntent);
 		finish();
-	}
-
-	public void quitToMarket(View view) {
-		onBackPressed();
-	}
-
-	public double roundToTwoPlaces(double rawPrice) {
-		Double result = Double.valueOf(twoDForm.format(rawPrice));
-		return result.doubleValue();
 	}
 
 	public int getTime() {
