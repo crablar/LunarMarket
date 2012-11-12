@@ -211,5 +211,9 @@ public class StockActivity extends MoonActivity {
 	public int getTime() {
 		return time;
 	}
+	
+	public void quitToMarket(View view) {
+	    onBackPressed();
+	}
 
 }

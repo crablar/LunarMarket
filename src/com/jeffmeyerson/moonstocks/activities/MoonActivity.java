@@ -92,14 +92,19 @@ public abstract class MoonActivity extends Activity {
         }
         mp = MediaPlayer.create(this, music_id);
         mp.setLooping(true);
+        mp.start();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        if (music_id == 0) {
+            return;
+        }
+
         // Start playing music
-        if (mp == null && music_id != 0) {
+        if (mp == null) {
             mp = MediaPlayer.create(this, music_id);
             mp.setLooping(true);
         }
@@ -110,14 +115,18 @@ public abstract class MoonActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        mp.pause();
+        if (mp != null) {
+            mp.pause();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mp.release();
-        mp = null;
+        if (mp != null) {
+            mp.release();
+            mp = null;
+        }
     }
 
     /**
