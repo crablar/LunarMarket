@@ -60,23 +60,23 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/stock_price_view" />
 
+
+
     <com.jeffmeyerson.moonstocks.views.BuyButton
         android:id="@+id/buy_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentRight="true"
         android:layout_above="@+id/back_button"
-        android:layout_centerVertical="true"
-        />
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
 
     <com.jeffmeyerson.moonstocks.views.SellButton
         android:id="@+id/sell_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
         android:layout_above="@+id/back_button"
-        android:layout_centerVertical="true"
-        />
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" />
 
     <Button
         android:id="@+id/back_button"
@@ -85,5 +85,13 @@
         android:layout_alignParentBottom="true"
         android:onClick="quitToMarket"
         android:text="Back" />
+        <Button
+        android:id="@+id/interpolation_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/back_button"
+        android:onClick="toggleInterpolation"
+        android:text="Toggle Interpolation" />
 
 </RelativeLayout>

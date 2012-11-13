@@ -37,6 +37,7 @@ public class StockActivity extends MoonActivity {
 	private Stock stock;
 	private double price;
 	private String stockTicker;
+	private boolean isInterpolating;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,8 @@ public class StockActivity extends MoonActivity {
 		chartView = (ChartView) findViewById(R.id.chart);
 
 
+		isInterpolating = false;
+		
 		// Get the Player object from our activity
 		player = (Player) Utility.deserialize(extras.getByteArray("player"));
 		((TextView) findViewById(R.id.balance_view)).setText(""
@@ -87,7 +90,7 @@ public class StockActivity extends MoonActivity {
 		// Create the Stock object out of the SongData
 		stock = new Stock(inputStream);
 
-		price = stock.getPrice(time);
+		price = stock.getUninterpolatedPrice(time);
 
 		stockPriceView.setText("$" + price);
 
@@ -97,8 +100,11 @@ public class StockActivity extends MoonActivity {
 		// ChartView
 		Runnable priceFlux = new Runnable() {
 			public void run() {
+				
 				// Get the stock price for the current time and set the TextView
-				double rawPrice = stock.getPrice(time);
+				double rawPrice;
+				
+				rawPrice = isInterpolating? stock.getInterpolatedPrice(time) : stock.getUninterpolatedPrice(time);
 				price = Utility.roundCurrency(rawPrice);
 				stockPriceView.setText("$" + price);
 
@@ -179,6 +185,14 @@ public class StockActivity extends MoonActivity {
 
 	}
 
+	public void quitToMarket(View view) {
+	    onBackPressed();
+	}
+	
+	public void toggleInterpolation(View view) {
+	    isInterpolating = !isInterpolating;
+	}
+	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -222,8 +236,6 @@ public class StockActivity extends MoonActivity {
 		return time;
 	}
 	
-	public void quitToMarket(View view) {
-	    onBackPressed();
-	}
+
 
 }

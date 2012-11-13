@@ -130,8 +130,8 @@ public class NewsActivity extends MoonActivity {
 		if(time == 0)
 			return "0.0";
 		
-        Double priceNew = stock.getPrice(time);
-        Double priceOld = stock.getPrice(time - 1);
+        Double priceNew = stock.getUninterpolatedPrice(time);
+        Double priceOld = stock.getUninterpolatedPrice(time - 1);
         Double change = priceNew - priceOld;
         
         if(change > 0){
