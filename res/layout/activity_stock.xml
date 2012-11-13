@@ -34,24 +34,24 @@
         android:layout_alignLeft="@+id/balance_text"
         android:layout_below="@+id/balance_text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <TextView
+        android:id="@+id/shares_owned_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/balance_view"
+        android:layout_alignBottom="@+id/balance_view"
+        android:layout_alignRight="@+id/shares_owned_text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/shares_owned_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/stock_name"
-        android:layout_alignBottom="@+id/stock_name"
-        android:layout_toRightOf="@+id/sell_button"
+        android:layout_above="@+id/balance_view"
+        android:layout_alignRight="@+id/chart"
         android:text="Shares Owned"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/shares_owned_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/shares_owned_text"
-        android:layout_below="@+id/shares_owned_text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <com.jeffmeyerson.moonstocks.views.ChartView
         android:id="@+id/chart"
@@ -59,8 +59,6 @@
         android:layout_height="300dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/stock_price_view" />
-
-
 
     <com.jeffmeyerson.moonstocks.views.BuyButton
         android:id="@+id/buy_button"
@@ -85,7 +83,8 @@
         android:layout_alignParentBottom="true"
         android:onClick="quitToMarket"
         android:text="Back" />
-        <Button
+
+    <Button
         android:id="@+id/interpolation_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
