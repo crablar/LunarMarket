@@ -27,7 +27,7 @@ import com.jeffmeyerson.moonstocks.views.ChartView;
  * 
  */
 public class StockActivity extends MoonActivity {
-    Context context = this;
+	Context context = this;
 
 	private Handler mHandler = new Handler();
 	private TextView stockPriceView;
@@ -54,9 +54,8 @@ public class StockActivity extends MoonActivity {
 
 		chartView = (ChartView) findViewById(R.id.chart);
 
-
 		isInterpolating = false;
-		
+
 		// Get the Player object from our activity
 		player = (Player) Utility.deserialize(extras.getByteArray("player"));
 		((TextView) findViewById(R.id.balance_view)).setText(""
@@ -85,12 +84,12 @@ public class StockActivity extends MoonActivity {
 		}
 
 		// Start at t = 0
-		time = 0;
+		localTime = 0;
 
 		// Create the Stock object out of the SongData
 		stock = new Stock(inputStream);
 
-		price = stock.getUninterpolatedPrice(time);
+		price = stock.getUninterpolatedPrice(localTime);
 
 		stockPriceView.setText("$" + price);
 
@@ -100,11 +99,13 @@ public class StockActivity extends MoonActivity {
 		// ChartView
 		Runnable priceFlux = new Runnable() {
 			public void run() {
-				
+
 				// Get the stock price for the current time and set the TextView
 				double rawPrice;
-				
-				rawPrice = isInterpolating? stock.getInterpolatedPrice(time) : stock.getUninterpolatedPrice(time);
+
+				rawPrice = isInterpolating ? stock
+						.getInterpolatedPrice(localTime) : stock
+						.getUninterpolatedPrice(localTime);
 				price = Utility.roundCurrency(rawPrice);
 				stockPriceView.setText("$" + price);
 
@@ -124,12 +125,11 @@ public class StockActivity extends MoonActivity {
 				// Invalidate the ChartView so that it can be reset
 				chartView.invalidate();
 
-
 				// Put this function on the message queue
 				mHandler.postDelayed(this, Stock.TIMESTEP);
 
 				// Move to the next time interval
-				time += Stock.TIMESTEP;
+				localTime += Stock.TIMESTEP;
 				globalTime += Stock.TIMESTEP;
 			}
 		};
@@ -143,17 +143,18 @@ public class StockActivity extends MoonActivity {
 
 		// Initialize buttons
 		View buyButton = (View) findViewById(R.id.buy_button);
-        View sellButton = (View) findViewById(R.id.sell_button);
+		View sellButton = (View) findViewById(R.id.sell_button);
 
 		// Add onclick listeners to existing buttons
 		buyButton.setOnClickListener(new View.OnClickListener() {
-		    @Override
+			@Override
 			public void onClick(View v) {
 				// Buy!!!!
 
-                if (!player.buy(stockTicker, 1, price)) {
-                    Toast.makeText(context, "Not enough money to buy stock!", Toast.LENGTH_SHORT).show();
-                }
+				if (!player.buy(stockTicker, 1, price)) {
+					Toast.makeText(context, "Not enough money to buy stock!",
+							Toast.LENGTH_SHORT).show();
+				}
 
 				// Get and set the player's updated balance
 				double balance = Utility.roundCurrency(player.getBalance());
@@ -164,14 +165,15 @@ public class StockActivity extends MoonActivity {
 				sharesOwnedView.setText(sharesOwned + "");
 			}
 		});
-		
+
 		sellButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 
 				// Sell!!!!
-                if (!player.sell(stockTicker, 1, price)) {
-                    Toast.makeText(context, "You don't own any stock to sell!", Toast.LENGTH_SHORT).show();
-                }
+				if (!player.sell(stockTicker, 1, price)) {
+					Toast.makeText(context, "You don't own any stock to sell!",
+							Toast.LENGTH_SHORT).show();
+				}
 
 				// Get and set the player's updated balance
 				double balance = Utility.roundCurrency(player.getBalance());
@@ -186,13 +188,13 @@ public class StockActivity extends MoonActivity {
 	}
 
 	public void quitToMarket(View view) {
-	    onBackPressed();
+		onBackPressed();
 	}
-	
+
 	public void toggleInterpolation(View view) {
-	    isInterpolating = !isInterpolating;
+		isInterpolating = !isInterpolating;
 	}
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -206,7 +208,8 @@ public class StockActivity extends MoonActivity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 
-		player = (Player) Utility.deserialize(savedInstanceState.getByteArray("player"));
+		player = (Player) Utility.deserialize(savedInstanceState
+				.getByteArray("player"));
 		stockTicker = savedInstanceState.getString("stock");
 
 	}
@@ -216,26 +219,19 @@ public class StockActivity extends MoonActivity {
 		getMenuInflater().inflate(R.menu.activity_stock, menu);
 		return true;
 	}
-	
-    // don't use MoonActivity's options menu
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
-    }
+
+	// don't use MoonActivity's options menu
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return false;
+	}
 
 	@Override
 	public void onBackPressed() {
 		Intent returnIntent = new Intent();
 		returnIntent.putExtra("player", Utility.serialize(player));
-		returnIntent.putExtra("time", getTime());
 		setResult(RESULT_OK, returnIntent);
 		finish();
 	}
-
-	public int getTime() {
-		return time;
-	}
-	
-
 
 }

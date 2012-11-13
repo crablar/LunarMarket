@@ -156,7 +156,6 @@ public class MarketActivity extends MoonActivity {
         TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
 
         player = (Player) Utility.deserialize(data.getByteArrayExtra("player"));
-        time = data.getExtras().getInt("time");
 
         InputStream inputStream = null;
 
@@ -176,8 +175,7 @@ public class MarketActivity extends MoonActivity {
 
             Stock stock = new Stock(inputStream);
             ((TextView) row.getChildAt(1)).setText("$"
-                    + String.valueOf(stock.getUninterpolatedPrice(data.getExtras().getInt(
-                            "time"))));
+                    + String.valueOf(stock.getUninterpolatedPrice(MoonActivity.globalTime)));
             ((TextView) row.getChildAt(2)).setText(String.valueOf(player
                     .getSharesOwned(company)));
         }

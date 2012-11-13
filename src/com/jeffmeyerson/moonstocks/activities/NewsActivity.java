@@ -38,17 +38,13 @@ public class NewsActivity extends MoonActivity {
         HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.stock_scroller);    
         TextView tv = (TextView) findViewById(R.id.scroll_text);
 
-        int time = 0;
+        int localTime = 0;
         // Get the data from the Intent
         Bundle extras = getIntent().getExtras();
 
-        if (extras != null) {
-            if (extras.containsKey("time")) {
-                time = extras.getInt("time");
-            }
-        }
+        
 
-        tv.setText(makeTextView(time));
+        tv.setText(makeTextView(localTime));
         scrollRight(hsv, tv);
 
         // Set up buttons for the articles.
@@ -127,11 +123,11 @@ public class NewsActivity extends MoonActivity {
 		String update = "";
 		Stock stock = new Stock(inputStream);
 
-		if(time == 0)
+		if(globalTime == 0)
 			return "0.0";
 		
-        Double priceNew = stock.getUninterpolatedPrice(time);
-        Double priceOld = stock.getUninterpolatedPrice(time - 1);
+        Double priceNew = stock.getUninterpolatedPrice(MoonActivity.globalTime);
+        Double priceOld = stock.getUninterpolatedPrice(MoonActivity.globalTime - 1);
         Double change = priceNew - priceOld;
         
         if(change > 0){
@@ -158,7 +154,7 @@ public class NewsActivity extends MoonActivity {
                 h.scrollTo(pos, 0);
                 
                 // TODO: is this correct?
-                globalTime += scrollTimeInterval;
+                MoonActivity.globalTime += scrollTimeInterval;
             } 
 
             public void onFinish() {

@@ -10,12 +10,14 @@ import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Player;
+import com.jeffmeyerson.moonstocks.views.TimerView;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,11 +41,13 @@ import android.view.MenuItem;
  */
 public abstract class MoonActivity extends Activity {
 
+    private Handler mHandler;
+	
     // Constants
     public static final int STARTING_MONEY = 5000;
     
-    // The amount of time elapsed since this activity was created
-    protected int time;
+    // The number of time intervals that have passed since this activity was created
+    protected int localTime;
     
     // The amount of time elapsed since the app was started
     static int globalTime = 0;
@@ -62,6 +66,24 @@ public abstract class MoonActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHandler = new Handler();
+        
+        Runnable timeFlux = new Runnable() {
+            public void run() {
+
+                // Put this function on the message queue
+               mHandler.postDelayed(this, 1000);
+
+                // Move to the next time interval
+                globalTime += 1000;
+                localTime++;
+            }
+        };
+
+        // Begin running the function
+        mHandler.postDelayed(timeFlux, 1000);
+        
+        localTime = 0;
         
         SharedPreferences mPrefs = getSharedPreferences("moonstocks_prefs", MODE_PRIVATE);
         int size = mPrefs.getInt("fileSize", 0);
@@ -113,13 +135,11 @@ public abstract class MoonActivity extends Activity {
             return true;
         } else if (id == R.id.menu_news) {
             Intent intent = new Intent(this, NewsActivity.class);
-            intent.putExtra("time", time);
             startActivity(intent);
             return true;
         } else if (id == R.id.menu_system_details) {
             Intent intent = new Intent(this, SystemDetailsActivity.class);
             intent.putExtra("player", Utility.serialize(player));
-            intent.putExtra("time", time);
             startActivity(intent);
             return true;
         } else if (id == R.id.menu_stock_market) {
