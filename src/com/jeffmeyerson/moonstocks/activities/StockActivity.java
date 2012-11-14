@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.Utility;
+import com.jeffmeyerson.moonstocks.pojos.MovingAverage;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
 import com.jeffmeyerson.moonstocks.views.ChartView;
@@ -31,6 +32,7 @@ public class StockActivity extends MoonActivity {
 
 	private Handler mHandler = new Handler();
 	private TextView stockPriceView;
+	private TextView movingAverageView;
 	private TextView balanceView;
 	private TextView sharesOwnedView;
 	private ChartView chartView;
@@ -38,6 +40,7 @@ public class StockActivity extends MoonActivity {
 	private double price;
 	private String stockTicker;
 	private boolean isInterpolating;
+	private MovingAverage movingAverage;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,12 +52,15 @@ public class StockActivity extends MoonActivity {
 
 		// Get the resources
 		stockPriceView = (TextView) findViewById(R.id.stock_price_view);
+		movingAverageView = (TextView) findViewById(R.id.moving_average_view);
 		sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
 		balanceView = (TextView) findViewById(R.id.balance_view);
 
 		chartView = (ChartView) findViewById(R.id.chart);
 
 		isInterpolating = false;
+
+		movingAverage = new MovingAverage(10);
 
 		// Get the Player object from our activity
 		player = (Player) Utility.deserialize(extras.getByteArray("player"));
@@ -91,6 +97,8 @@ public class StockActivity extends MoonActivity {
 
 		price = stock.getUninterpolatedPrice(localTime);
 
+		movingAverage.addPrice(price, localTime);
+
 		stockPriceView.setText("$" + price);
 
 		// chartView.setCurrentFrame(currentFrame);
@@ -102,13 +110,13 @@ public class StockActivity extends MoonActivity {
 
 				// Get the stock price for the current time and set the TextView
 				double rawPrice;
-
 				rawPrice = isInterpolating ? stock
 						.getInterpolatedPrice(localTime) : stock
 						.getUninterpolatedPrice(localTime);
 				price = Utility.roundCurrency(rawPrice);
+				movingAverage.addPrice(price, localTime);
 				stockPriceView.setText("$" + price);
-
+				movingAverageView.setText("$" + movingAverage.getMovingAverage());
 				chartView.addPoint(Utility.roundCurrencyToFloat(rawPrice));
 
 				/**
@@ -119,13 +127,9 @@ public class StockActivity extends MoonActivity {
 				 * loaded, it is redrawn (in our case, with new information).
 				 */
 
-				// Invalidate the StockPriceView so that it can be reset
 				stockPriceView.invalidate();
-
-				// Invalidate the ChartView so that it can be reset
 				chartView.invalidate();
-
-				// Put this function on the message queue
+				movingAverageView.invalidate();
 				mHandler.postDelayed(this, Stock.TIMESTEP);
 
 				// Move to the next time interval

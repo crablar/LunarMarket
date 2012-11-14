@@ -26,6 +26,8 @@ public class Stock {
 	private List<SongElement> uninterpolatedSong;
 	private List<SongElement> interpolatedSong;
 
+	public String stockName;
+
 	boolean interpolationOn;
 
 	public Stock(InputStream songData) {
@@ -38,7 +40,7 @@ public class Stock {
 		// Read the song data from the InputStream
 		BufferedReader br = new BufferedReader(new InputStreamReader(songData));
 		String line = "";
-		String stockName = "";
+		stockName = "";
 
 		try {
 			stockName = br.readLine();
@@ -85,14 +87,15 @@ public class Stock {
 					.getPriceFunctionForStock(stockName);
 			PriceFunction interpolation = new Interpolation(
 					uninterpolatedFunction);
-			SongElement uninterpolatedElement = new SongElement(type, values, interpolation);
-			SongElement interpolatedElement = new SongElement(type, values, uninterpolatedFunction);
-			
+			SongElement uninterpolatedElement = new SongElement(type, values,
+					interpolation);
+			SongElement interpolatedElement = new SongElement(type, values,
+					uninterpolatedFunction);
+
 			assert (uninterpolatedElement != null);
 
 			uninterpolatedSong.add(uninterpolatedElement);
 			interpolatedSong.add(interpolatedElement);
-
 		}
 	}
 
@@ -103,7 +106,7 @@ public class Stock {
 	 * @return
 	 */
 	public double getUninterpolatedPrice(int time) {
-		
+
 		// Take the average of the returned values for each SongElement.
 		int total = 0;
 		for (SongElement element : uninterpolatedSong) {
@@ -111,7 +114,7 @@ public class Stock {
 		}
 		return total / uninterpolatedSong.size();
 	}
-	
+
 	/**
 	 * Gets the interpolated price of the stock at the given point in time.
 	 * 
@@ -127,5 +130,4 @@ public class Stock {
 		}
 		return total / interpolatedSong.size();
 	}
-
 }

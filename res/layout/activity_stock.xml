@@ -34,7 +34,7 @@
         android:layout_alignLeft="@+id/balance_text"
         android:layout_below="@+id/balance_text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-    
+
     <TextView
         android:id="@+id/shares_owned_view"
         android:layout_width="wrap_content"
@@ -92,5 +92,14 @@
         android:layout_toRightOf="@+id/back_button"
         android:onClick="toggleInterpolation"
         android:text="Toggle Interpolation" />
+
+    <TextView
+        android:id="@+id/moving_average_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/interpolation_button"
+        android:layout_below="@+id/chart"
+        android:layout_toRightOf="@+id/stock_ticker_text"
+        android:text="movingAvg" />
 
 </RelativeLayout>

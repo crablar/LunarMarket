@@ -41,7 +41,7 @@ import android.view.MenuItem;
  */
 public abstract class MoonActivity extends Activity {
 
-    private Handler mHandler;
+    Handler mHandler;
 	
     // Constants
     public static final int STARTING_MONEY = 5000;
