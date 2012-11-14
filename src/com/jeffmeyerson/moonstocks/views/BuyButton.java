@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -37,14 +38,25 @@ public class BuyButton extends View {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        paint.setStrokeWidth(3);
+        final int border = 10;
+        final float x = border;
+        final float y = border;
+        final float h = this.getHeight() - border;
+        final float w = this.getWidth() - border;
+
+        paint.setStrokeWidth(border);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.argb(128, 128, 255, 128));
+
+        canvas.drawRoundRect(new RectF(x,y,w,h), border*2, border*2, paint);
+
+        paint.setStrokeWidth(0);
+        paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.argb(128, 64, 255, 64));
 
-        final float h = this.getHeight();
-        final float w = this.getWidth();
         arrow.reset();
-        arrow.moveTo(0, h/2);
-        arrow.lineTo(w/2, 0);
+        arrow.moveTo(x, h/2);
+        arrow.lineTo(w/2, y);
         arrow.lineTo(w, h/2);
         arrow.close();
         // draw the up part of the arrow
