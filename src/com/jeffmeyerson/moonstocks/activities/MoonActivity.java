@@ -44,23 +44,21 @@ public abstract class MoonActivity extends Activity {
 
     // Constants
     public static final int STARTING_MONEY = 5000;
-    // Used for TickerView.
-    
+    private static final String PERSISTENCE_FILE = "moonstocks";
+
     // The number of time intervals that have passed since this activity was created
     protected int localTime;
-    
-    // The amount of time elapsed since the app was started
+
+    // The amount of time elapsed since the player started the game.
+    // TODO: persist this
     static int globalTime = 0;
 
     // There is only one player
     static Player player = new Player();
-    
+
     // Media player data. Hidden from children.
     private MediaPlayer mp;
     private int music_id = 0;
-
-    // Persistence data. Hidden from children.
-    private final String persistenceFile = "moonstocks";
 
     // Persistence related things **************************************
     @Override
@@ -92,7 +90,7 @@ public abstract class MoonActivity extends Activity {
             FileInputStream fin;
             byte[] buffer = new byte[size];
             try {
-                fin = openFileInput(persistenceFile);
+                fin = openFileInput(PERSISTENCE_FILE);
                 fin.read(buffer);
             } catch (FileNotFoundException e) {
                 Log.d("MoonActivity", "player file not found");

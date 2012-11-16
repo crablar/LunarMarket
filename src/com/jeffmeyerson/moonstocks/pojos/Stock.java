@@ -86,20 +86,16 @@ public class Stock {
 				values.add(Integer.valueOf(lineArr[i]));
 			}
 
-			PriceFunction uninterpolatedFunction = PriceFunctionFactory
-					.getPriceFunctionForStock(stockName);
-			PriceFunction interpolation = new Interpolation(
-					uninterpolatedFunction);
-			SongElement uninterpolatedElement = new SongElement(type, values,
-					interpolation);
-			SongElement interpolatedElement = new SongElement(type, values,
-					uninterpolatedFunction);
+			PriceFunction uninterpolatedFunction = PriceFunctionFactory.getPriceFunctionForStock(stockName);
+			PriceFunction interpolation = new Interpolation(uninterpolatedFunction);
+			SongElement uninterpolatedElement = new SongElement(type, values, interpolation);
+			SongElement interpolatedElement = new SongElement(type, values, uninterpolatedFunction);
 
 			assert (uninterpolatedElement != null);
 
 			uninterpolatedSong.add(uninterpolatedElement);
 			interpolatedSong.add(interpolatedElement);
-			
+
 			MAX_PRICE = getMaxPrice();
 			MIN_PRICE = getMinPrice();
 		}
@@ -140,7 +136,7 @@ public class Stock {
 	public double getMaxPrice() {
 		if(MAX_PRICE != -1)
 			return MAX_PRICE;
-		double max = 0;
+		double max = Double.MIN_VALUE;
 		for (int i = 0; i < uninterpolatedSong.size(); i++)
 			max = Math.max(max, getUninterpolatedPrice(i));
 		return max;
@@ -149,7 +145,7 @@ public class Stock {
 	public double getMinPrice() {
 		if(MIN_PRICE != -1)
 			return MIN_PRICE;
-		double min = 1000000;
+		double min = Double.MAX_VALUE;
 		for (int i = 0; i < uninterpolatedSong.size(); i++)
 			min = Math.min(min, getUninterpolatedPrice(i));
 		return min;
