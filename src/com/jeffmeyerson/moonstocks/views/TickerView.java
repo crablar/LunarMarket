@@ -27,7 +27,11 @@ public class TickerView extends HorizontalScrollView {
     private final long SCROLL_TIME = 20000;
     private final long SCROLL_TIME_INTERVAL = 50;
 
-    TextView text;
+    private TextView text;
+
+    // This time is local only to the ticker. Not synchronized with global time currently.
+    private int time;
+    private List<Company> companies;
 
     public TickerView(Context context) {
         super(context);
@@ -47,41 +51,44 @@ public class TickerView extends HorizontalScrollView {
     private void initialize(Context context) {
         text = new TextView(context);
         this.addView(text);
+        time = 1;
     }
 
     public void setCompanies(List<Company> companies) {
-        InputStream inputStream = null;
-        String marketScroll = "";
-        for (final Company company : companies) {
-            // TODO: Make programmatic
-            // Put the raw text file into an InputStream
-            if(company.getTicker().equals("EVIL")){
-                inputStream = this.getResources().openRawResource(R.raw.evil_vals);
+        this.companies = companies;
+        updateText();
+    }
+
+    private void updateText() {
+        time++;
+        String newText = "";
+        InputStream is = null;
+        for (Company company : companies) {
+            if (company.getTicker().equals("EVIL")) {
+                is = this.getResources().openRawResource(R.raw.evil_vals);
+            } else if (company.getTicker().equals("BDST")) {
+                is = this.getResources().openRawResource(R.raw.bdst_vals);
+            } else if (company.getTicker().equals("WMC")) {
+                is = this.getResources().openRawResource(R.raw.wmc_vals);
             }
-            else if(company.getTicker().equals("BDST")){
-                inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
-            }
-            else if(company.getTicker().equals("WMC")){
-                inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
-            }
-            marketScroll += company.getTicker();
-            marketScroll += " " + getStockPrice(inputStream, 0);
-            marketScroll += "     ";
+            newText += company.getTicker();
+            newText += " " + getStockPrice(is);
+            newText += "     ";
         }
-        text.setText(marketScroll + marketScroll + marketScroll);
+        text.setText(newText + newText + newText);
     }
 
     // TODO: this should be refactored to not need to create a new stock every time
-    private String getStockPrice(InputStream is, int time) {
+    private String getStockPrice(InputStream is) {
+        if (time == 0) {
+            return "--";
+        }
+
         String update = "";
         Stock stock = new Stock(is);
 
-        if (time == 0) {
-            return "0.0";
-        }
-
         Double priceNew = stock.getUninterpolatedPrice(time);
-        Double priceOld = stock.getUninterpolatedPrice(time);
+        Double priceOld = stock.getUninterpolatedPrice(time-1);
         Double change = priceNew - priceOld;
 
         if(change > 0){
@@ -112,6 +119,7 @@ public class TickerView extends HorizontalScrollView {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
+                         updateText();
                          scrollTo(0, 0);
                          scroll();
                     }
