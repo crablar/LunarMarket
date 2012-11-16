@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class BDSTStockFunction implements PriceFunction {
 
-    private static final int UPPER_BOUND = 299;
+    private static final int UPPER_BOUND = 599;
 
     @Override
     public int getValue(int time, List<Integer> values) {

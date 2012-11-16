@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,7 +61,7 @@ public class StockActivity extends MoonActivity {
 
 		isInterpolating = false;
 
-		movingAverage = new MovingAverage(10);
+		movingAverage = new MovingAverage(20);
 
 		// Get the Player object from our activity
 		player = (Player) Utility.deserialize(extras.getByteArray("player"));
@@ -116,8 +117,12 @@ public class StockActivity extends MoonActivity {
 				price = Utility.roundCurrency(rawPrice);
 				movingAverage.addPrice(price, localTime);
 				stockPriceView.setText("$" + price);
-				movingAverageView.setText("$" + movingAverage.getMovingAverage());
-				chartView.addPoint(Utility.roundCurrencyToFloat(rawPrice));
+				movingAverageView.setText("Twenty-tick moving average: $"
+						+ movingAverage.getMovingAverage());
+
+				// Divided by two because max is 599 but ChartView has 300 pixel
+				// height
+				chartView.addPoint(Utility.roundCurrencyToFloat(rawPrice / 2));
 
 				/**
 				 * My understanding of how this section of our code works is

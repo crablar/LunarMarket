@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class Interpolation implements PriceFunction {
-	private static final int UPPER_BOUND = 299;
+	private static final int UPPER_BOUND = 599;
 
 	private final static int REAL_POINT_FREQUENCY = 10;
 	private PriceFunction functionToInterpolateOn;
@@ -28,8 +28,8 @@ public class Interpolation implements PriceFunction {
 		int timeElapsedSinceLastPoint = time - timeAtPreviousRealPoint;
 		int previousRealPoint = functionToInterpolateOn.getValue(
 				timeAtPreviousRealPoint, values);
-		int nextRealPoint = functionToInterpolateOn.getValue(
-				timeAtNextRealPoint, values);
+		int nextRealPoint = Math.min(UPPER_BOUND, functionToInterpolateOn.getValue(
+				timeAtNextRealPoint, values));
 		int priceDifferenceBetweenRealPoints = nextRealPoint
 				- previousRealPoint;
 		int result = previousRealPoint

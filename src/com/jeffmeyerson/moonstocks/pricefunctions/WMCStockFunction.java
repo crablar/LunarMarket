@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class WMCStockFunction implements PriceFunction {
 
-	private static final int UPPER_BOUND = 299;
+	private static final int UPPER_BOUND = 599;
 	private static int prevResult;
 	Random rand = new Random();
 
