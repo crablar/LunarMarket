@@ -1,5 +1,12 @@
 package com.jeffmeyerson.moonstocks.views;
 
+import java.io.InputStream;
+import java.util.List;
+
+import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.pojos.Company;
+import com.jeffmeyerson.moonstocks.pojos.Stock;
+
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -42,8 +49,46 @@ public class TickerView extends HorizontalScrollView {
         this.addView(text);
     }
 
-    public void setText(String s) {
-        text.setText(s);
+    public void setCompanies(List<Company> companies) {
+        InputStream inputStream = null;
+        String marketScroll = "";
+        for (final Company company : companies) {
+            // TODO: Make programmatic
+            // Put the raw text file into an InputStream
+            if(company.getTicker().equals("EVIL")){
+                inputStream = this.getResources().openRawResource(R.raw.evil_vals);
+            }
+            else if(company.getTicker().equals("BDST")){
+                inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
+            }
+            else if(company.getTicker().equals("WMC")){
+                inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
+            }
+            marketScroll += company.getTicker();
+            marketScroll += " " + getStockPrice(inputStream, 0);
+            marketScroll += "     ";
+        }
+        text.setText(marketScroll + marketScroll + marketScroll);
+    }
+
+    // TODO: this should be refactored to not need to create a new stock every time
+    private String getStockPrice(InputStream is, int time) {
+        String update = "";
+        Stock stock = new Stock(is);
+
+        if (time == 0) {
+            return "0.0";
+        }
+
+        Double priceNew = stock.getUninterpolatedPrice(time);
+        Double priceOld = stock.getUninterpolatedPrice(time);
+        Double change = priceNew - priceOld;
+
+        if(change > 0){
+            update += "+";
+        }
+        update += change;
+        return update;
     }
 
     public void scroll() {

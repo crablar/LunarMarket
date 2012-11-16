@@ -1,7 +1,5 @@
 package com.jeffmeyerson.moonstocks.activities;
 
-import java.io.InputStream;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +8,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.jeffmeyerson.moonstocks.R;
-import com.jeffmeyerson.moonstocks.pojos.Company;
-import com.jeffmeyerson.moonstocks.pojos.Stock;
 import com.jeffmeyerson.moonstocks.views.TickerView;
 
 public class NewsActivity extends MoonActivity {
@@ -28,11 +24,8 @@ public class NewsActivity extends MoonActivity {
 
         // Set up the scrolling stock ticker at the top.
         TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
-        //TextView tv = (TextView) findViewById(R.id.scroll_text);
 
-        int localTime = 0;
-
-        tickerView.setText(makeTextView(localTime));
+        tickerView.setCompanies(getCompanies());
         tickerView.scroll();
 
         // Set up buttons for the articles.
@@ -82,46 +75,4 @@ public class NewsActivity extends MoonActivity {
             }
         });
     }
-
-    private String makeTextView(int time) {
-    	InputStream inputStream = null;
-    	String marketScroll = "";
-    	for (final Company company : getCompanies()) {
-			
-			// TODO: Make programmatic
-	        // Put the raw text file into an InputStream
-			if(company.getTicker().equals("EVIL")){
-				inputStream = this.getResources().openRawResource(R.raw.evil_vals);
-			}
-			else if(company.getTicker().equals("BDST")){
-				inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
-			}
-			else if(company.getTicker().equals("WMC")){
-				inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
-			}
-			
-			marketScroll += company.getTicker();
-			marketScroll += " " + getUpdate(inputStream, time);
-			marketScroll += "     ";
-    	}
-		return marketScroll + marketScroll + marketScroll;
-	}
-
-	private String getUpdate(InputStream inputStream, int time) {
-		String update = "";
-		Stock stock = new Stock(inputStream);
-
-		if(globalTime == 0)
-			return "0.0";
-		
-        Double priceNew = stock.getUninterpolatedPrice(MoonActivity.globalTime);
-        Double priceOld = stock.getUninterpolatedPrice(MoonActivity.globalTime - 1);
-        Double change = priceNew - priceOld;
-        
-        if(change > 0){
-        	update += "+";
-        }
-        update += change;
-		return update;
-	}
 }
