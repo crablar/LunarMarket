@@ -30,8 +30,11 @@ public class Stock {
 
 	boolean interpolationOn;
 
-	public Stock(InputStream songData) {
+	private double MAX_PRICE = -1;
+	private double MIN_PRICE = -1;
 
+	public Stock(InputStream songData) {
+		
 		uninterpolatedSong = new ArrayList<SongElement>();
 		interpolatedSong = new ArrayList<SongElement>();
 
@@ -96,6 +99,9 @@ public class Stock {
 
 			uninterpolatedSong.add(uninterpolatedElement);
 			interpolatedSong.add(interpolatedElement);
+			
+			MAX_PRICE = getMaxPrice();
+			MIN_PRICE = getMinPrice();
 		}
 	}
 
@@ -122,7 +128,7 @@ public class Stock {
 	 * @return
 	 */
 	public double getInterpolatedPrice(int time) {
-		
+
 		// Take the average of the returned values for each SongElement.
 		int total = 0;
 		for (SongElement element : interpolatedSong) {
@@ -130,4 +136,23 @@ public class Stock {
 		}
 		return total / interpolatedSong.size();
 	}
+
+	public double getMaxPrice() {
+		if(MAX_PRICE != -1)
+			return MAX_PRICE;
+		double max = 0;
+		for (int i = 0; i < uninterpolatedSong.size(); i++)
+			max = Math.max(max, getUninterpolatedPrice(i));
+		return max;
+	}
+
+	public double getMinPrice() {
+		if(MIN_PRICE != -1)
+			return MIN_PRICE;
+		double min = 1000000;
+		for (int i = 0; i < uninterpolatedSong.size(); i++)
+			min = Math.min(min, getUninterpolatedPrice(i));
+		return min;
+	}
+
 }

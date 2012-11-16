@@ -47,6 +47,7 @@ public class StockActivity extends MoonActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stock);
+		InputStream inputStream = null;
 
 		// Get the data from the Intent
 		Bundle extras = getIntent().getExtras();
@@ -75,8 +76,6 @@ public class StockActivity extends MoonActivity {
 		TextView stockTickerView = (TextView) findViewById(R.id.stock_ticker_text);
 		stockTickerView.setText(stockTicker);
 
-		InputStream inputStream = null;
-
 		// TODO: Make programmatic
 		// Put the raw text file into an InputStream
 		if (stockTicker.equals("EVIL")) {
@@ -95,6 +94,8 @@ public class StockActivity extends MoonActivity {
 
 		// Create the Stock object out of the SongData
 		stock = new Stock(inputStream);
+		
+		chartView.setMaxAndMin(stock.getMaxPrice(), stock.getMinPrice());
 
 		price = stock.getUninterpolatedPrice(localTime);
 

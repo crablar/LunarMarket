@@ -16,10 +16,13 @@ public class ChartView extends View {
     private static final int MAX_POINTS = 100;
     private static final int SCREEN_HEIGHT = 300;
     private static final float SCALE = 3;// getWidth() / 20;
-
+    private static double MAX_PRICE;
+    private static double MIN_PRICE;
+    
     // member variables
     private List<Float> points;
     private Paint paint;
+    
 
     void initialize() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -42,6 +45,17 @@ public class ChartView extends View {
         initialize();
     }
 
+    /**
+     * Set the max and the min price to display things better.
+     * 
+     * @param max
+     * @param min
+     */
+    public void setMaxAndMin(double max, double min){
+    	MAX_PRICE = max;
+    	MIN_PRICE = min;
+    }
+    
     /**
      * Adds a point to the ChartView. This automatically scrolls the ChartView
      * and deletes the point that falls off the edge.
