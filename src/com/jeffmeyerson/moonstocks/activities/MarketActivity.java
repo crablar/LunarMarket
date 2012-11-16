@@ -175,7 +175,7 @@ public class MarketActivity extends MoonActivity {
 
             Stock stock = new Stock(inputStream);
             ((TextView) row.getChildAt(1)).setText("$"
-                    + String.valueOf(stock.getUninterpolatedPrice(MoonActivity.globalTime)));
+                    + String.valueOf(stock.getPrice(MoonActivity.globalTime)));
             ((TextView) row.getChildAt(2)).setText(String.valueOf(player
                     .getSharesOwned(company)));
         }

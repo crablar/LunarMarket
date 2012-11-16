@@ -87,8 +87,8 @@ public class TickerView extends HorizontalScrollView {
         String update = "";
         Stock stock = new Stock(is);
 
-        Double priceNew = stock.getUninterpolatedPrice(time);
-        Double priceOld = stock.getUninterpolatedPrice(time-1);
+        Double priceNew = stock.getPrice(time);
+        Double priceOld = stock.getPrice(time-1);
         Double change = priceNew - priceOld;
 
         if(change > 0){

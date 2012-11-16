@@ -39,7 +39,6 @@ public class StockActivity extends MoonActivity {
 	private Stock stock;
 	private double price;
 	private String stockTicker;
-	private boolean isInterpolating;
 	private MovingAverage movingAverage;
 
 	@Override
@@ -59,14 +58,11 @@ public class StockActivity extends MoonActivity {
 
 		chartView = (ChartView) findViewById(R.id.chart);
 
-		isInterpolating = false;
-
 		movingAverage = new MovingAverage(20);
 
 		// Get the Player object from our activity
 		player = (Player) Utility.deserialize(extras.getByteArray("player"));
-		((TextView) findViewById(R.id.balance_view)).setText(""
-				+ player.getBalance());
+		((TextView) findViewById(R.id.balance_view)).setText("" + player.getBalance());
 
 		// Get the ticker symbol
 		stockTicker = extras.getString("EXTRA_TICKER_ID");
@@ -96,7 +92,7 @@ public class StockActivity extends MoonActivity {
 		
 		chartView.setMaxAndMin(stock.getMaxPrice(), stock.getMinPrice());
 
-		price = stock.getUninterpolatedPrice(localTime);
+		price = stock.getPrice(localTime);
 
 		movingAverage.addPrice(price, localTime);
 
@@ -111,14 +107,11 @@ public class StockActivity extends MoonActivity {
 
 				// Get the stock price for the current time and set the TextView
 				double rawPrice;
-				rawPrice = isInterpolating ? stock
-						.getInterpolatedPrice(localTime) : stock
-						.getUninterpolatedPrice(localTime);
+				rawPrice = stock.getPrice(localTime);
 				price = Utility.roundCurrency(rawPrice);
 				movingAverage.addPrice(price, localTime);
 				stockPriceView.setText("$" + price);
-				movingAverageView.setText("Twenty-tick moving average: $"
-						+ movingAverage.getMovingAverage());
+				movingAverageView.setText("Twenty-tick moving average: $" + movingAverage.getMovingAverage());
 
 				// Divided by two because max is 599 but ChartView has 300 pixel
 				// height
@@ -161,8 +154,7 @@ public class StockActivity extends MoonActivity {
 				// Buy!!!!
 
 				if (!player.buy(stockTicker, 1, price)) {
-					Toast.makeText(context, "Not enough money to buy stock!",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "Not enough money to buy stock!", Toast.LENGTH_SHORT).show();
 				}
 
 				// Get and set the player's updated balance
@@ -201,7 +193,7 @@ public class StockActivity extends MoonActivity {
 	}
 
 	public void toggleInterpolation(View view) {
-		isInterpolating = !isInterpolating;
+	    chartView.toggleInterpolation();
 	}
 
 	@Override

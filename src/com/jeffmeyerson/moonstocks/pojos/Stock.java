@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jeffmeyerson.moonstocks.pojos.SongElement.SongElementType;
-import com.jeffmeyerson.moonstocks.pricefunctions.Interpolation;
 import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
 import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunctionFactory;
 
@@ -23,22 +22,16 @@ public class Stock {
 	/** Time interval between actions measured in ms. */
 	public static final int TIMESTEP = 100;
 
-	private List<SongElement> uninterpolatedSong;
-	private List<SongElement> interpolatedSong;
+	private List<SongElement> song;
 
 	public String stockName;
-
-	boolean interpolationOn;
 
 	private double MAX_PRICE = -1;
 	private double MIN_PRICE = -1;
 
 	public Stock(InputStream songData) {
-		
-		uninterpolatedSong = new ArrayList<SongElement>();
-		interpolatedSong = new ArrayList<SongElement>();
 
-		interpolationOn = false;
+		song = new ArrayList<SongElement>();
 
 		// Read the song data from the InputStream
 		BufferedReader br = new BufferedReader(new InputStreamReader(songData));
@@ -86,15 +79,12 @@ public class Stock {
 				values.add(Integer.valueOf(lineArr[i]));
 			}
 
-			PriceFunction uninterpolatedFunction = PriceFunctionFactory.getPriceFunctionForStock(stockName);
-			PriceFunction interpolation = new Interpolation(uninterpolatedFunction);
-			SongElement uninterpolatedElement = new SongElement(type, values, interpolation);
-			SongElement interpolatedElement = new SongElement(type, values, uninterpolatedFunction);
+			PriceFunction fn = PriceFunctionFactory.getPriceFunctionForStock(stockName);
+			SongElement element = new SongElement(type, values, fn);
 
-			assert (uninterpolatedElement != null);
+			assert (element != null);
 
-			uninterpolatedSong.add(uninterpolatedElement);
-			interpolatedSong.add(interpolatedElement);
+			song.add(element);
 
 			MAX_PRICE = getMaxPrice();
 			MIN_PRICE = getMinPrice();
@@ -102,43 +92,27 @@ public class Stock {
 	}
 
 	/**
-	 * Gets the uninterpolated price of the stock at the given point in time.
+	 * Gets the price of the stock at the given point in time.
 	 * 
 	 * @param time
 	 * @return
 	 */
-	public double getUninterpolatedPrice(int time) {
+	public double getPrice(int time) {
 
 		// Take the average of the returned values for each SongElement.
 		int total = 0;
-		for (SongElement element : uninterpolatedSong) {
+		for (SongElement element : song) {
 			total += element.getValue(time);
 		}
-		return total / uninterpolatedSong.size();
-	}
-
-	/**
-	 * Gets the interpolated price of the stock at the given point in time.
-	 * 
-	 * @param time
-	 * @return
-	 */
-	public double getInterpolatedPrice(int time) {
-
-		// Take the average of the returned values for each SongElement.
-		int total = 0;
-		for (SongElement element : interpolatedSong) {
-			total += element.getValue(time);
-		}
-		return total / interpolatedSong.size();
+		return total / song.size();
 	}
 
 	public double getMaxPrice() {
 		if(MAX_PRICE != -1)
 			return MAX_PRICE;
 		double max = Double.MIN_VALUE;
-		for (int i = 0; i < uninterpolatedSong.size(); i++)
-			max = Math.max(max, getUninterpolatedPrice(i));
+		for (int i = 0; i < song.size(); i++)
+			max = Math.max(max, getPrice(i));
 		return max;
 	}
 
@@ -146,8 +120,8 @@ public class Stock {
 		if(MIN_PRICE != -1)
 			return MIN_PRICE;
 		double min = Double.MAX_VALUE;
-		for (int i = 0; i < uninterpolatedSong.size(); i++)
-			min = Math.min(min, getUninterpolatedPrice(i));
+		for (int i = 0; i < song.size(); i++)
+			min = Math.min(min, getPrice(i));
 		return min;
 	}
 
