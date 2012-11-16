@@ -5,26 +5,18 @@ import java.io.InputStream;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
-import android.widget.TextView;
 
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.views.TickerView;
 
 public class NewsActivity extends MoonActivity {
 
     private Context context = this;
-
-    private long scrollTime = 20000;
-    private long scrollTimeInterval = 50;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,17 +27,13 @@ public class NewsActivity extends MoonActivity {
         play(R.raw.evil);
 
         // Set up the scrolling stock ticker at the top.
-        HorizontalScrollView hsv = (HorizontalScrollView) findViewById(R.id.stock_scroller);    
-        TextView tv = (TextView) findViewById(R.id.scroll_text);
+        TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
+        //TextView tv = (TextView) findViewById(R.id.scroll_text);
 
         int localTime = 0;
-        // Get the data from the Intent
-        Bundle extras = getIntent().getExtras();
 
-        
-
-        tv.setText(makeTextView(localTime));
-        scrollRight(hsv, tv);
+        tickerView.setText(makeTextView(localTime));
+        tickerView.scroll();
 
         // Set up buttons for the articles.
         // TODO: this should totally be programmatic
@@ -136,37 +124,4 @@ public class NewsActivity extends MoonActivity {
         update += change;
 		return update;
 	}
-
-	public void scrollRight(final HorizontalScrollView h, final TextView tv){
-        new CountDownTimer(scrollTime, scrollTimeInterval) { 
-
-            public void onTick(long millisUntilFinished) {
-
-                // Disable Scrolling by setting up an OnTouchListener to do nothing
-                h.setOnTouchListener( new OnTouchListener(){ 
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        return true; 
-                    }
-                });
-
-                int pos = (int) (1.0 * (scrollTime - millisUntilFinished) / scrollTime * (tv.getWidth() - h.getWidth()));
-                h.scrollTo(pos, 0);
-                
-                // TODO: is this correct?
-                MoonActivity.globalTime += scrollTimeInterval;
-            } 
-
-            public void onFinish() {
-            	Handler handler = new Handler();
-            	handler.postDelayed(new Runnable() {
-	            	public void run() {
-	            		 h.scrollTo(0, 0);
-	            		 scrollRight(h, tv);
-	            	}
-            	}, 2000);
-               
-            } 
-         }.start(); 
-    }
 }

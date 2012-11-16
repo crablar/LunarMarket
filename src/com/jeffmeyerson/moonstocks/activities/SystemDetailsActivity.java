@@ -2,7 +2,6 @@ package com.jeffmeyerson.moonstocks.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +10,6 @@ import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Protocol;
-import com.jeffmeyerson.moonstocks.views.TimerView;
 
 public class SystemDetailsActivity extends MoonActivity {
 

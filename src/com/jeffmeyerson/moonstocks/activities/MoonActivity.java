@@ -10,7 +10,6 @@ import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Player;
-import com.jeffmeyerson.moonstocks.views.TimerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -42,9 +41,10 @@ import android.view.MenuItem;
 public abstract class MoonActivity extends Activity {
 
     Handler mHandler;
-	
+
     // Constants
     public static final int STARTING_MONEY = 5000;
+    // Used for TickerView.
     
     // The number of time intervals that have passed since this activity was created
     protected int localTime;

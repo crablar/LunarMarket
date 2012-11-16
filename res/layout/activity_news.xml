@@ -8,19 +8,13 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <HorizontalScrollView
+    <com.jeffmeyerson.moonstocks.views.TickerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/stock_scroller"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none" >
-
-        <TextView
-            android:id="@+id/scroll_text"
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:text="@+string/initialScrollText" />
-    </HorizontalScrollView>
+        android:scrollbars="none"
+    />
 
     <TableLayout
         android:id="@+id/market_table"
