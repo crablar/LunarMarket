@@ -4,10 +4,15 @@ import java.util.List;
 
 /**
  * @author jeffreymeyerson
- *
- * The Function interface.  Functions are used by PriceCalculators to produce prices
- * from generic parameter types that are consistent across time.
+ * 
+ *         The Function abstract class.
  */
-public interface PriceFunction {
-    int getValue(int time, List<Integer> values);
+public abstract class PriceFunction {
+
+	protected static final int UPPER_BOUND = 599;
+
+	public abstract int getValue(int time, List<Integer> values);
+
+	abstract int getPreviousValue();
+	
 }

@@ -49,7 +49,7 @@ public abstract class MoonActivity extends Activity {
     // The number of time intervals that have passed since this activity was created
     protected int localTime;
 
-    // The amount of time elapsed since the player started the game.
+    // The amount of time (ms) elapsed since the player started the game.
     // TODO: persist this
     static int globalTime = 0;
 

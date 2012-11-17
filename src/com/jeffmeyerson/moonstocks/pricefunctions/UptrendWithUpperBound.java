@@ -3,10 +3,12 @@ package com.jeffmeyerson.moonstocks.pricefunctions;
 import java.util.List;
 
 /**
+ * @jmeyerson: Deprecated? Is this class used at all?
+ * 
  * A simple uptrend with an upper bound.
  *
  */
-public class UptrendWithUpperBound implements PriceFunction {
+public class UptrendWithUpperBound extends PriceFunction {
 
     private static final int UPPER_BOUND = 299;
 
@@ -22,5 +24,11 @@ public class UptrendWithUpperBound implements PriceFunction {
         }
         return Math.min(UPPER_BOUND, result);
     }
+
+	@Override
+	int getPreviousValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

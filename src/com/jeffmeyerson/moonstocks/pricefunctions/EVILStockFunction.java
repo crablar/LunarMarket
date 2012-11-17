@@ -1,15 +1,15 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- * A function as capricious and unpredictable as the company it represents.
+ * Evil moves as a function of BDST (which makes sense if you read the news).
  * 
  */
-public class EVILStockFunction implements PriceFunction {
-	private static final int UPPER_BOUND = 599;
-	private static int prevResult;
+public class EVILStockFunction extends PriceFunction {
+	private static ArrayList<Integer> previousEVILPrices = new ArrayList<Integer>();
 	Random rand = new Random();
 
 	@Override
@@ -21,17 +21,25 @@ public class EVILStockFunction implements PriceFunction {
 		int result = 0;
 		if (time == 0) {
 			result = values.get(time) * 10;
-			prevResult = result;
+			previousEVILPrices.add(result);
 		} else {
 			result = values.get(time) * values.get(time - 1) * 10;
 			result += rand.nextInt(UPPER_BOUND / 10);
-			if(Math.abs(result - prevResult) > UPPER_BOUND / 10)
+			if (Math.abs(result - getPreviousValue()) > UPPER_BOUND / 10)
 				result += UPPER_BOUND / 10;
-			prevResult = result;
+			previousEVILPrices.add(result);
 		}
-		if(UPPER_BOUND < result)
-			prevResult = UPPER_BOUND / 2;
+		if (UPPER_BOUND < result)
+			previousEVILPrices.add(UPPER_BOUND / 2);
 		return result % UPPER_BOUND;
+	}
+
+	@Override
+	int getPreviousValue() {
+		if(previousEVILPrices.size() == 0)
+			// Error
+			return previousEVILPrices.get(0);
+		return previousEVILPrices.get(previousEVILPrices.size() - 1);
 	}
 
 }
