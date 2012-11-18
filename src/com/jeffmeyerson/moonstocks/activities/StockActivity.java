@@ -40,6 +40,7 @@ public class StockActivity extends MoonActivity {
 	private double price;
 	private String stockTicker;
 	private MovingAverage movingAverage;
+	int currentTime;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -84,17 +85,17 @@ public class StockActivity extends MoonActivity {
 			play(R.raw.evil);
 		}
 
-		// Start at t = 0
-		localTime = 0;
-
 		// Create the Stock object out of the SongData
 		stock = new Stock(inputStream);
 		
 		chartView.setMaxAndMin(stock.getMaxPrice(), stock.getMinPrice());
 
-		price = stock.getPrice(localTime);
+		// Make a temp variable to freeze time
+		currentTime = MoonActivity.getTime();
+		
+		price = stock.getPrice(currentTime);
 
-		movingAverage.addPrice(price, localTime);
+		movingAverage.addPrice(price, currentTime);
 
 		stockPriceView.setText("$" + price);
 
@@ -107,9 +108,9 @@ public class StockActivity extends MoonActivity {
 
 				// Get the stock price for the current time and set the TextView
 				double rawPrice;
-				rawPrice = stock.getPrice(localTime);
+				rawPrice = stock.getPrice(currentTime);
 				price = Utility.roundCurrency(rawPrice);
-				movingAverage.addPrice(price, localTime);
+				movingAverage.addPrice(price, currentTime);
 				stockPriceView.setText("$" + price);
 				movingAverageView.setText("Twenty-tick moving average: $" + movingAverage.getMovingAverage());
 
@@ -131,7 +132,7 @@ public class StockActivity extends MoonActivity {
 				mHandler.postDelayed(this, Stock.TIMESTEP);
 
 				// Move to the next time interval
-				localTime += Stock.TIMESTEP;
+				currentTime += Stock.TIMESTEP;
 				globalTime += Stock.TIMESTEP;
 			}
 		};
