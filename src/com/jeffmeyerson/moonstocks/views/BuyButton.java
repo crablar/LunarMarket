@@ -41,14 +41,14 @@ public class BuyButton extends View {
         final int border = 10;
         final float x = border;
         final float y = border;
-        final float h = this.getHeight() - border;
-        final float w = this.getWidth() - border;
+        final float h = this.getHeight();
+        final float w = this.getWidth();
 
         paint.setStrokeWidth(border);
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.argb(128, 128, 255, 128));
 
-        canvas.drawRoundRect(new RectF(x,y,w,h), border*2, border*2, paint);
+        canvas.drawRoundRect(new RectF(border/2, border/2, this.getWidth() - (border/2), this.getHeight() - (border/2)), border*2, border*2, paint);
 
         paint.setStrokeWidth(0);
         paint.setStyle(Paint.Style.FILL);
@@ -57,10 +57,10 @@ public class BuyButton extends View {
         arrow.reset();
         arrow.moveTo(x, h/2);
         arrow.lineTo(w/2, y);
-        arrow.lineTo(w, h/2);
+        arrow.lineTo(w-border, h/2);
         arrow.close();
         // draw the up part of the arrow
         canvas.drawPath(arrow, paint);
-        canvas.drawRect(w/4, h/2, 3*(w/4), h, paint);
+        canvas.drawRect(w/4, h/2, 3*(w/4), h-(border*2), paint);
     }
 }

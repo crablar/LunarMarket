@@ -188,10 +188,6 @@ public class StockActivity extends MoonActivity {
 
 	}
 
-	public void quitToMarket(View view) {
-		onBackPressed();
-	}
-
 	public void toggleInterpolation(View view) {
 	    chartView.toggleInterpolation();
 	}
