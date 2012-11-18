@@ -25,6 +25,7 @@ import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.services.TimeService;
 
 public class MarketActivity extends MoonActivity {
 
@@ -40,6 +41,10 @@ public class MarketActivity extends MoonActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market);
 
+        //  Begin TimeService
+        Intent timeIntent = new Intent(this, TimeService.class);
+        startService(timeIntent);
+        
         // TODO: move this stuff out to MoonActivity
         mPrefs = getSharedPreferences("moonstocks_prefs", MODE_PRIVATE);
         size = mPrefs.getInt("fileSize", 0);
