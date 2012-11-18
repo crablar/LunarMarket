@@ -138,16 +138,34 @@ public abstract class MoonActivity extends Activity {
 			Intent intent = new Intent(this, NewsActivity.class);
 			intent.putExtra("player", Utility.serialize(player));
 			startActivity(intent);
+			// This is kind of a hack to make the ActionBar seem like it doesn't
+			// do anything when you try and go into the activity you're already in.
+			// The correct solution would be to disable the button on the actionbar.
+			if (this instanceof NewsActivity) { 
+			    overridePendingTransition(0,0);
+			} else {
+			     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+			}
 			return true;
 		} else if (id == R.id.menu_system_details) {
 			Intent intent = new Intent(this, SystemDetailsActivity.class);
 			intent.putExtra("player", Utility.serialize(player));
 			startActivity(intent);
+			if (this instanceof SystemDetailsActivity) {
+			    overridePendingTransition(0,0);
+			} else {
+			     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+			}
 			return true;
 		} else if (id == R.id.menu_stock_market) {
 			Intent intent = new Intent(this, MarketActivity.class);
 			intent.putExtra("player", Utility.serialize(player));
 			startActivity(intent);
+			if (this instanceof MarketActivity) {
+			    overridePendingTransition(0,0);
+			} else {
+			     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+			}
 			return true;
 		}
 
