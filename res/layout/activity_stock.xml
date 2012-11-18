@@ -64,7 +64,7 @@
         android:id="@+id/buy_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_above="@+id/back_button"
+        android:layout_above="@+id/interpolation_button"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true" />
 
@@ -72,24 +72,16 @@
         android:id="@+id/sell_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_above="@+id/back_button"
+        android:layout_above="@+id/interpolation_button"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true" />
-
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:onClick="quitToMarket"
-        android:text="Back" />
 
     <Button
         android:id="@+id/interpolation_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/back_button"
+        android:layout_centerHorizontal="true"
         android:onClick="toggleInterpolation"
         android:text="Toggle Interpolation" />
 
@@ -98,8 +90,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/interpolation_button"
-        android:layout_below="@+id/chart"
-        android:layout_toRightOf="@+id/stock_ticker_text"
+        android:layout_above="@+id/sell_button"
+        android:layout_centerHorizontal="true"
         android:text="movingAvg" />
 
 </RelativeLayout>

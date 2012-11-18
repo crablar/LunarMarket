@@ -18,7 +18,9 @@ import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.MovingAverage;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.views.BuyButton;
 import com.jeffmeyerson.moonstocks.views.ChartView;
+import com.jeffmeyerson.moonstocks.views.SellButton;
 
 /**
  * @author jeffreymeyerson
@@ -40,6 +42,7 @@ public class StockActivity extends MoonActivity {
 	private double price;
 	private String stockTicker;
 	private MovingAverage movingAverage;
+	int currentTime;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -84,17 +87,17 @@ public class StockActivity extends MoonActivity {
 			play(R.raw.evil);
 		}
 
-		// Start at t = 0
-		localTime = 0;
-
 		// Create the Stock object out of the SongData
 		stock = new Stock(inputStream);
 		
 		chartView.setMaxAndMin(stock.getMaxPrice(), stock.getMinPrice());
 
-		price = stock.getPrice(localTime);
+		// Make a temp variable to freeze time
+		currentTime = MoonActivity.getTime();
+		
+		price = stock.getPrice(currentTime);
 
-		movingAverage.addPrice(price, localTime);
+		movingAverage.addPrice(price, currentTime);
 
 		stockPriceView.setText("$" + price);
 
@@ -107,9 +110,9 @@ public class StockActivity extends MoonActivity {
 
 				// Get the stock price for the current time and set the TextView
 				double rawPrice;
-				rawPrice = stock.getPrice(localTime);
+				rawPrice = stock.getPrice(currentTime);
 				price = Utility.roundCurrency(rawPrice);
-				movingAverage.addPrice(price, localTime);
+				movingAverage.addPrice(price, currentTime);
 				stockPriceView.setText("$" + price);
 				movingAverageView.setText("Twenty-tick moving average: $" + movingAverage.getMovingAverage());
 
@@ -131,7 +134,7 @@ public class StockActivity extends MoonActivity {
 				mHandler.postDelayed(this, Stock.TIMESTEP);
 
 				// Move to the next time interval
-				localTime += Stock.TIMESTEP;
+				currentTime += Stock.TIMESTEP;
 				globalTime += Stock.TIMESTEP;
 			}
 		};
@@ -144,8 +147,8 @@ public class StockActivity extends MoonActivity {
 		sharesOwnedView.setText(sharesOwned + "");
 
 		// Initialize buttons
-		View buyButton = (View) findViewById(R.id.buy_button);
-		View sellButton = (View) findViewById(R.id.sell_button);
+		final BuyButton buyButton = (BuyButton) findViewById(R.id.buy_button);
+		final SellButton sellButton = (SellButton) findViewById(R.id.sell_button);
 
 		// Add onclick listeners to existing buttons
 		buyButton.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +167,10 @@ public class StockActivity extends MoonActivity {
 				// Get and set the player's updated sharesOwned
 				int sharesOwned = player.getSharesOwned(stockTicker);
 				sharesOwnedView.setText(sharesOwned + "");
+				buyButton.clickedState = true;
+				mHandler.postDelayed(new Runnable() { public void run() {
+				    buyButton.clickedState = false;
+                }}, 100);
 			}
 		});
 
@@ -183,13 +190,13 @@ public class StockActivity extends MoonActivity {
 				// Get and set the player's updated sharesOwned
 				int sharesOwned = player.getSharesOwned(stockTicker);
 				sharesOwnedView.setText(sharesOwned + "");
+				sellButton.clickedState = true;
+				mHandler.postDelayed(new Runnable() {public void run() {
+				    sellButton.clickedState = false;
+				}}, 100);
 			}
 		});
 
-	}
-
-	public void quitToMarket(View view) {
-		onBackPressed();
 	}
 
 	public void toggleInterpolation(View view) {
