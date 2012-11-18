@@ -43,7 +43,7 @@ public abstract class MoonActivity extends Activity {
     Handler mHandler;
 
     // Constants
-    public static final int STARTING_MONEY = 5000;
+    public static final int STARTING_MONEY = 100;
     private static final String PERSISTENCE_FILE = "moonstocks";
 
     // The number of time intervals that have passed since this activity was created
@@ -131,9 +131,12 @@ public abstract class MoonActivity extends Activity {
             player = new Player();
             player.setBalance(STARTING_MONEY);
             player.setName("Jeff");
+            player.setLevel(1);
             return true;
         } else if (id == R.id.menu_news) {
             Intent intent = new Intent(this, NewsActivity.class);
+            Log.d("level", "level in moonActivity " + player.getLevel());
+            intent.putExtra("player", Utility.serialize(player));
             startActivity(intent);
             return true;
         } else if (id == R.id.menu_system_details) {
@@ -143,6 +146,7 @@ public abstract class MoonActivity extends Activity {
             return true;
         } else if (id == R.id.menu_stock_market) {
             Intent intent = new Intent(this, MarketActivity.class);
+            intent.putExtra("player", Utility.serialize(player));
             startActivity(intent);
             return true;
         }
@@ -214,6 +218,6 @@ public abstract class MoonActivity extends Activity {
     }
     
     protected int checkLevel(){
-    	return (int) (player.getBalance()/ 5000);
+    	return (int) (player.getBalance()/ STARTING_MONEY);
     }
 }

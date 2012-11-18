@@ -3,11 +3,15 @@ package com.jeffmeyerson.moonstocks.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.Utility;
+import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.views.TickerView;
 
 public class NewsActivity extends MoonActivity {
@@ -31,31 +35,30 @@ public class NewsActivity extends MoonActivity {
         // Set up buttons for the articles.
         // TODO: this should totally be programmatic
         
+        // Get the data from the Intent
+     	Bundle extras = getIntent().getExtras();
+     	player = (Player) Utility.deserialize(extras.getByteArray("player"));
+        
         int level = player.getLevel();
-        if(level >= 1){
-	        Button lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
-	        lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
-	            public void onClick(View v) {
-	                Intent intent = new Intent(context, ArticleActivity.class);
-	                intent.putExtra("EXTRA_ARTICLE_NAME", "lunar_market_opens");
-	                startActivity(intent);
-	            }
-	        });
+        
+        Log.d("level", "player level in newsActivity " + level);
+        
+        Button lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
+        lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ArticleActivity.class);
+                intent.putExtra("EXTRA_ARTICLE_NAME", "lunar_market_opens");
+                startActivity(intent);
+            }
+        });
+        
+        Button buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
+        if(level < 2){	   
+        	buyStockNotGlobusButton.setText("???");
+        	buyStockNotGlobusButton.setGravity(Gravity.CENTER);
+        	buyStockNotGlobusButton.setEnabled(false);
         }
-
-        if(level >= 2){
-	        Button carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
-	        carefulWithTheMoonButton.setOnClickListener(new OnClickListener() {
-	            public void onClick(View v) {
-	                Intent intent = new Intent(context, ArticleActivity.class);
-	                intent.putExtra("EXTRA_ARTICLE_NAME", "careful_with_the_moon");
-	                startActivity(intent);
-	            }
-	        });
-        }
-
-        if(level >= 3){
-	        Button buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
+        else{
 	        buyStockNotGlobusButton.setOnClickListener(new OnClickListener() {
 	            public void onClick(View v) {
 	                Intent intent = new Intent(context, ArticleActivity.class);
@@ -65,8 +68,30 @@ public class NewsActivity extends MoonActivity {
 	        });
         }
 
-        if(level >= 4){
-	        Button freezeAndThawButton = (Button) findViewById(R.id.freeze_and_thaw_button);
+        Button carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
+        if(level < 3){	        
+	        carefulWithTheMoonButton.setText("???");
+	        carefulWithTheMoonButton.setGravity(Gravity.CENTER);
+	        carefulWithTheMoonButton.setEnabled(false);
+        }
+        else{
+        	carefulWithTheMoonButton.setEnabled(true);
+	        carefulWithTheMoonButton.setOnClickListener(new OnClickListener() {
+	            public void onClick(View v) {
+	                Intent intent = new Intent(context, ArticleActivity.class);
+	                intent.putExtra("EXTRA_ARTICLE_NAME", "careful_with_the_moon");
+	                startActivity(intent);
+	            }
+	        });
+        }
+        
+        Button freezeAndThawButton = (Button) findViewById(R.id.freeze_and_thaw_button);
+        if(level < 4){
+        	freezeAndThawButton.setText("???");
+        	freezeAndThawButton.setGravity(Gravity.CENTER);
+        	freezeAndThawButton.setEnabled(false);
+        }
+        else{
 	        freezeAndThawButton.setOnClickListener(new OnClickListener() {
 	            public void onClick(View v) {
 	                Intent intent = new Intent(context, ArticleActivity.class);
@@ -75,9 +100,14 @@ public class NewsActivity extends MoonActivity {
 	            }
 	        });
         }
-
-        if(level >= 5){
-	        Button bankInitializationButton = (Button) findViewById(R.id.bank_initialization_button);
+        
+        Button bankInitializationButton = (Button) findViewById(R.id.bank_initialization_button);
+        if(level < 5){
+        	bankInitializationButton.setText("???");
+        	bankInitializationButton.setGravity(Gravity.CENTER);
+        	bankInitializationButton.setEnabled(false);
+        }
+        else{
 	        bankInitializationButton.setOnClickListener(new OnClickListener() {
 	            public void onClick(View v) {
 	                Intent intent = new Intent(context, ArticleActivity.class);

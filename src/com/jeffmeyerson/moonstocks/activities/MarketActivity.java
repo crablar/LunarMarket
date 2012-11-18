@@ -49,6 +49,8 @@ public class MarketActivity extends MoonActivity {
         if(player.getLevel() < checkLevel()){
         	player.setLevel(checkLevel());
         }
+        
+        Log.d("level", "player level is " + player.getLevel());
         //otherwise, we don't lower the player's level
         
         // TODO: move this stuff out to MoonActivity
@@ -159,6 +161,11 @@ public class MarketActivity extends MoonActivity {
             // TODO Auto-generated catch block
             Log.d("fileError", "writing IO exception");
             e.printStackTrace();
+        }
+        
+        //check if the player has leveled up!
+        if(player.getLevel() < checkLevel()){
+        	player.setLevel(checkLevel());
         }
 
     }
