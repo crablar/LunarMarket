@@ -26,9 +26,15 @@ public class UptrendWithUpperBound extends PriceFunction {
     }
 
 	@Override
-	int getPreviousValue() {
+	public int getPreviousValue() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
