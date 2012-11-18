@@ -136,6 +136,7 @@ public abstract class MoonActivity extends Activity {
 			return true;
 		} else if (id == R.id.menu_news) {
 			Intent intent = new Intent(this, NewsActivity.class);
+			intent.putExtra("player", Utility.serialize(player));
 			startActivity(intent);
 			return true;
 		} else if (id == R.id.menu_system_details) {
@@ -145,6 +146,7 @@ public abstract class MoonActivity extends Activity {
 			return true;
 		} else if (id == R.id.menu_stock_market) {
 			Intent intent = new Intent(this, MarketActivity.class);
+			intent.putExtra("player", Utility.serialize(player));
 			startActivity(intent);
 			return true;
 		}

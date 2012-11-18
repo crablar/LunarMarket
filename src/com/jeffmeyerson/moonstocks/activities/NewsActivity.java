@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.Utility;
@@ -37,7 +38,19 @@ public class NewsActivity extends MoonActivity {
         
         // Get the data from the Intent
      	Bundle extras = getIntent().getExtras();
-     	player = (Player) Utility.deserialize(extras.getByteArray("player"));
+
+     	if (extras == null) {
+     	   Toast.makeText(context, "ERROR: Didn't get an extras bundle!", Toast.LENGTH_SHORT).show();
+     	} else  {
+     	    if (extras.containsKey("player")) {
+     	        player = (Player) Utility.deserialize(extras.getByteArray("player"));
+     	    } else {
+     	        Toast.makeText(context, "ERROR: Intent bundle did not contain a player!", Toast.LENGTH_SHORT).show();
+     	        if (player == null) {
+     	            player = new Player();
+     	        }
+     	    }
+     	}
         
         int level = player.getLevel();
         
