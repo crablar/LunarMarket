@@ -108,6 +108,7 @@ public abstract class MoonActivity extends Activity {
             player = new Player();
             player.setBalance(STARTING_MONEY);
             player.setName("Jeff");
+            player.setLevel(1);
         }
 
     }
@@ -210,5 +211,9 @@ public abstract class MoonActivity extends Activity {
             result.add(company);
         }
         return result;
+    }
+    
+    protected int checkLevel(){
+    	return (int) (player.getBalance()/ 5000);
     }
 }

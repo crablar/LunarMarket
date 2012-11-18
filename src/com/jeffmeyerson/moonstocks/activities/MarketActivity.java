@@ -45,6 +45,12 @@ public class MarketActivity extends MoonActivity {
         Intent timeIntent = new Intent(this, TimeService.class);
         startService(timeIntent);
         
+        //check if the player has leveled up!
+        if(player.getLevel() < checkLevel()){
+        	player.setLevel(checkLevel());
+        }
+        //otherwise, we don't lower the player's level
+        
         // TODO: move this stuff out to MoonActivity
         mPrefs = getSharedPreferences("moonstocks_prefs", MODE_PRIVATE);
         size = mPrefs.getInt("fileSize", 0);
