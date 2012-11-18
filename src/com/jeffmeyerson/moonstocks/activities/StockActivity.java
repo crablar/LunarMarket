@@ -18,7 +18,9 @@ import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.MovingAverage;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.views.BuyButton;
 import com.jeffmeyerson.moonstocks.views.ChartView;
+import com.jeffmeyerson.moonstocks.views.SellButton;
 
 /**
  * @author jeffreymeyerson
@@ -145,8 +147,8 @@ public class StockActivity extends MoonActivity {
 		sharesOwnedView.setText(sharesOwned + "");
 
 		// Initialize buttons
-		View buyButton = (View) findViewById(R.id.buy_button);
-		View sellButton = (View) findViewById(R.id.sell_button);
+		final BuyButton buyButton = (BuyButton) findViewById(R.id.buy_button);
+		final SellButton sellButton = (SellButton) findViewById(R.id.sell_button);
 
 		// Add onclick listeners to existing buttons
 		buyButton.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +167,10 @@ public class StockActivity extends MoonActivity {
 				// Get and set the player's updated sharesOwned
 				int sharesOwned = player.getSharesOwned(stockTicker);
 				sharesOwnedView.setText(sharesOwned + "");
+				buyButton.clickedState = true;
+				mHandler.postDelayed(new Runnable() { public void run() {
+				    buyButton.clickedState = false;
+                }}, 100);
 			}
 		});
 
@@ -184,6 +190,10 @@ public class StockActivity extends MoonActivity {
 				// Get and set the player's updated sharesOwned
 				int sharesOwned = player.getSharesOwned(stockTicker);
 				sharesOwnedView.setText(sharesOwned + "");
+				sellButton.clickedState = true;
+				mHandler.postDelayed(new Runnable() {public void run() {
+				    sellButton.clickedState = false;
+				}}, 100);
 			}
 		});
 

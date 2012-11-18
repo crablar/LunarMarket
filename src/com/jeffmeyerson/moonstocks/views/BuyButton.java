@@ -13,6 +13,7 @@ public class BuyButton extends View {
 
     private Paint paint;
     private Path arrow;
+    public boolean clickedState = false;
 
     void initialize() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -38,6 +39,13 @@ public class BuyButton extends View {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        // we do things ghetto here
+        if (clickedState) {
+            paint.setColor(Color.argb(128, 128, 255, 255));
+        } else {
+            paint.setColor(Color.argb(128, 128, 255, 128));
+        }
+
         final int border = 10;
         final float x = border;
         final float y = border;
@@ -46,7 +54,6 @@ public class BuyButton extends View {
 
         paint.setStrokeWidth(border);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.argb(128, 128, 255, 128));
 
         canvas.drawRoundRect(new RectF(border/2, border/2, this.getWidth() - (border/2), this.getHeight() - (border/2)), border*2, border*2, paint);
 

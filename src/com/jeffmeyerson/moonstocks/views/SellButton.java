@@ -13,6 +13,7 @@ public class SellButton extends View {
 
     private Paint paint;
     private Path arrow;
+    public boolean clickedState = false;
 
     void initialize() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -38,6 +39,17 @@ public class SellButton extends View {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        // Button selectors?
+        //
+        // Button selectors?
+        //
+        // We don't NEED no stinkin' button selectors!
+        if (clickedState) {
+            paint.setColor(Color.argb(128, 128, 128, 128));
+        } else {
+            paint.setColor(Color.argb(128, 255, 128, 128));
+        }
+        
         final int border = 10;
         final float x = border;
         final float y = border;
