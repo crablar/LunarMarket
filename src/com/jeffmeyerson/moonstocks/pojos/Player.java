@@ -19,11 +19,13 @@ public class Player implements Serializable {
     private double balance;
     private Map<String, Integer> stockShares;
     private Protocol protocol;
+    private int level;
 
     public Player() {
     	balance = MoonActivity.STARTING_MONEY;
         stockShares = new HashMap<String, Integer>();
         protocol = new Protocol();
+        level = 1;
     }
 
     /**
@@ -101,5 +103,13 @@ public class Player implements Serializable {
 	public Protocol getProtocol() {
 		// TODO Auto-generated method stub
 		return this.protocol;
+	}
+	
+	public void setLevel(int l){
+		level = l;
+	}
+	
+	public int getLevel(){
+		return level;
 	}
 }

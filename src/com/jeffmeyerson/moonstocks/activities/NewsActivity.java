@@ -30,49 +30,61 @@ public class NewsActivity extends MoonActivity {
 
         // Set up buttons for the articles.
         // TODO: this should totally be programmatic
-        Button lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
-        lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ArticleActivity.class);
-                intent.putExtra("EXTRA_ARTICLE_NAME", "lunar_market_opens");
-                startActivity(intent);
-            }
-        });
+        
+        int level = player.getLevel();
+        if(level >= 1){
+	        Button lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
+	        lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
+	            public void onClick(View v) {
+	                Intent intent = new Intent(context, ArticleActivity.class);
+	                intent.putExtra("EXTRA_ARTICLE_NAME", "lunar_market_opens");
+	                startActivity(intent);
+	            }
+	        });
+        }
 
-        Button carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
-        carefulWithTheMoonButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ArticleActivity.class);
-                intent.putExtra("EXTRA_ARTICLE_NAME", "careful_with_the_moon");
-                startActivity(intent);
-            }
-        });
+        if(level >= 2){
+	        Button carefulWithTheMoonButton = (Button) findViewById(R.id.careful_with_the_moon_button);
+	        carefulWithTheMoonButton.setOnClickListener(new OnClickListener() {
+	            public void onClick(View v) {
+	                Intent intent = new Intent(context, ArticleActivity.class);
+	                intent.putExtra("EXTRA_ARTICLE_NAME", "careful_with_the_moon");
+	                startActivity(intent);
+	            }
+	        });
+        }
 
-        Button buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
-        buyStockNotGlobusButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ArticleActivity.class);
-                intent.putExtra("EXTRA_ARTICLE_NAME", "buy_stock_not_globus");
-                startActivity(intent);
-            }
-        });
+        if(level >= 3){
+	        Button buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
+	        buyStockNotGlobusButton.setOnClickListener(new OnClickListener() {
+	            public void onClick(View v) {
+	                Intent intent = new Intent(context, ArticleActivity.class);
+	                intent.putExtra("EXTRA_ARTICLE_NAME", "buy_stock_not_globus");
+	                startActivity(intent);
+	            }
+	        });
+        }
 
-        Button freezeAndThawButton = (Button) findViewById(R.id.freeze_and_thaw_button);
-        freezeAndThawButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ArticleActivity.class);
-                intent.putExtra("EXTRA_ARTICLE_NAME", "freeze_and_thaw");
-                startActivity(intent);
-            }
-        });
+        if(level >= 4){
+	        Button freezeAndThawButton = (Button) findViewById(R.id.freeze_and_thaw_button);
+	        freezeAndThawButton.setOnClickListener(new OnClickListener() {
+	            public void onClick(View v) {
+	                Intent intent = new Intent(context, ArticleActivity.class);
+	                intent.putExtra("EXTRA_ARTICLE_NAME", "freeze_and_thaw");
+	                startActivity(intent);
+	            }
+	        });
+        }
 
-        Button bankInitializationButton = (Button) findViewById(R.id.bank_initialization_button);
-        bankInitializationButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ArticleActivity.class);
-                intent.putExtra("EXTRA_ARTICLE_NAME", "bank_initialization");
-                startActivity(intent);
-            }
-        });
+        if(level >= 5){
+	        Button bankInitializationButton = (Button) findViewById(R.id.bank_initialization_button);
+	        bankInitializationButton.setOnClickListener(new OnClickListener() {
+	            public void onClick(View v) {
+	                Intent intent = new Intent(context, ArticleActivity.class);
+	                intent.putExtra("EXTRA_ARTICLE_NAME", "bank_initialization");
+	                startActivity(intent);
+	            }
+	        });
+        }
     }
 }
