@@ -52,13 +52,10 @@ public class MarketActivity extends MoonActivity {
 		mPrefs = getSharedPreferences("moonstocks_prefs", MODE_PRIVATE);
 		size = mPrefs.getInt("fileSize", 0);
 
-		// Load company data from XML.
-		List<Company> companies = getCompanies();
-
 		// Iterate through the companies on the market and add a row to the
 		// table for each one.
 		TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
-		for (final Company c : companies) {
+		for (final Company c : companyMap.values()) {
 			TableRow row = new TableRow(this);
 			row.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 					LayoutParams.WRAP_CONTENT));
@@ -175,28 +172,15 @@ public class MarketActivity extends MoonActivity {
 
 		InputStream inputStream = null;
 
-		for (int i = 1; i <= getCompanies().size(); i++) {
+		for (int i = 1; i <= companyMap.size(); i++) {
 			TableRow row = (TableRow) marketTable.getChildAt(i); // gets the row
-			String company = (String) ((Button) row.getChildAt(0)).getText();
+			String tickerName = (String) ((Button) row.getChildAt(0)).getText();
 
-			// TODO: Make programmatic
-			// Put the raw text file into an InputStream
-			if (company.equals("EVIL")) {
-				inputStream = this.getResources().openRawResource(
-						R.raw.evil_vals);
-			} else if (company.equals("BDST")) {
-				inputStream = this.getResources().openRawResource(
-						R.raw.bdst_vals);
-			} else if (company.equals("WMC")) {
-				inputStream = this.getResources().openRawResource(
-						R.raw.wmc_vals);
-			}
-
-			Stock stock = new Stock(inputStream);
+			Stock stock = companyMap.get(tickerName).getStock();
 			((TextView) row.getChildAt(1)).setText("$"
 					+ String.valueOf(stock.getPrice(MoonActivity.globalTime)));
 			((TextView) row.getChildAt(2)).setText(String.valueOf(player
-					.getSharesOwned(company)));
+					.getSharesOwned(tickerName)));
 		}
 
 	}

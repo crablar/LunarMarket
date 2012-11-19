@@ -3,13 +3,9 @@ package com.jeffmeyerson.moonstocks.activities;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
-import com.jeffmeyerson.moonstocks.R;
-import com.jeffmeyerson.moonstocks.Utility;
-import com.jeffmeyerson.moonstocks.pojos.Company;
-import com.jeffmeyerson.moonstocks.pojos.Player;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,6 +17,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.Utility;
+import com.jeffmeyerson.moonstocks.pojos.Company;
+import com.jeffmeyerson.moonstocks.pojos.Player;
+import com.jeffmeyerson.moonstocks.pojos.Stock;
 
 /**
  * A base class that other MoonStocks activities can extend from. It fills in
@@ -43,11 +45,15 @@ public abstract class MoonActivity extends Activity {
 
 	static Handler mHandler = new Handler();
 	static boolean isRunning = false;
-
+	
+	// vomit
+	static HashMap<String, Company> companyMap = new HashMap<String, Company>();
+	static ArrayList<Company> companyList = new ArrayList<Company>();
+	
 	// Constants
 	public static final int STARTING_MONEY = 5000;
 	private static final String PERSISTENCE_FILE = "moonstocks";
-
+	
 	// The amount of time (ms) elapsed since the player started the game.
 	// TODO: persist this
 	static int globalTime = 0;
@@ -64,6 +70,9 @@ public abstract class MoonActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		if(companyMap.size() == 0)
+			loadCompanies();
+		
 		if (!isRunning) {
 			Runnable timeFlux = new Runnable() {
 				public void run() {
@@ -221,19 +230,31 @@ public abstract class MoonActivity extends Activity {
 	/**
 	 * Read in the list of companies from companies.xml.
 	 */
-	protected List<Company> getCompanies() {
-		List<Company> result = new LinkedList<Company>();
+	protected void loadCompanies() {
 		String[] companyStrings = getResources().getStringArray(
 				R.array.companies);
 
 		for (String companyString : companyStrings) {
 			String[] companyArr = companyString.split(" ");
-			String ticker = companyArr[0];
+			String tickerName = companyArr[0];
 			String name = companyArr[1];
-			Company company = new Company(ticker, name);
-			result.add(company);
+			InputStream inputStream = null;
+			if (tickerName.equals("EVIL")) {
+				inputStream = this.getResources().openRawResource(
+						R.raw.evil_vals);
+			} else if (tickerName.equals("BDST")) {
+				inputStream = this.getResources().openRawResource(
+						R.raw.bdst_vals);
+			} else if (tickerName.equals("WMC")) {
+				inputStream = this.getResources().openRawResource(
+						R.raw.wmc_vals);
+			}
+
+			Stock stock = new Stock(inputStream);
+			Company company = new Company(tickerName, name, stock);
+			companyList.add(company);
+			companyMap.put(tickerName, company);
 		}
-		return result;
 	}
 
 	protected int checkLevel() {
