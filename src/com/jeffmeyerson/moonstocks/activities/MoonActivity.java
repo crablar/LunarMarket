@@ -58,7 +58,7 @@ public abstract class MoonActivity extends Activity {
 	
 	// The amount of time (ms) elapsed since the player started the game.
 	// TODO: persist this
-	static int globalTime = 0;
+	static int globalTime = 1000;
 
 	// There is only one player
 	static Player player = new Player();

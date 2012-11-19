@@ -10,6 +10,7 @@ import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Protocol;
+import com.jeffmeyerson.moonstocks.views.TickerView;
 
 public class SystemDetailsActivity extends MoonActivity {
 
@@ -18,6 +19,11 @@ public class SystemDetailsActivity extends MoonActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_system_details);
 
+        // Set up the scrolling stock ticker at the top.
+        TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
+
+        tickerView.scroll();
+		
 		play(R.raw.evil);
 
 		// Get the data from the Intent

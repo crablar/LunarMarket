@@ -25,6 +25,7 @@ import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.views.TickerView;
 
 public class MarketActivity extends MoonActivity {
 
@@ -40,6 +41,11 @@ public class MarketActivity extends MoonActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_market);
 
+        // Set up the scrolling stock ticker at the top.
+        TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
+
+        tickerView.scroll();
+		
 		//check if the player has leveled up!
         if(player.getLevel() < checkLevel()){
             player.setLevel(checkLevel());

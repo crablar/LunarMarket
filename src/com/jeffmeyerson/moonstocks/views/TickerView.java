@@ -49,6 +49,7 @@ public class TickerView extends HorizontalScrollView {
     private void initialize(Context context) {
         text = new TextView(context);
         this.addView(text);
+        updateText();
     }
 
     private void updateText() {
@@ -81,7 +82,6 @@ public class TickerView extends HorizontalScrollView {
                         return true; 
                     }
                 });
-                Log.d(this.toString(), "I'm scrolling at time " + MoonActivity.getTime());
                 int pos = (int) (1.0 * (SCROLL_TIME - millisUntilFinished) / SCROLL_TIME * (text.getWidth() - getWidth()));
                 scrollTo(pos, 0);
             } 

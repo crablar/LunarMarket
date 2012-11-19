@@ -3,12 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <com.jeffmeyerson.moonstocks.views.TickerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/stock_scroller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+
     <TextView
         android:id="@+id/playerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TradeBot Class xF4D2"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:layout_below="@+id/stock_scroller"/>
 
     <com.jeffmeyerson.moonstocks.views.TimerView
         android:id="@+id/timerView"

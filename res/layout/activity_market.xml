@@ -9,6 +9,13 @@
     android:orientation="vertical"
     tools:context=".MarketActivity" >
 
+    <com.jeffmeyerson.moonstocks.views.TickerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/stock_scroller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+
     <TableLayout
         android:id="@+id/market_table"
         android:layout_width="match_parent"
