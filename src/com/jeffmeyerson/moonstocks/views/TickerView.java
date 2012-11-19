@@ -12,6 +12,7 @@ import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -73,7 +74,6 @@ public class TickerView extends HorizontalScrollView {
         new CountDownTimer(SCROLL_TIME, SCROLL_TIME_INTERVAL) { 
 
             public void onTick(long millisUntilFinished) {
-
                 // Disable Scrolling by setting up an OnTouchListener to do nothing
                 setOnTouchListener( new OnTouchListener(){ 
                     @Override
@@ -81,7 +81,7 @@ public class TickerView extends HorizontalScrollView {
                         return true; 
                     }
                 });
-
+                Log.d(this.toString(), "I'm scrolling at time " + MoonActivity.getTime());
                 int pos = (int) (1.0 * (SCROLL_TIME - millisUntilFinished) / SCROLL_TIME * (text.getWidth() - getWidth()));
                 scrollTo(pos, 0);
             } 
