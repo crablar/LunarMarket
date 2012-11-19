@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import com.jeffmeyerson.moonstocks.R;
+import com.jeffmeyerson.moonstocks.activities.MoonActivity;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
 
@@ -29,10 +30,6 @@ public class TickerView extends HorizontalScrollView {
 
     private TextView text;
 
-    // This time is local only to the ticker. Not synchronized with global time currently.
-    private int time;
-    private List<Company> companies;
-
     public TickerView(Context context) {
         super(context);
         initialize(context);
@@ -51,52 +48,26 @@ public class TickerView extends HorizontalScrollView {
     private void initialize(Context context) {
         text = new TextView(context);
         this.addView(text);
-        time = 1;
-    }
-
-    public void setCompanies(List<Company> companies) {
-        this.companies = companies;
-        updateText();
     }
 
     private void updateText() {
-        time++;
         String newText = "";
-        InputStream is = null;
-        for (Company company : companies) {
-            if (company.getTicker().equals("EVIL")) {
-                is = this.getResources().openRawResource(R.raw.evil_vals);
-            } else if (company.getTicker().equals("BDST")) {
-                is = this.getResources().openRawResource(R.raw.bdst_vals);
-            } else if (company.getTicker().equals("WMC")) {
-                is = this.getResources().openRawResource(R.raw.wmc_vals);
-            }
-            newText += company.getTicker();
-            newText += " " + getStockPrice(is);
+        int time = MoonActivity.getTime();
+        List<Company> companyList = MoonActivity.companyList;
+        for (int i = 0; i < companyList.size(); i++) {
+        	Company company = companyList.get(i);
+        	Stock stock = company.getStock();
+        	
+            Double priceNew = stock.getPrice(time);
+            Double priceOld = stock.getPrice(time-1000);
+            Double priceChange = priceNew - priceOld;
+        	
+        	newText += company.getTicker() + " " + priceChange;
             newText += "     ";
         }
         text.setText(newText + newText + newText);
     }
 
-    // TODO: this should be refactored to not need to create a new stock every time
-    private String getStockPrice(InputStream is) {
-        if (time == 0) {
-            return "--";
-        }
-
-        String update = "";
-        Stock stock = new Stock(is);
-
-        Double priceNew = stock.getPrice(time);
-        Double priceOld = stock.getPrice(time-1);
-        Double change = priceNew - priceOld;
-
-        if(change > 0){
-            update += "+";
-        }
-        update += change;
-        return update;
-    }
 
     public void scroll() {
         new CountDownTimer(SCROLL_TIME, SCROLL_TIME_INTERVAL) { 

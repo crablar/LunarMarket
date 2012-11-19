@@ -46,9 +46,11 @@ public abstract class MoonActivity extends Activity {
 	static Handler mHandler = new Handler();
 	static boolean isRunning = false;
 	
-	// vomit
-	static HashMap<String, Company> companyMap = new HashMap<String, Company>();
-	static ArrayList<Company> companyList = new ArrayList<Company>();
+	// Map of ticker names to their companies
+	public static HashMap<String, Company> companyMap = new HashMap<String, Company>();
+	
+	// Companies sorted in a consistent fashion
+	public static ArrayList<Company> companyList = new ArrayList<Company>();
 	
 	// Constants
 	public static final int STARTING_MONEY = 5000;

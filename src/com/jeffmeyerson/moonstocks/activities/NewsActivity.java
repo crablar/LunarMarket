@@ -30,7 +30,6 @@ public class NewsActivity extends MoonActivity {
         // Set up the scrolling stock ticker at the top.
         TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
 
-        tickerView.setCompanies(companyList);
         tickerView.scroll();
 
         // Set up buttons for the articles.
