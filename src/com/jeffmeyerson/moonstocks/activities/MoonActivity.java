@@ -121,7 +121,6 @@ public abstract class MoonActivity extends Activity {
 			player = new Player();
 			player.setBalance(STARTING_MONEY);
 			player.setName("Jeff");
-			player.setLevel(1);
 		}
 
 	}

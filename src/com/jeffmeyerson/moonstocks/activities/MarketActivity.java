@@ -45,11 +45,6 @@ public class MarketActivity extends MoonActivity {
         TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
 
         tickerView.scroll();
-		
-		//check if the player has leveled up!
-        if(player.getLevel() < checkLevel()){
-            player.setLevel(checkLevel());
-        }
         
         Log.d("level", "player level is " + player.getLevel());
         //otherwise, we don't lower the player's level
@@ -163,11 +158,6 @@ public class MarketActivity extends MoonActivity {
 			Log.d("fileError", "writing IO exception");
 			e.printStackTrace();
 		}
-		
-		//check if the player has leveled up!
-        if(player.getLevel() < checkLevel()){
-            player.setLevel(checkLevel());
-        }
 
 	}
 

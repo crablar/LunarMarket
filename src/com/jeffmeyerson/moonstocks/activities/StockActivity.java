@@ -185,6 +185,9 @@ public class StockActivity extends MoonActivity {
 
 				// Get and set the player's updated balance
 				double balance = Utility.roundCurrency(player.getBalance());
+				if(player.updateLevel())
+					Toast.makeText(context, "You advanced a level!",
+						Toast.LENGTH_SHORT).show();
 				balanceView.setText(balance + "");
 
 				// Get and set the player's updated sharesOwned

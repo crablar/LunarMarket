@@ -20,12 +20,14 @@ public class Player implements Serializable {
     private Map<String, Integer> stockShares;
     private Protocol protocol;
     private int level;
+    private int levelGoal;
 
     public Player() {
     	balance = MoonActivity.STARTING_MONEY;
         stockShares = new HashMap<String, Integer>();
         protocol = new Protocol();
         level = 1;
+        levelGoal = 6000;
     }
 
     /**
@@ -105,11 +107,18 @@ public class Player implements Serializable {
 		return this.protocol;
 	}
 	
-	public void setLevel(int l){
-		level = l;
-	}
 	
 	public int getLevel(){
 		return level;
+	}
+
+	public boolean updateLevel() {
+		if(balance >= levelGoal){
+			level++;
+			levelGoal += 1000;
+			return true;
+		}
+		return false;
+			
 	}
 }
