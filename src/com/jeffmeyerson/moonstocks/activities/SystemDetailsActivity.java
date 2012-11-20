@@ -1,9 +1,11 @@
 package com.jeffmeyerson.moonstocks.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeffmeyerson.moonstocks.R;
@@ -16,9 +18,20 @@ public class SystemDetailsActivity extends MoonActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_system_details);
 
+		// Load the ImageView that will host the animation and
+		 // set its background to our AnimationDrawable XML resource.
+		 ImageView img = (ImageView)findViewById(R.id.avatarView);
+		 img.setBackgroundResource(R.drawable.avatar_animation);
+		 // Get the background, which has been compiled to an AnimationDrawable object.
+		 AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
+		 // Start the animation (looped playback by default).
+		 frameAnimation.start();
+
+		
         // Set up the scrolling stock ticker at the top.
         TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
 
