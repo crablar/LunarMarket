@@ -97,7 +97,6 @@ public class MarketActivity extends MoonActivity {
 			marketTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		}
-		
 		Runnable tableFlux = new Runnable() {
 			public void run() {
 
@@ -119,8 +118,19 @@ public class MarketActivity extends MoonActivity {
 			}
 		};
 		
-		mHandler.postDelayed(tableFlux, 1000);
+		// Market Average chartview
+		Runnable chartFlux = new Runnable(){
+			public void run(){
+				double marketAvg = Utility.getMarketAverage();
+				chartView.addPoint(Utility.roundCurrencyToFloat(marketAvg / 2));
+				chartView.invalidate();
+				mHandler.postDelayed(this, Stock.TIMESTEP);
 
+			}
+		};
+		
+		mHandler.postDelayed(tableFlux, 1000);
+		mHandler.postDelayed(chartFlux, Stock.TIMESTEP);
 
 	}
 
