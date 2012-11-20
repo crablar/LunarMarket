@@ -10,9 +10,23 @@ import java.text.DecimalFormat;
 
 import android.util.Log;
 
+import com.jeffmeyerson.moonstocks.activities.MoonActivity;
+import com.jeffmeyerson.moonstocks.pojos.Company;
+
 // Let's try not to make this a kitchen sink.
 public class Utility {
 
+	public static double getMarketAverage(){
+		if(MoonActivity.companyList.size() == 0)
+			return 0;
+		int time = MoonActivity.getTime();
+		double total = 0;
+		for(Company company : MoonActivity.companyList){
+			total += company.getStock().getPrice(time);
+		}
+		return total / MoonActivity.companyList.size();
+	}
+	
     public static double roundCurrency(double amount) {
         final DecimalFormat twoDForm = new DecimalFormat("#.00");
         Double result = Double.valueOf(twoDForm.format(amount));

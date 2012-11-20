@@ -11,18 +11,19 @@
     <application
         android:icon="@drawable/moonstocks_icon"
         android:label="@string/app_name" >
-        <service android:name=".TimeService"></service>
+        <service android:name=".TimeService" >
+        </service>
 
         <activity
-            android:name=".activities.MarketActivity"
-            android:label="@string/app_name" >
+            android:name=".activities.SystemDetailsActivity"
+            android:label="@string/title_activity_system_details" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SystemDetailsActivity"
-            android:label="@string/title_activity_system_details" >
+            android:name=".activities.MarketActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".activities.StockActivity"

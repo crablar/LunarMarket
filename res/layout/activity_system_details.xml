@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -14,9 +15,9 @@
         android:id="@+id/playerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/stock_scroller"
         android:text="TradeBot Class xF4D2"
-        android:textAppearance="?android:attr/textAppearanceMedium" 
-        android:layout_below="@+id/stock_scroller"/>
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <com.jeffmeyerson.moonstocks.views.TimerView
         android:id="@+id/timerView"
@@ -50,18 +51,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/efficiencyText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/netProfitText"
-        android:text="Market efficiency:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/protocolText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/efficiencyText"
+        android:layout_below="@+id/netProfitText"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <com.jeffmeyerson.moonstocks.views.TimerView

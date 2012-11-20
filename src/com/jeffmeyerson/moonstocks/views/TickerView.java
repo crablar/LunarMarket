@@ -26,8 +26,8 @@ import android.widget.TextView;
 public class TickerView extends HorizontalScrollView {
 
     // Constants.
-    private final long SCROLL_TIME = 20000;
-    private final long SCROLL_TIME_INTERVAL = 50;
+    private final long SCROLL_TIME = 12000;
+    private final long SCROLL_TIME_INTERVAL = 25;
 
     private TextView text;
 

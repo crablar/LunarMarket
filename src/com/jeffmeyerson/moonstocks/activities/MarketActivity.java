@@ -25,6 +25,7 @@ import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.views.ChartView;
 import com.jeffmeyerson.moonstocks.views.TickerView;
 
 public class MarketActivity extends MoonActivity {
@@ -35,6 +36,7 @@ public class MarketActivity extends MoonActivity {
 	private final String fileName = "mainactivity";
 	private int size;
 	private SharedPreferences mPrefs;
+	private ChartView chartView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class MarketActivity extends MoonActivity {
         // Set up the scrolling stock ticker at the top.
         TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
 
+		chartView = (ChartView) findViewById(R.id.chart);
+        
         tickerView.scroll();
         
         Log.d("level", "player level is " + player.getLevel());
@@ -93,6 +97,30 @@ public class MarketActivity extends MoonActivity {
 			marketTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		}
+		
+		Runnable tableFlux = new Runnable() {
+			public void run() {
+
+				TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
+				for (int i = 1; i <= companyMap.size(); i++) {
+					TableRow row = (TableRow) marketTable.getChildAt(i); // gets the row
+					String tickerName = (String) ((Button) row.getChildAt(0)).getText();
+
+					Stock stock = companyMap.get(tickerName).getStock();
+					((TextView) row.getChildAt(1)).setText("$"
+							+ String.valueOf(stock.getPrice(MoonActivity.globalTime)));
+					((TextView) row.getChildAt(2)).setText(String.valueOf(player
+							.getSharesOwned(tickerName)));
+				}
+				
+				// Put this function on the message queue
+				mHandler.postDelayed(this, 1000);
+				
+			}
+		};
+		
+		mHandler.postDelayed(tableFlux, 1000);
+
 
 	}
 
@@ -162,11 +190,10 @@ public class MarketActivity extends MoonActivity {
 	}
 
 	private void updateTable(Intent data) {
+		
 		TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
 
 		player = (Player) Utility.deserialize(data.getByteArrayExtra("player"));
-
-		InputStream inputStream = null;
 
 		for (int i = 1; i <= companyMap.size(); i++) {
 			TableRow row = (TableRow) marketTable.getChildAt(i); // gets the row
