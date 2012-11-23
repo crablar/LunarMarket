@@ -54,17 +54,20 @@ public class TickerView extends HorizontalScrollView {
 
     private void updateText() {
         String newText = "";
-        int time = MoonActivity.getTime();
+        int time = Math.max(12000, MoonActivity.getTime());
         List<Company> companyList = MoonActivity.companyList;
         for (int i = 0; i < companyList.size(); i++) {
         	Company company = companyList.get(i);
         	Stock stock = company.getStock();
         	
             Double priceNew = stock.getPrice(time);
-            Double priceOld = stock.getPrice(time-1000);
+            Double priceOld = stock.getPrice(time-12000);
             Double priceChange = priceNew - priceOld;
         	
-        	newText += company.getTicker() + " " + priceChange;
+            if(priceOld < priceNew)
+            	newText += company.getTicker() + " +" + priceChange;
+            else
+            	newText += company.getTicker() + " " + priceChange;
             newText += "     ";
         }
         text.setText(newText + newText + newText);

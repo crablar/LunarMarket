@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 import com.jeffmeyerson.moonstocks.pojos.SongElement.SongElementType;
 import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
 import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunctionFactory;
@@ -79,7 +81,8 @@ public class Stock {
 				values.add(Integer.valueOf(lineArr[i]));
 			}
 
-			PriceFunction fn = PriceFunctionFactory.getPriceFunctionForStock(stockName);
+			PriceFunction fn = PriceFunctionFactory
+					.getPriceFunctionForStock(stockName);
 			SongElement element = new SongElement(type, values, fn);
 
 			assert (element != null);
@@ -92,23 +95,41 @@ public class Stock {
 	}
 
 	/**
-	 * Gets the price of the stock at the given point in time.
+	 * Gets the price of the stock at the given point in time. Price is
+	 * determined by high frequency.
 	 * 
 	 * @param time
 	 * @return
 	 */
 	public double getPrice(int time) {
-
-		// Take the average of the returned values for each SongElement.
-		int total = 0;
-		for (SongElement element : song) {
-			total += element.getValue(time);
-		}
-		return total / song.size();
+        int total = 0;
+        for (SongElement element : song) {
+                if(element.type.equals(SongElement.SongElementType.HIGH_FREQUENCY_NOTES));
+                	return element.getValue(time);
+        }
+        // Error
+        return 300;
+	}
+	
+	/**
+	 * Gets the volume of the stock at the given point in time. Volume is
+	 * determined by low frequency.
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public double getVolume(int time) {
+        int total = 0;
+        for (SongElement element : song) {
+                if(element.type.equals(SongElement.SongElementType.LOW_FREQUENCY_NOTES));
+                	return element.getValue(time);
+        }
+        // Error
+        return 20;
 	}
 
 	public double getMaxPrice() {
-		if(MAX_PRICE != -1)
+		if (MAX_PRICE != -1)
 			return MAX_PRICE;
 		double max = Double.MIN_VALUE;
 		for (int i = 0; i < song.size(); i++)
@@ -117,7 +138,7 @@ public class Stock {
 	}
 
 	public double getMinPrice() {
-		if(MIN_PRICE != -1)
+		if (MIN_PRICE != -1)
 			return MIN_PRICE;
 		double min = Double.MAX_VALUE;
 		for (int i = 0; i < song.size(); i++)
