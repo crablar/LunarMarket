@@ -17,7 +17,7 @@ public class EVILStockFunction extends PriceFunction {
 	public int getValue(int time, List<Integer> values) {
 		Random r = new Random();
 		// wrap around if time goes past the amount of song data we have
-		time = Math.abs(time) % values.size();
+		time = time % values.size();
 		int result = 0;
 		if (time == 0) {
 			result = values.get(time) * 10;
@@ -25,11 +25,11 @@ public class EVILStockFunction extends PriceFunction {
 			result = values.get(time) * values.get(time - 1) * 10;
 			int difference = Math.abs(result - getPreviousValue());
 			if (difference > r.nextInt(MAX_VOLATILITY))
-				result = r.nextBoolean() ? getPreviousValue() - 10
-						: getPreviousValue() + 10;
+				result = difference < 0 ? getPreviousValue() - MAX_VOLATILITY
+						: getPreviousValue() + MAX_VOLATILITY;
 		}
 		if (UPPER_BOUND < result)
-			result = UPPER_BOUND;
+			result = UPPER_BOUND / 2;
 		if (result < 0)
 			result = getPreviousValue() + MAX_VOLATILITY;
 		previousValues.add(result);

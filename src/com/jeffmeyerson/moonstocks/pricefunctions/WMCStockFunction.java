@@ -26,10 +26,10 @@ public class WMCStockFunction extends PriceFunction {
 			result = values.get(time) * values.get(time - 1) * 10;
 			int difference = Math.abs(result - getPreviousValue());
 			if(difference > r.nextInt(MAX_VOLATILITY))
-				result = r.nextBoolean() ? getPreviousValue() - 10 : getPreviousValue() + 10;
+				result = r.nextBoolean() ? getPreviousValue() - MAX_VOLATILITY : getPreviousValue() + MAX_VOLATILITY;
 		}
 		if (UPPER_BOUND < result)
-			result = UPPER_BOUND;
+			result = UPPER_BOUND / 2;
 		if (result < 0)
 			result = getPreviousValue() + MAX_VOLATILITY;
 		previousValues.add(result);

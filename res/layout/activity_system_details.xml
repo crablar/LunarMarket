@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/playerText"
-        android:text="Hardware Specifications: 1024_CORE_INTEL_JANITORIAL_PROCESSOR"
+        android:text="Hardware Specifications: 1024_CORE_INTEL_PROCESSOR"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
