@@ -1,5 +1,6 @@
 package com.jeffmeyerson.moonstocks.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.Utility;
@@ -15,6 +17,7 @@ import com.jeffmeyerson.moonstocks.pojos.Protocol;
 import com.jeffmeyerson.moonstocks.views.TickerView;
 
 public class SystemDetailsActivity extends MoonActivity {
+	Context context = this;
 
 	ImageView img;
 
@@ -24,14 +27,7 @@ public class SystemDetailsActivity extends MoonActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_system_details);
 
-		assignAnimation();
-
-		// Get the background, which has been compiled to an AnimationDrawable
-		// object.
-		AnimationDrawable frameAnimation = (AnimationDrawable) img
-				.getBackground();
-		// Start the animation (looped playback by default).
-		frameAnimation.start();
+		assignAnimationAndBegin();
 
 		// Set up the scrolling stock ticker at the top.
 		TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
@@ -71,14 +67,14 @@ public class SystemDetailsActivity extends MoonActivity {
 
 	}
 
-	private void assignAnimation() {
+	private void assignAnimationAndBegin() {
 		// Load the ImageView that will host the animation and
 		// set its background to our AnimationDrawable XML resource.
 		img = (ImageView) findViewById(R.id.avatarView);
 		String avatarDescription = player.getAvatarDescription();
 
 		if (avatarDescription.equals("no eyes")) {
-
+			img.setBackgroundResource(R.drawable.avatar_no_eyes_animation);
 		}
 		if (avatarDescription.equals("one eye")) {
 			img.setBackgroundResource(R.drawable.avatar_one_eye_animation);
@@ -95,12 +91,31 @@ public class SystemDetailsActivity extends MoonActivity {
 		if (avatarDescription.equals("gold teeth")) {
 
 		}
-
+		// Get the background, which has been compiled to an AnimationDrawable
+		// object.
+		AnimationDrawable frameAnimation = (AnimationDrawable) img
+				.getBackground();
+		// Start the animation (looped playback by default).
+		frameAnimation.start();
 	}
-
+	
+	/*
+	 * Pawn something
+	 */
 	public void pawn(View view) {
-		player.pawn();
-		assignAnimation();
+		int cash = player.pawn();
+		if(cash == 0){
+			Toast.makeText(context, "You don't own anything worth pawning.",
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+		player.setBalance(player.getBalance() + cash);
+		if(player.updateLevel()){
+			player.demoteAvatar();
+			Toast.makeText(context, "You advanced a level!",
+				Toast.LENGTH_SHORT).show();
+		}
+		assignAnimationAndBegin();
 		TextView balanceView = (TextView) findViewById(R.id.balanceText);
 		balanceView.setText("Balance: $" + +player.getBalance());
 	}

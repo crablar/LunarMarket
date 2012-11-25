@@ -148,14 +148,18 @@ public class Player implements Serializable {
 			avatarIndex++;
 	}
 	
-	public void demoteAvatar(){
-		if(avatarIndex > 0)
-			avatarIndex--;
+	public boolean demoteAvatar(){
+		if(avatarIndex == 0)
+			return false;
+		avatarIndex--;
+		return true;
 	}
 	
-	public void pawn(){
-		demoteAvatar();
-		balance += 500;
+	public int pawn(){
+		if(demoteAvatar()){
+			return 500;
+		}
+		return 0;
 	}
 	
 }
