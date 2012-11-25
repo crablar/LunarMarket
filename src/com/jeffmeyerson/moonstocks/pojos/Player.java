@@ -15,6 +15,8 @@ import com.jeffmeyerson.moonstocks.activities.MoonActivity;
  */
 public class Player implements Serializable {
 
+	private static final String[] avatarArray = {"no eyes", "one eye", "normal", "sunglasses", "gold teeth"};
+	private static int avatarIndex = 2;
 	private static final long serialVersionUID = 5885032670865723288L;
 	private String playerName;
 	private double balance;
@@ -125,6 +127,7 @@ public class Player implements Serializable {
 	public boolean updateLevel() {
 		if (balance >= levelGoal) {
 			level++;
+			advanceAvatar();
 			levelGoal += 1000;
 			return true;
 		}
@@ -135,4 +138,24 @@ public class Player implements Serializable {
 	public int getLevelGoal() {
 		return levelGoal;
 	}
+
+	public String getAvatarDescription() {
+		return avatarArray[avatarIndex];
+	}
+	
+	public void advanceAvatar(){
+		if(avatarIndex < avatarArray.length - 1)
+			avatarIndex++;
+	}
+	
+	public void demoteAvatar(){
+		if(avatarIndex > 0)
+			avatarIndex--;
+	}
+	
+	public void pawn(){
+		demoteAvatar();
+		balance += 500;
+	}
+	
 }

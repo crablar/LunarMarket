@@ -16,27 +16,28 @@ import com.jeffmeyerson.moonstocks.views.TickerView;
 
 public class SystemDetailsActivity extends MoonActivity {
 
+	ImageView img;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_system_details);
 
-		// Load the ImageView that will host the animation and
-		 // set its background to our AnimationDrawable XML resource.
-		 ImageView img = (ImageView)findViewById(R.id.avatarView);
-		 img.setBackgroundResource(R.drawable.avatar_animation);
-		 // Get the background, which has been compiled to an AnimationDrawable object.
-		 AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
-		 // Start the animation (looped playback by default).
-		 frameAnimation.start();
+		assignAnimation();
 
-		
-        // Set up the scrolling stock ticker at the top.
-        TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
+		// Get the background, which has been compiled to an AnimationDrawable
+		// object.
+		AnimationDrawable frameAnimation = (AnimationDrawable) img
+				.getBackground();
+		// Start the animation (looped playback by default).
+		frameAnimation.start();
 
-        tickerView.scroll();
-		
+		// Set up the scrolling stock ticker at the top.
+		TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
+
+		tickerView.scroll();
+
 		play(R.raw.evil);
 
 		// Get the data from the Intent
@@ -68,6 +69,40 @@ public class SystemDetailsActivity extends MoonActivity {
 		TextView protocolView = (TextView) findViewById(R.id.protocolText);
 		protocolView.setText(Protocol.getProtocolVerbose());
 
+	}
+
+	private void assignAnimation() {
+		// Load the ImageView that will host the animation and
+		// set its background to our AnimationDrawable XML resource.
+		img = (ImageView) findViewById(R.id.avatarView);
+		String avatarDescription = player.getAvatarDescription();
+
+		if (avatarDescription.equals("no eyes")) {
+
+		}
+		if (avatarDescription.equals("one eye")) {
+			img.setBackgroundResource(R.drawable.avatar_one_eye_animation);
+
+		}
+		if (avatarDescription.equals("normal")) {
+			img.setBackgroundResource(R.drawable.avatar_basic_animation);
+		}
+
+		if (avatarDescription.equals("sunglasses")) {
+
+		}
+
+		if (avatarDescription.equals("gold teeth")) {
+
+		}
+
+	}
+
+	public void pawn(View view) {
+		player.pawn();
+		assignAnimation();
+		TextView balanceView = (TextView) findViewById(R.id.balanceText);
+		balanceView.setText("Balance: $" + +player.getBalance());
 	}
 
 	@Override
