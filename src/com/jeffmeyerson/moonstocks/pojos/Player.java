@@ -15,7 +15,7 @@ import com.jeffmeyerson.moonstocks.activities.MoonActivity;
  */
 public class Player implements Serializable {
 
-	private static final String[] avatarArray = {"no eyes", "one eye", "normal", "sunglasses", "gold teeth"};
+	private static final String[] avatarArray = {"no eyes", "one eye", "normal", "gold teeth", "shades and nose"};
 	private static int avatarIndex = 2;
 	private static final long serialVersionUID = 5885032670865723288L;
 	private String playerName;

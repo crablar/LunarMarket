@@ -84,12 +84,12 @@ public class SystemDetailsActivity extends MoonActivity {
 			img.setBackgroundResource(R.drawable.avatar_basic_animation);
 		}
 
-		if (avatarDescription.equals("sunglasses")) {
-
+		if (avatarDescription.equals("gold teeth")) {
+			img.setBackgroundResource(R.drawable.avatar_gold_teeth_animation);
 		}
 
-		if (avatarDescription.equals("gold teeth")) {
-
+		if (avatarDescription.equals("shades and nose")) {
+			img.setBackgroundResource(R.drawable.avatar_shades_and_nose_animation);
 		}
 		// Get the background, which has been compiled to an AnimationDrawable
 		// object.

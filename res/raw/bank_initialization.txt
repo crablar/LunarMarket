@@ -16,7 +16,7 @@ Bloomberg interfaced with bank1 on October 9, 2078, resulting in the following c
 
 Bloomberg:  Good evening.
 
-bank1:  Depending on how you look at it.  Today's current estimated worldwide human death toll is 15,292, 924 above average, with the most frequent cause being dehydration resulting from diarrhea.  Billboard reports the highest-played song over the last century to be "Clocks" by Coldplay.  Time in xF839, Antarctica is 1422 hours.
+bank1:  Depending on how you look at it.  Today's current estimated worldwide human death toll is 15,292, which is 924 above average, with the most frequent cause being dehydration resulting from diarrhea.  Billboard reports the highest-played song over the last century to be "Clocks" by Coldplay.  Time in xF839, Antarctica is 1422 hours.
 
 Bloomberg:  Why the name "bank1"?
 
@@ -58,7 +58,7 @@ Bloomberg:  This column is about educating our readers with applicable, hard kno
 
 bank1: <]=D
 
-Bloomberg:  What sorts of specific insights can you give us about the worldwide increase in currency instability and government debt that has proliferated, perhaps coincidentally, since the initialization of bank1?
+Bloomberg:  What sorts of specific insights can you give us about the worldwide increase in currency instability and government debt that has proliferated, perhaps not coincidentally, since the initialization of bank1?
 
 bank1:  Did you see that I gave him a hat in that last one?
 

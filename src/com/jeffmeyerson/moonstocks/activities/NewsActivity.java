@@ -65,7 +65,7 @@ public class NewsActivity extends MoonActivity {
         });
         
         Button buyStockNotGlobusButton = (Button) findViewById(R.id.buy_stock_not_globus_button);
-        if(level < 2){	   
+        if(level < 5){	   
         	buyStockNotGlobusButton.setText("???");
         	buyStockNotGlobusButton.setGravity(Gravity.CENTER);
         	buyStockNotGlobusButton.setEnabled(false);
@@ -114,7 +114,7 @@ public class NewsActivity extends MoonActivity {
         }
         
         Button bankInitializationButton = (Button) findViewById(R.id.bank_initialization_button);
-        if(level < 5){
+        if(level < 2){
         	bankInitializationButton.setText("???");
         	bankInitializationButton.setGravity(Gravity.CENTER);
         	bankInitializationButton.setEnabled(false);
