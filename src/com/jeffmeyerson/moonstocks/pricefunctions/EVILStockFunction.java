@@ -25,13 +25,13 @@ public class EVILStockFunction extends PriceFunction {
 			result = values.get(time) * values.get(time - 1) * 10;
 			int difference = Math.abs(result - getPreviousValue());
 			if (difference > r.nextInt(MAX_VOLATILITY))
-				result = difference < 0 ? getPreviousValue() - MAX_VOLATILITY
-						: getPreviousValue() + MAX_VOLATILITY;
+				result = difference < 0 ? getPreviousValue() - randomVolatility()
+						: getPreviousValue() + randomVolatility();
 		}
 		if (UPPER_BOUND < result)
 			result = UPPER_BOUND / 2;
 		if (result < 0)
-			result = getPreviousValue() + MAX_VOLATILITY;
+			result = getPreviousValue() + randomVolatility();
 		previousValues.add(result);
 		return result % UPPER_BOUND;
 	}

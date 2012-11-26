@@ -1,6 +1,7 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author jeffreymeyerson
@@ -17,5 +18,10 @@ public abstract class PriceFunction {
 	public abstract int getValue(int time, List<Integer> values);
 	public abstract int getPreviousValue();
 	public abstract String getName();
+	
+	public int randomVolatility(){
+		Random r = new Random();
+		return r.nextInt(MAX_VOLATILITY);
+	}
 
 }
