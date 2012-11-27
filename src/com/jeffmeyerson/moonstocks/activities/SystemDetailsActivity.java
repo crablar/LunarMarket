@@ -98,22 +98,22 @@ public class SystemDetailsActivity extends MoonActivity {
 		// Start the animation (looped playback by default).
 		frameAnimation.start();
 	}
-	
+
 	/*
 	 * Pawn something
 	 */
 	public void pawn(View view) {
 		int cash = player.pawn();
-		if(cash == 0){
+		if (cash == 0) {
 			Toast.makeText(context, "You don't own anything worth pawning.",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
 		player.setBalance(player.getBalance() + cash);
-		if(player.updateLevel()){
+		if (player.updateLevel()) {
 			player.demoteAvatar();
-			Toast.makeText(context, "You advanced a level!",
-				Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "You advanced a level!", Toast.LENGTH_SHORT)
+					.show();
 		}
 		assignAnimationAndBegin();
 		TextView balanceView = (TextView) findViewById(R.id.balanceText);

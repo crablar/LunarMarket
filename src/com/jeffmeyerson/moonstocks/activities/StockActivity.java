@@ -75,7 +75,7 @@ public class StockActivity extends MoonActivity {
 		stockTickerView.setText(stockTicker);
 
 		// TODO: Make programmatic
-		// Put the raw text file into an InputStream
+		// Put the raw text file into an InputStream, play music
 		if (stockTicker.equals("EVIL")) {
 			inputStream = this.getResources().openRawResource(R.raw.evil_vals);
 			play(R.raw.evil);
@@ -85,6 +85,10 @@ public class StockActivity extends MoonActivity {
 		} else if (stockTicker.equals("WMC")) {
 			inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
 			play(R.raw.wmc);
+		}
+		else if (stockTicker.equals("PAR")) {
+			inputStream = this.getResources().openRawResource(R.raw.par_vals);
+			play(R.raw.par);
 		}
 
 		// Create the Stock object out of the SongData

@@ -45,17 +45,17 @@ public abstract class MoonActivity extends Activity {
 
 	static Handler mHandler = new Handler();
 	static boolean isRunning = false;
-	
+
 	// Map of ticker names to their companies
 	public static HashMap<String, Company> companyMap = new HashMap<String, Company>();
-	
+
 	// Companies sorted in a consistent fashion
 	public static ArrayList<Company> companyList = new ArrayList<Company>();
-	
+
 	// Constants
 	public static final int STARTING_MONEY = 5000;
 	private static final String PERSISTENCE_FILE = "moonstocks";
-	
+
 	// The amount of time (ms) elapsed since the player started the game.
 	// TODO: persist this
 	static int globalTime = 1000;
@@ -72,9 +72,9 @@ public abstract class MoonActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if(companyMap.size() == 0)
+		if (companyMap.size() == 0)
 			loadCompanies();
-		
+
 		if (!isRunning) {
 			Runnable timeFlux = new Runnable() {
 				public void run() {
@@ -84,7 +84,7 @@ public abstract class MoonActivity extends Activity {
 
 					// Move to the next time interval
 					globalTime += 1000;
-					
+
 					Log.d(this.toString(), "Time is " + globalTime);
 				}
 			};
@@ -149,12 +149,15 @@ public abstract class MoonActivity extends Activity {
 			intent.putExtra("player", Utility.serialize(player));
 			startActivity(intent);
 			// This is kind of a hack to make the ActionBar seem like it doesn't
-			// do anything when you try and go into the activity you're already in.
-			// The correct solution would be to disable the button on the actionbar.
-			if (this instanceof NewsActivity) { 
-			    overridePendingTransition(0,0);
+			// do anything when you try and go into the activity you're already
+			// in.
+			// The correct solution would be to disable the button on the
+			// actionbar.
+			if (this instanceof NewsActivity) {
+				overridePendingTransition(0, 0);
 			} else {
-			     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+				overridePendingTransition(android.R.anim.slide_in_left,
+						android.R.anim.slide_out_right);
 			}
 			return true;
 		} else if (id == R.id.menu_system_details) {
@@ -162,9 +165,10 @@ public abstract class MoonActivity extends Activity {
 			intent.putExtra("player", Utility.serialize(player));
 			startActivity(intent);
 			if (this instanceof SystemDetailsActivity) {
-			    overridePendingTransition(0,0);
+				overridePendingTransition(0, 0);
 			} else {
-			     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+				overridePendingTransition(android.R.anim.slide_in_left,
+						android.R.anim.slide_out_right);
 			}
 			return true;
 		} else if (id == R.id.menu_stock_market) {
@@ -172,9 +176,10 @@ public abstract class MoonActivity extends Activity {
 			intent.putExtra("player", Utility.serialize(player));
 			startActivity(intent);
 			if (this instanceof MarketActivity) {
-			    overridePendingTransition(0,0);
+				overridePendingTransition(0, 0);
 			} else {
-			     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+				overridePendingTransition(android.R.anim.slide_in_left,
+						android.R.anim.slide_out_right);
 			}
 			return true;
 		}
@@ -239,6 +244,8 @@ public abstract class MoonActivity extends Activity {
 			String[] companyArr = companyString.split(" ");
 			String tickerName = companyArr[0];
 			String name = companyArr[1];
+			for (int i = 2; i < companyArr.length; i++)
+				name += " " + companyArr[i];
 			InputStream inputStream = null;
 			if (tickerName.equals("EVIL")) {
 				inputStream = this.getResources().openRawResource(
@@ -249,6 +256,9 @@ public abstract class MoonActivity extends Activity {
 			} else if (tickerName.equals("WMC")) {
 				inputStream = this.getResources().openRawResource(
 						R.raw.wmc_vals);
+			} else if (tickerName.equals("PAR")) {
+				inputStream = this.getResources().openRawResource(
+						R.raw.par_vals);
 			}
 
 			Stock stock = new Stock(inputStream);
@@ -259,7 +269,7 @@ public abstract class MoonActivity extends Activity {
 	}
 
 	protected int checkLevel() {
-		return (int) (player.getBalance()/ STARTING_MONEY);
+		return (int) (player.getBalance() / STARTING_MONEY);
 	}
 
 	public static int getTime() {

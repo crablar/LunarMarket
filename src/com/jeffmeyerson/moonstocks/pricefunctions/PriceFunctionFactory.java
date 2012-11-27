@@ -9,7 +9,8 @@ public class PriceFunctionFactory {
 			return new EVILStockFunction();
 		if(stockName.equals("BDST"))
 			return new BDSTStockFunction();
-		
+		if(stockName.equals("PAR"))
+			return new PARStockFunction();
 		// Error
 		return null;
 	}
