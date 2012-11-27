@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class ChartView extends View {
@@ -107,8 +108,9 @@ public class ChartView extends View {
 					paint.setColor(Color.GREEN);
 				} else if (points.get(i - IL) > points.get(i)) {
 					paint.setColor(Color.RED);
-				} else if (points.get(i - IL) == points.get(i)) {
-					paint.setColor(Color.GRAY);
+				} else {
+					paint.setColor(Color.YELLOW);
+					Log.d(this.toString(), "NO PRICE CHANGE");
 				}
 				canvas.drawLine((i - IL) * SCALE,
 						SCREEN_HEIGHT - points.get(i - IL), i * SCALE,

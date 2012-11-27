@@ -59,7 +59,7 @@ public class Stock {
 			if (line == null) {
 				break;
 			}
-
+			System.out.println(line);
 			// line example: "low_freq_values 5 6 6 7 7 8 8 9 9 10 10 11 11 12"
 			// The type in the above example is "low_freq_values"
 			String[] lineArr = line.split(" ");
@@ -89,9 +89,10 @@ public class Stock {
 
 			song.add(element);
 
-			MAX_PRICE = getMaxPrice();
-			MIN_PRICE = getMinPrice();
 		}
+		
+		MAX_PRICE = getMaxPrice();
+		MIN_PRICE = getMinPrice();
 	}
 
 	/**
@@ -104,8 +105,10 @@ public class Stock {
 	public double getPrice(int time) {
         // There are currently only two elements; high and low freq
 		// This gets the low frequency element
-        SongElement element = song.get(0);
-        return element.getValue(time);
+        SongElement highFreq = song.get(0);
+        SongElement lowFreq = song.get(1);
+
+        return (highFreq.getValue(time) + lowFreq.getValue(time)) / 2;
         }
 
 	
