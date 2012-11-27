@@ -61,7 +61,7 @@ public class StockActivity extends MoonActivity {
 
 		chartView = (ChartView) findViewById(R.id.chart);
 
-		movingAverage = new MovingAverage(20);
+		movingAverage = new MovingAverage(10);
 
 		// Get the Player object from our activity
 		player = (Player) Utility.deserialize(extras.getByteArray("player"));
@@ -118,7 +118,7 @@ public class StockActivity extends MoonActivity {
 				price = Utility.roundCurrency(rawPrice);
 				movingAverage.addPrice(price, currentTime);
 				stockPriceView.setText("$" + price);
-				movingAverageView.setText("Twenty-tick moving average: $" + movingAverage.getMovingAverage());
+				movingAverageView.setText("One-second moving average: $" + movingAverage.getMovingAverage());
 
 				// Divided by two because max is 599 but ChartView has 300 pixel
 				// height

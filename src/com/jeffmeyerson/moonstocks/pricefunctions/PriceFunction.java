@@ -27,9 +27,9 @@ public abstract class PriceFunction {
 		time = time % values.size();
 		int result = 0;
 		if (time == 0) {
-			result = values.get(0);
+			result = values.get(0) * 5;
 		} else {
-			result = values.get(time);
+			result = values.get(time) * 5;
 			int difference = result - getPreviousValue();
 			if (Math.abs(difference) > MAX_VOLATILITY)
 				result = difference < 0 ? getPreviousValue() - randomVolatility()
