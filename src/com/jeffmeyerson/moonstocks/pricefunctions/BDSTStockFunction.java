@@ -15,28 +15,10 @@ public class BDSTStockFunction extends PriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
 	@Override
-	public int getValue(int time, List<Integer> values) {
-		Random r = new Random();
-		// wrap around if time goes past the amount of song data we have
-		time = Math.abs(time) % values.size();
-		int result = 0;
-		if (time == 0) {
-			result = values.get(time) * 10;
-		} else {
-			result = values.get(time) * values.get(time - 1) * 10;
-			int difference = Math.abs(result - getPreviousValue());
-			if (difference > r.nextInt(MAX_VOLATILITY))
-				result = r.nextBoolean() ? getPreviousValue() - randomVolatility()
-						: getPreviousValue() + randomVolatility();
-		}
-		if (UPPER_BOUND < result)
-			result = UPPER_BOUND / 2;
-		if (result < 0)
-			result = getPreviousValue() + randomVolatility();
-		previousValues.add(result);
-		return result % UPPER_BOUND;
+	public String getName() {
+		return "BDST";
 	}
-
+	
 	@Override
 	public int getPreviousValue() {
 		if (previousValues.size() == 0)
@@ -45,8 +27,8 @@ public class BDSTStockFunction extends PriceFunction {
 	}
 
 	@Override
-	public String getName() {
-		return "BDST";
+	protected void addToPreviousValues(int result) {
+		previousValues.add(result);
 	}
 
 }
