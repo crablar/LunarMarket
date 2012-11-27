@@ -102,14 +102,12 @@ public class Stock {
 	 * @return
 	 */
 	public double getPrice(int time) {
-        int total = 0;
-        for (SongElement element : song) {
-                if(element.type.equals(SongElement.SongElementType.HIGH_FREQUENCY_NOTES));
-                	return element.getValue(time);
+        // There are currently only two elements; high and low freq
+		// This gets the low frequency element
+        SongElement element = song.get(0);
+        return element.getValue(time);
         }
-        // Error
-        return 300;
-	}
+
 	
 	/**
 	 * Gets the volume of the stock at the given point in time. Volume is
@@ -119,7 +117,6 @@ public class Stock {
 	 * @return
 	 */
 	public double getVolume(int time) {
-        int total = 0;
         for (SongElement element : song) {
                 if(element.type.equals(SongElement.SongElementType.LOW_FREQUENCY_NOTES));
                 	return element.getValue(time);

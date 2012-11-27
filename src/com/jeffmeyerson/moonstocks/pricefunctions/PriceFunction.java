@@ -23,5 +23,7 @@ public abstract class PriceFunction {
 		Random r = new Random();
 		return r.nextInt(MAX_VOLATILITY);
 	}
+	
+	
 
 }

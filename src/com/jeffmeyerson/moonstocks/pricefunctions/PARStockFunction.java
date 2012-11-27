@@ -19,20 +19,20 @@ public class PARStockFunction extends PriceFunction {
 		time = time % values.size();
 		int result = 0;
 		if (time == 0) {
-			result = values.get(time) * 10;
+			result = values.get(0);
 		} else {
-			result = values.get(time) * values.get(time - 1) * 10;
-			int difference = Math.abs(result - getPreviousValue());
-			if (difference > r.nextInt(MAX_VOLATILITY))
+			result = values.get(time);
+			int difference = result - getPreviousValue();
+			if (Math.abs(difference) > MAX_VOLATILITY)
 				result = difference < 0 ? getPreviousValue() - randomVolatility()
 						: getPreviousValue() + randomVolatility();
 		}
 		if (UPPER_BOUND < result)
-			result = UPPER_BOUND / 2;
+			result = UPPER_BOUND - randomVolatility();
 		if (result < 0)
 			result = getPreviousValue() + randomVolatility();
 		previousValues.add(result);
-		return result % UPPER_BOUND;
+		return result;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class PARStockFunction extends PriceFunction {
 
 	@Override
 	public String getName() {
-		return "EVIL";
+		return "PAR";
 	}
 
 }
