@@ -13,6 +13,9 @@ import android.view.View;
 
 public class ChartView extends View {
 
+	// canvas
+	private Canvas canvas;
+
 	// constants
 	private static final int MAX_POINTS = 100;
 	private static final int SCREEN_HEIGHT = 300;
@@ -92,6 +95,7 @@ public class ChartView extends View {
 
 	@Override
 	public void onDraw(Canvas canvas) {
+		this.canvas = canvas;
 		super.onDraw(canvas);
 
 		int IL; // short for InterpolationLevel, done for conciseness below.
@@ -104,6 +108,13 @@ public class ChartView extends View {
 			paint.setStrokeWidth(3);
 
 			for (int i = IL; i < points.size(); i += IL) {
+				int a = Math.round(points.get(i - 1));
+				int r = Math.round(points.get(i - 1));
+				int g = Math.round(points.get(i));
+				int b = Math.round(points.get(i));
+
+				canvas.drawARGB(a, r, g, b);
+				
 				if (points.get(i - IL) < points.get(i)) {
 					paint.setColor(Color.GREEN);
 				} else if (points.get(i - IL) > points.get(i)) {
