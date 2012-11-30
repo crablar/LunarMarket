@@ -11,13 +11,13 @@ import java.util.Random;
 public abstract class PriceFunction {
 
 	protected static final int UPPER_BOUND = 599;
-	protected int MAX_VOLATILITY = 50;
+	protected static int MAX_VOLATILITY = 10;
 	
 	protected abstract String getName();
 	protected abstract int getPreviousValue();
 	protected abstract void addToPreviousValues(int result);
 	
-	public int randomVolatility(){
+	public static int randomVolatility(){
 		Random r = new Random();
 		return r.nextInt(MAX_VOLATILITY);
 	}
@@ -32,13 +32,15 @@ public abstract class PriceFunction {
 			result = values.get(time) * 5;
 			int difference = result - getPreviousValue();
 			if (Math.abs(difference) > MAX_VOLATILITY)
-				result = difference < 0 ? getPreviousValue() - randomVolatility()
-						: getPreviousValue() + randomVolatility();
+				result = difference < 0 ? getPreviousValue() - MAX_VOLATILITY
+						: getPreviousValue() + MAX_VOLATILITY;
 		}
-		if (UPPER_BOUND < result)
+		if (result > UPPER_BOUND)
 			result = UPPER_BOUND - randomVolatility();
-		if (result < 0)
-			result = getPreviousValue() + randomVolatility();
+		if (result < 0){
+			int vol = randomVolatility();
+			result = Math.max(result - vol, vol);
+		}
 		addToPreviousValues(result);
 		return result;
 	}

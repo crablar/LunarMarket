@@ -7,9 +7,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+
+import com.jeffmeyerson.moonstocks.activities.MoonActivity;
+import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
 
 public class ChartView extends View {
 
@@ -105,28 +109,69 @@ public class ChartView extends View {
 			IL = 1;
 		}
 
-			paint.setStrokeWidth(3);
+		paint.setStrokeWidth(3);
 
-			for (int i = IL; i < points.size(); i += IL) {
-				int a = Math.round(points.get(i - 1));
-				int r = Math.round(points.get(i - 1));
-				int g = Math.round(points.get(i));
-				int b = Math.round(points.get(i));
-
-				canvas.drawARGB(a, r, g, b);
-				
-				if (points.get(i - IL) < points.get(i)) {
-					paint.setColor(Color.GREEN);
-				} else if (points.get(i - IL) > points.get(i)) {
-					paint.setColor(Color.RED);
-				} else {
-					paint.setColor(Color.YELLOW);
-					Log.d(this.toString(), "NO PRICE CHANGE");
-				}
-				canvas.drawLine((i - IL) * SCALE,
-						SCREEN_HEIGHT - points.get(i - IL), i * SCALE,
-						SCREEN_HEIGHT - points.get(i), paint);
+		for (int i = IL; i < points.size(); i += IL) {
+			int[] argb = generateTimedARGB();
+//			paint.setARGB(a, r, g, b);
+//			float[] picturePoints = generatePicturePoints(i);
+//			canvas.drawLines(picturePoints, paint);
+			
+			canvas.drawARGB(argb[0], argb[1], argb[2], argb[3]);
+			
+			if (points.get(i - IL) < points.get(i)) {
+				paint.setColor(Color.GREEN);
+			} else if (points.get(i - IL) > points.get(i)) {
+				paint.setColor(Color.RED);
+			} else {
+				paint.setColor(Color.YELLOW);
+				Log.d(this.toString(), "NO PRICE CHANGE");
 			}
-
+			canvas.drawLine((i - IL) * SCALE,
+					SCREEN_HEIGHT - points.get(i - IL), i * SCALE,
+					SCREEN_HEIGHT - points.get(i), paint);
 		}
+
+	}
+
+	private float[] generatePicturePoints(int parameter) {
+		float[] result = new float[(parameter % points.size()) * 4];
+		float begin = 50;
+		for (int i = 0; i < result.length; i += 4) {
+			result[i] = begin;
+			result[i + 1] = begin * 2;
+			result[i + 2] = begin;
+			result[i + 3] = begin * 2;
+		}
+		return result;
+	}
+
+	public Canvas drawPicture(Canvas canvas, int a, int r, int g, int b) {
+		// paint.setARGB(a, r, g, 255);
+		// RectF rectf = new RectF(50, 50, 50, 50);
+		// canvas.drawOval(rectf, paint);
+		// paint.setARGB(a, r, 255, b);
+		// rectf = new RectF(100, 100, 100, 100);
+		// paint.setARGB(a, 255, g, b);
+		// rectf = new RectF(150, 150, 150, 150);
+		// paint.setARGB(a, r, 255, b);
+		// rectf = new RectF(200, 200, 200, 200);
+		return canvas;
+	}
+	
+	public int[] generateTimedARGB(){
+		int time = MoonActivity.getTime();
+		
+		// Convert time to seconds
+		time = (time / 1000) % 255;
+		
+		int a = time * 10 % 255;
+		int r = time * 20 % 255;
+		int g = 255 - time * 20 % 255;
+		int b = (127 + (time * 20)) % 255;
+		
+		int[] result = {a, r, g, b};
+		return result;
+	}
+
 }
