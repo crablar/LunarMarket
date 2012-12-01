@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
@@ -35,11 +36,16 @@ public class ChartView extends View {
 
     // this is for the line graph
 	private List<Float> points;
-	private Path path = new Path();
+
+	// line for the moving average
+    private float average;
+    private DashPathEffect dottedLine;
+    private Path path;
+    private boolean showAvg;
 
 	// this is for the bobble at the end of the stock graph
 	private int startAngle = 0;
-	private RectF bobble = new RectF();
+	private final RectF bobble = new RectF();
 
 	// OMG SPARKLES
 	private LevelUpAnimation levelUpAnimation = null;
@@ -48,6 +54,8 @@ public class ChartView extends View {
 		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		// TODO: evaluate performance of using ArrayList vs. LinkedList here
 		points = new ArrayList<Float>();
+        dottedLine = new DashPathEffect(new float[] {8, 10}, 0);
+        path = new Path();
 	}
 
 	public ChartView(Context context) {
@@ -105,7 +113,15 @@ public class ChartView extends View {
 			}
 		}
 	}
+
+	public void showAverage(boolean showAvg) {
+	    this.showAvg = showAvg;
+	}
 	
+    public void setAverage(float average) {
+        this.average = average;
+    }
+
 	public void doLevelUpAnimation() {
 	    float tailX = points.size() * SCALE;
         float tailY = SCREEN_HEIGHT - points.get(points.size() - 1);
@@ -180,6 +196,18 @@ public class ChartView extends View {
 		    startAngle += 25;
 		    bobble.set(tailX - 15, tailY - 15, tailX + 15, tailY + 15);
 		    canvas.drawArc(bobble, startAngle, 270, false, paint);
+		}
+
+		if (showAvg) {
+		    paint.setColor(Color.YELLOW);
+            paint.setStyle(Style.STROKE);
+            paint.setPathEffect(dottedLine);
+            paint.setStrokeWidth(1);
+            path.reset();
+            path.moveTo(0, SCREEN_HEIGHT - average);
+            path.lineTo(w, SCREEN_HEIGHT - average);
+            canvas.drawPath(path, paint);
+            paint.setPathEffect(null);
 		}
 
 		if (levelUpAnimation != null) {

@@ -120,7 +120,7 @@ public class MarketActivity extends MoonActivity {
 				
 			}
 		};
-		
+
 		// Market Average chartview
 		Runnable chartFlux = new Runnable(){
 			public void run(){

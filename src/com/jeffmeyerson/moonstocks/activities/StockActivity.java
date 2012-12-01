@@ -100,12 +100,13 @@ public class StockActivity extends MoonActivity {
 
 		// Create the Stock object out of the SongData
 		stock = new Stock(inputStream);
-		
+
 		chartView.setMaxAndMin(stock.getMaxPrice(), stock.getMinPrice());
+        chartView.showAverage(true);
 
 		// Make a temp variable to freeze time
 		currentTime = MoonActivity.getTime();
-		
+
 		price = stock.getPrice(currentTime);
 
 		movingAverage.addPrice(price);
@@ -130,6 +131,7 @@ public class StockActivity extends MoonActivity {
 				// Divided by two because max is 599 but ChartView has 300 pixel
 				// height
 				chartView.addPoint(Utility.roundCurrencyToFloat(rawPrice / 2));
+                chartView.setAverage((float) (movingAverage.getMovingAverage() / 2));
 
 				/**
 				 * My understanding of how this section of our code works is
