@@ -3,8 +3,6 @@ package com.jeffmeyerson.moonstocks.activities;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
@@ -109,8 +107,7 @@ public class MarketActivity extends MoonActivity {
 					String tickerName = (String) ((Button) row.getChildAt(0)).getText();
 
 					Stock stock = companyMap.get(tickerName).getStock();
-					((TextView) row.getChildAt(1)).setText("$"
-							+ String.valueOf(stock.getPrice(MoonActivity.globalTime)));
+					((TextView) row.getChildAt(1)).setText("$" + String.valueOf(stock.getPrice(MoonActivity.getTime())));
 					((TextView) row.getChildAt(2)).setText(String.valueOf(player
 							.getSharesOwned(tickerName)));
 				}
@@ -220,7 +217,7 @@ public class MarketActivity extends MoonActivity {
 
 			Stock stock = companyMap.get(tickerName).getStock();
 			((TextView) row.getChildAt(1)).setText("$"
-					+ String.valueOf(stock.getPrice(MoonActivity.globalTime)));
+					+ String.valueOf(stock.getPrice(MoonActivity.getTime())));
 			((TextView) row.getChildAt(2)).setText(String.valueOf(player
 					.getSharesOwned(tickerName)));
 			

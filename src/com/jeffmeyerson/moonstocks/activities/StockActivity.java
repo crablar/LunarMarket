@@ -108,7 +108,6 @@ public class StockActivity extends MoonActivity {
 		// Create the Stock object out of the SongData
 		stock = new Stock(inputStream);
 
-		chartView.setMaxAndMin(stock.getMaxPrice(), stock.getMinPrice());
         chartView.showAverage(true);
 
 		// Make a temp variable to freeze time
