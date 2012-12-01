@@ -92,8 +92,6 @@ public abstract class MoonActivity extends Activity {
 
 					// Move to the next time interval
 					globalTime += 1000;
-
-					Log.d(this.toString(), "Time is " + globalTime);
 				}
 			};
 			// Begin running the function

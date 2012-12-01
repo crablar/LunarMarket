@@ -14,6 +14,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class ChartView extends View {
@@ -99,6 +100,10 @@ public class ChartView extends View {
 		}
 		maxPrice = Collections.max(points);
         minPrice = Collections.min(points);
+        // add some padding to the range
+        float range = maxPrice - minPrice;
+        maxPrice += (range/2);
+        minPrice -= (range/2);
 	}
 
 	public void showAverage(boolean showAvg) {
@@ -121,7 +126,8 @@ public class ChartView extends View {
         final int h = canvas.getHeight();
         final int w = canvas.getWidth();
         final float vScale = 3;
-        final float hScale = 1; //h / (maxPrice - minPrice);
+        final float hOffset = minPrice;
+        final float hScale = h / (maxPrice - minPrice);
 
         // draw ourselves a nice pretty griddy
         paint.setStrokeWidth(1);
@@ -133,8 +139,8 @@ public class ChartView extends View {
         for (int i = 0; i < GRID_LINES; i++) {
             canvas.drawLine((w / GRID_LINES) * i, 0, (w / GRID_LINES) * i, h, paint);
             canvas.drawLine(0, (h / GRID_LINES) * i, w, (h / GRID_LINES) * i, paint);
-            float textWidth = paint.measureText("$" + (priceStep * i));
-            canvas.drawText("$" + (priceStep * i), w - textWidth - 5, h - (h / GRID_LINES) * i, paint);
+            float textWidth = paint.measureText("$" + ((priceStep * i) + (int)minPrice));
+            canvas.drawText("$" + ((priceStep * i) + (int)minPrice), w - textWidth - 5, h - (h / GRID_LINES) * i, paint);
         }
         paint.setStyle(Style.STROKE);
         canvas.drawRect(1,1,w-1,h-1, paint);
@@ -158,9 +164,9 @@ public class ChartView extends View {
 				paint.setColor(Color.YELLOW);
 			}
 			float startX = (i - IL) * vScale;
-			float startY = h - (points.get(i - IL) * hScale);
+			float startY = h - ((points.get(i - IL) - hOffset) * hScale);
 			float endX = i * vScale;
-			float endY = h - (points.get(i) * hScale);
+			float endY = h - ((points.get(i) - hOffset) * hScale);
 
             canvas.drawLine(startX, startY, endX, endY, paint);
 		}
@@ -172,7 +178,7 @@ public class ChartView extends View {
 		    paint.setStyle(Style.STROKE);
 		    paint.setColor(Color.WHITE);
 		    tailX = points.size() * vScale;
-            tailY = h - (points.get(points.size() - 1) * hScale);
+            tailY = h - ((points.get(points.size() - 1) - hOffset) * hScale);
 		    startAngle += 25;
 		    rect.set(tailX - 15, tailY - 15, tailX + 15, tailY + 15);
 		    canvas.drawArc(rect, startAngle, 270, false, paint);
@@ -185,8 +191,8 @@ public class ChartView extends View {
             paint.setPathEffect(dottedLine);
             paint.setStrokeWidth(1);
             path.reset();
-            path.moveTo(0, h - (average * hScale));
-            path.lineTo(w, h - (average * hScale));
+            path.moveTo(0, h - ((average - hOffset) * hScale));
+            path.lineTo(w, h - ((average - hOffset) * hScale));
             canvas.drawPath(path, paint);
             paint.setPathEffect(null);
 		}

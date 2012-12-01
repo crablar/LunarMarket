@@ -126,10 +126,8 @@ public class StockActivity extends MoonActivity {
 				movingAverage.addPrice(price);
 				stockPriceView.setText("$" + price);
 
-				// Divided by two because max is 599 but ChartView has 300 pixel
-				// height
-				chartView.addPoint(Utility.roundCurrencyToFloat(rawPrice / 2));
-                chartView.setAverage((float) (movingAverage.getMovingAverage() / 2));
+				chartView.addPoint(Utility.roundCurrencyToFloat(rawPrice));
+                chartView.setAverage((float) (movingAverage.getMovingAverage()));
 
 				/**
 				 * My understanding of how this section of our code works is
