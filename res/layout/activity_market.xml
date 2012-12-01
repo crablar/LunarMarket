@@ -63,5 +63,14 @@
         android:layout_gravity="center_horizontal"
         android:text="Average Price Per Share"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <Button 
+        android:id="@+id/crash_the_market_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="false"
+        android:onClick="clickCrashTheMarket"/>
 
 </LinearLayout>
