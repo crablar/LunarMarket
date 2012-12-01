@@ -178,6 +178,12 @@ public abstract class MoonActivity extends Activity {
 			player = new Player();
 			player.setBalance(STARTING_MONEY);
 			player.setName("Jeff");
+			getSharedPreferences("moonstocks_prefs",
+	                MODE_PRIVATE).edit().clear().commit();
+			deleteFile(PERSISTENCE_FILE);
+			Intent intent = new Intent(this, SystemDetailsActivity.class);
+            intent.putExtra("player", Utility.serialize(player));
+            startActivity(intent);
 			return true;
 		} else if (id == R.id.menu_news) {
 			Intent intent = new Intent(this, NewsActivity.class);
