@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.RectF;
@@ -120,15 +121,22 @@ public class ChartView extends View {
         final int h = canvas.getHeight();
         final int w = canvas.getWidth();
         final float vScale = 3;
-        final float hScale = h / (maxPrice - minPrice);
+        final float hScale = 1; //h / (maxPrice - minPrice);
 
         // draw ourselves a nice pretty griddy
         paint.setStrokeWidth(1);
         paint.setColor(Color.LTGRAY);
+        paint.setStyle(Style.FILL_AND_STROKE);
+        final int priceStep = (int) ((maxPrice - minPrice) / GRID_LINES);
+        paint.setTypeface(Typeface.DEFAULT);
+        paint.setTextSize(20);
         for (int i = 0; i < GRID_LINES; i++) {
             canvas.drawLine((w / GRID_LINES) * i, 0, (w / GRID_LINES) * i, h, paint);
             canvas.drawLine(0, (h / GRID_LINES) * i, w, (h / GRID_LINES) * i, paint);
+            float textWidth = paint.measureText("$" + (priceStep * i));
+            canvas.drawText("$" + (priceStep * i), w - textWidth - 5, h - (h / GRID_LINES) * i, paint);
         }
+        paint.setStyle(Style.STROKE);
         canvas.drawRect(1,1,w-1,h-1, paint);
 
         // decide whether to interpolate
@@ -150,19 +158,21 @@ public class ChartView extends View {
 				paint.setColor(Color.YELLOW);
 			}
 			float startX = (i - IL) * vScale;
-			float startY = h - points.get(i - IL);
+			float startY = h - (points.get(i - IL) * hScale);
 			float endX = i * vScale;
-			float endY = h - points.get(i);
+			float endY = h - (points.get(i) * hScale);
 
             canvas.drawLine(startX, startY, endX, endY, paint);
 		}
 
         // draw the bobble
+        float tailX = 0;
+        float tailY = 0;
 		if (points.size() > 0) {
 		    paint.setStyle(Style.STROKE);
 		    paint.setColor(Color.WHITE);
-		    float tailX = points.size() * vScale;
-		    float tailY = h - points.get(points.size() - 1);
+		    tailX = points.size() * vScale;
+            tailY = h - (points.get(points.size() - 1) * hScale);
 		    startAngle += 25;
 		    rect.set(tailX - 15, tailY - 15, tailX + 15, tailY + 15);
 		    canvas.drawArc(rect, startAngle, 270, false, paint);
@@ -175,16 +185,14 @@ public class ChartView extends View {
             paint.setPathEffect(dottedLine);
             paint.setStrokeWidth(1);
             path.reset();
-            path.moveTo(0, h - average);
-            path.lineTo(w, h - average);
+            path.moveTo(0, h - (average * hScale));
+            path.lineTo(w, h - (average * hScale));
             canvas.drawPath(path, paint);
             paint.setPathEffect(null);
 		}
 
         // draw the sparkles
 		if (triggerSparkles) {
-            float tailX = points.size() * vScale;
-            float tailY = h - points.get(points.size() - 1);
             // TODO: fix this warning properly
             levelUpAnimation = new LevelUpAnimation(tailX, tailY);
 		}
