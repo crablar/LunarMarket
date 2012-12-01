@@ -14,6 +14,11 @@ public class WMCStockFunction extends PriceFunction {
 
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
+	// WMC is the second most volatile
+	public WMCStockFunction(){
+		this.volatilityMultiplier = 4;
+	}
+	
 	@Override
 	public String getName() {
 		return "WMC";

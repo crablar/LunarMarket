@@ -3,6 +3,8 @@ package com.jeffmeyerson.moonstocks.pricefunctions;
 import java.util.List;
 import java.util.Random;
 
+import com.jeffmeyerson.moonstocks.activities.MoonActivity;
+
 /**
  * @author jeffreymeyerson
  * 
@@ -10,13 +12,19 @@ import java.util.Random;
  */
 public abstract class PriceFunction {
 
+	protected int volatilityMultiplier;;
+	
 	protected abstract String getName();
 	protected abstract int getPreviousValue();
 	protected abstract void addToPreviousValues(int result);
 
 	public int randomVolatility(){
 		Random r = new Random();
-		return r.nextInt(maxVolatility());
+		int playerLevel = 1;
+		if(MoonActivity.player != null)
+			playerLevel = MoonActivity.player.getLevel();
+		
+		return r.nextInt(maxVolatility() * playerLevel * volatilityMultiplier) % 350;
 	}
 
 	public int getValue(int time, List<Integer> values) {

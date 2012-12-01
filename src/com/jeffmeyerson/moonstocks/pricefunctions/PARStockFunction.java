@@ -12,6 +12,11 @@ import android.util.Log;
 public class PARStockFunction extends PriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
+	// PAR is the third least volatile
+	public PARStockFunction(){
+		this.volatilityMultiplier = 3;
+	}
+	
 	@Override
 	public String getName() {
 		return "PAR";

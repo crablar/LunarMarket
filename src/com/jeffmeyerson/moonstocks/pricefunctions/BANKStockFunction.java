@@ -13,6 +13,11 @@ import android.util.Log;
 public class BANKStockFunction extends PriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
+	// Bank is least volatile
+	public BANKStockFunction(){
+		this.volatilityMultiplier = 1;
+	}
+	
 	@Override
 	public String getName() {
 		return "BANK";
@@ -39,5 +44,6 @@ public class BANKStockFunction extends PriceFunction {
 	int maxVolatility() {
 		return 10;
 	}
+	
 
 }

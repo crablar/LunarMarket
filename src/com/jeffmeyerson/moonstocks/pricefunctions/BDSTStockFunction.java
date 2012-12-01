@@ -13,6 +13,11 @@ import android.util.Log;
 public class BDSTStockFunction extends PriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
+	// BDST is the most volatile
+	public BDSTStockFunction(){
+		this.volatilityMultiplier = 5;
+	}
+	
 	@Override
 	public String getName() {
 		return "BDST";

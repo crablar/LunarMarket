@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class StockActivity extends MoonActivity {
 	private TextView balanceView;
 	private TextView sharesOwnedView;
 	private ChartView chartView;
+	private Button interpolationButton;
 	private Stock stock;
 	private double price;
 	private String stockTicker;
@@ -61,7 +63,7 @@ public class StockActivity extends MoonActivity {
 		movingAverageView = (TextView) findViewById(R.id.moving_average_view);
 		sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
 		balanceView = (TextView) findViewById(R.id.balance_view);
-
+		interpolationButton = (Button) findViewById(R.id.interpolation_button);
 		chartView = (ChartView) findViewById(R.id.chart);
 
 		movingAverage = new MovingAverage(10);
@@ -70,6 +72,11 @@ public class StockActivity extends MoonActivity {
 		player = (Player) Utility.deserialize(extras.getByteArray("player"));
 		((TextView) findViewById(R.id.balance_view)).setText("" + player.getBalance());
 
+		if(player.getLevel() == 1)
+			interpolationButton.setText("???");
+		else
+			interpolationButton.setText("Toggle Interpolation");
+		
 		// Get the ticker symbol
 		stockTicker = extras.getString("EXTRA_TICKER_ID");
 
@@ -198,7 +205,9 @@ public class StockActivity extends MoonActivity {
 				double balance = Utility.roundCurrency(player.getBalance());
 				if (player.updateLevel()) {
                     chartView.doLevelUpAnimation();
-					Toast.makeText(context, "You reached level " + player.getLevel() + "!", Toast.LENGTH_SHORT).show();
+                    interpolationButton.setText("Toggle Interpolation");
+                    interpolationButton.setClickable(true);
+            		Toast.makeText(context, "You reached level " + player.getLevel() + "!", Toast.LENGTH_SHORT).show();
 				}
 				balanceView.setText(balance + "");
 
