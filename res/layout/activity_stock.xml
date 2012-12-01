@@ -93,13 +93,4 @@
         android:clickable="false"
         android:onClick="toggleInterpolation"/>
 
-    <TextView
-        android:id="@+id/moving_average_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/interpolation_button"
-        android:layout_above="@+id/sell_button"
-        android:layout_centerHorizontal="true"
-        android:text="movingAvg" />
-
 </RelativeLayout>

@@ -36,13 +36,9 @@ public class StockActivity extends MoonActivity {
 
 	private final int STOCK_CRASH_PRICE = 300;
 	private Handler mHandler = new Handler();
-	private TextView stockPriceView;
-	private TextView movingAverageView;
-	private TextView balanceView;
-	private TextView sharesOwnedView;
-	private ChartView chartView;
-	private Button interpolationButton;
+
 	private Button crashThisStockButton;
+
 	private Stock stock;
 	private double price;
 	private String stockTicker;
@@ -54,19 +50,18 @@ public class StockActivity extends MoonActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stock);
 		InputStream inputStream = null;
-		
+
 		Log.d("class", "In StockActivity");
 
 		// Get the data from the Intent
 		Bundle extras = getIntent().getExtras();
 
 		// Get the resources
-		stockPriceView = (TextView) findViewById(R.id.stock_price_view);
-		movingAverageView = (TextView) findViewById(R.id.moving_average_view);
-		sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
-		balanceView = (TextView) findViewById(R.id.balance_view);
-		interpolationButton = (Button) findViewById(R.id.interpolation_button);
-		chartView = (ChartView) findViewById(R.id.chart);
+		final TextView stockPriceView = (TextView) findViewById(R.id.stock_price_view);
+		final TextView sharesOwnedView = (TextView) findViewById(R.id.shares_owned_view);
+		final TextView balanceView = (TextView) findViewById(R.id.balance_view);
+		final Button interpolationButton = (Button) findViewById(R.id.interpolation_button);
+		final ChartView chartView = (ChartView) findViewById(R.id.chart);
 
 		movingAverage = new MovingAverage(10);
 
@@ -78,7 +73,7 @@ public class StockActivity extends MoonActivity {
 			interpolationButton.setText("???");
 		else
 			interpolationButton.setText("Toggle Interpolation");
-		
+
 		// Get the ticker symbol
 		stockTicker = extras.getString("EXTRA_TICKER_ID");
 
@@ -139,12 +134,9 @@ public class StockActivity extends MoonActivity {
 				price = Utility.roundCurrency(rawPrice);
 				movingAverage.addPrice(price);
 				stockPriceView.setText("$" + price);
-				movingAverageView.setText("One-second moving average: $" + movingAverage.getMovingAverage());
 
-				// Divided by two because max is 599 but ChartView has 300 pixel
-				// height
-				chartView.addPoint(Utility.roundCurrencyToFloat(rawPrice / 2));
-                chartView.setAverage((float) (movingAverage.getMovingAverage() / 2));
+				chartView.addPoint(Utility.roundCurrencyToFloat(rawPrice));
+                chartView.setAverage((float) (movingAverage.getMovingAverage()));
 
 				/**
 				 * My understanding of how this section of our code works is
@@ -156,7 +148,6 @@ public class StockActivity extends MoonActivity {
 
 				stockPriceView.invalidate();
 				chartView.invalidate();
-				movingAverageView.invalidate();
 				mHandler.postDelayed(this, Stock.TIMESTEP);
 
 				// Move to the next time interval
@@ -232,6 +223,7 @@ public class StockActivity extends MoonActivity {
 	}
 
 	public void toggleInterpolation(View view) {
+	    final ChartView chartView = (ChartView) findViewById(R.id.chart);
 	    chartView.toggleInterpolation();
 	}
 
