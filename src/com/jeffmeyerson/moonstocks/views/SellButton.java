@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -13,11 +14,14 @@ public class SellButton extends View {
 
     private Paint paint;
     private Path arrow;
+    private RectF rect;
+
     public boolean clickedState = false;
 
     void initialize() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         arrow = new Path();
+        rect = new RectF();
     }
 
     public SellButton(Context context) {
@@ -60,7 +64,8 @@ public class SellButton extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.argb(128, 255, 128, 128));
 
-        canvas.drawRoundRect(new RectF(border/2, border/2, this.getWidth() - (border/2), this.getHeight() - (border/2)), border*2, border*2, paint);
+        rect.set(border/2, border/2, this.getWidth() - (border/2), this.getHeight() - (border/2));
+        canvas.drawRoundRect(rect, border*2, border*2, paint);
 
         paint.setStyle(Paint.Style.FILL);
         paint.setStrokeWidth(3);
@@ -74,5 +79,12 @@ public class SellButton extends View {
         // draw the up part of the arrow
         canvas.drawPath(arrow, paint);
         canvas.drawRect(w/4, y + border, 3*(w/4), h/2, paint);
+
+        // draw the text
+        paint.setTypeface(Typeface.DEFAULT);
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(30);
+        float textWidth = paint.measureText("Sell");
+        canvas.drawText("Sell", (w/2) - (textWidth/2),h/2,paint);
     }
 }

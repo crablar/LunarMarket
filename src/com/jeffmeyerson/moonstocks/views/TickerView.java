@@ -1,9 +1,7 @@
 package com.jeffmeyerson.moonstocks.views;
 
-import java.io.InputStream;
 import java.util.List;
 
-import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.activities.MoonActivity;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
@@ -12,7 +10,6 @@ import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
