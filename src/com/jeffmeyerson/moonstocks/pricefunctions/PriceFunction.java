@@ -13,12 +13,12 @@ public abstract class PriceFunction {
 	protected abstract String getName();
 	protected abstract int getPreviousValue();
 	protected abstract void addToPreviousValues(int result);
-	
+
 	public int randomVolatility(){
 		Random r = new Random();
 		return r.nextInt(maxVolatility());
 	}
-	
+
 	public int getValue(int time, List<Integer> values) {
 		// wrap around if time goes past the amount of song data we have
 		time = time % values.size();
@@ -41,9 +41,9 @@ public abstract class PriceFunction {
 		addToPreviousValues(result);
 		return result;
 	}
-	
+
 	abstract int upperBound();
-	
+
 	abstract int maxVolatility();
 
 }

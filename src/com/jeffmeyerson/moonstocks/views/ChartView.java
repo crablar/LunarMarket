@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
@@ -26,10 +27,15 @@ public class ChartView extends View {
 	private static double MAX_PRICE;
 	private static double MIN_PRICE;
 
-	// member variables
-	private List<Float> points;
+    // member variables
+    private boolean interpolate = false;
+
+	// used for general drawing
 	private Paint paint;
-	private boolean interpolate = false;
+
+    // this is for the line graph
+	private List<Float> points;
+	private Path path = new Path();
 
 	// this is for the bobble at the end of the stock graph
 	private int startAngle = 0;
@@ -110,6 +116,23 @@ public class ChartView extends View {
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
+        final int h = canvas.getHeight();
+        final int w = canvas.getWidth();
+        final int GRID_LINES = 10;
+
+        // draw ourselves a nice pretty griddy
+        paint.setStrokeWidth(1);
+        paint.setColor(Color.LTGRAY);
+
+        for (int i = 0; i < GRID_LINES; i++) {
+            // vertical lines
+            canvas.drawLine((w / GRID_LINES) * i, 0, (w / GRID_LINES) * i, h, paint);
+            // horizontal lines
+            canvas.drawLine(0, (h / GRID_LINES) * i, w, (h / GRID_LINES) * i, paint);
+        }
+        // draw a box around the whole shebang
+        canvas.drawRect(1,1,w-1,h-1, paint);
+
 		int IL; // short for InterpolationLevel, done for conciseness below.
 		if (interpolate) {
 			IL = INTERPOLATION_LEVEL;
@@ -134,9 +157,19 @@ public class ChartView extends View {
 			} else {
 				paint.setColor(Color.YELLOW);
 			}
-			canvas.drawLine((i - IL) * SCALE,
-					SCREEN_HEIGHT - points.get(i - IL), i * SCALE,
-					SCREEN_HEIGHT - points.get(i), paint);
+			float startX = (i - IL) * SCALE;
+			float startY = SCREEN_HEIGHT - points.get(i - IL);
+			float endX = i * SCALE;
+			float endY = SCREEN_HEIGHT - points.get(i);
+			// this proved to be too slow.
+//			path.reset();
+//			path.moveTo(startX, startY);
+//			path.lineTo(endX, endY);
+//			path.lineTo(endX, canvas.getHeight());
+//			path.lineTo(startX, canvas.getHeight());
+//			path.close();
+//			canvas.drawPath(path, paint);
+            canvas.drawLine(startX, startY, endX, endY, paint);
 		}
 
 		if (points.size() > 0) {
