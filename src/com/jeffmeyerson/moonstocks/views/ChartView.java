@@ -10,11 +10,9 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.jeffmeyerson.moonstocks.activities.MoonActivity;
-import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
 
 public class ChartView extends View {
 
@@ -32,9 +30,13 @@ public class ChartView extends View {
 	private List<Float> points;
 	private Paint paint;
 	private boolean interpolate = false;
-	
+
 	// this is for the bobble at the end of the stock graph
 	private int startAngle = 0;
+	private RectF bobble = new RectF();
+
+	// OMG SPARKLES
+	private LevelUpAnimation levelUpAnimation = null;
 
 	void initialize() {
 		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -97,6 +99,12 @@ public class ChartView extends View {
 			}
 		}
 	}
+	
+	public void doLevelUpAnimation() {
+	    float tailX = points.size() * SCALE;
+        float tailY = SCREEN_HEIGHT - points.get(points.size() - 1);
+	    levelUpAnimation = new LevelUpAnimation(tailX, tailY);
+	}
 
 	@Override
 	public void onDraw(Canvas canvas) {
@@ -125,20 +133,24 @@ public class ChartView extends View {
 				paint.setColor(Color.RED);
 			} else {
 				paint.setColor(Color.YELLOW);
-				Log.d(this.toString(), "NO PRICE CHANGE");
 			}
 			canvas.drawLine((i - IL) * SCALE,
 					SCREEN_HEIGHT - points.get(i - IL), i * SCALE,
 					SCREEN_HEIGHT - points.get(i), paint);
 		}
-        
+
 		if (points.size() > 0) {
 		    paint.setStyle(Style.STROKE);
 		    paint.setColor(Color.WHITE);
 		    float tailX = points.size() * SCALE;
 		    float tailY = SCREEN_HEIGHT - points.get(points.size() - 1);
 		    startAngle += 25;
-		    canvas.drawArc(new RectF(tailX - 15, tailY - 15, tailX + 15, tailY + 15), startAngle, 270, false, paint);
+		    bobble.set(tailX - 15, tailY - 15, tailX + 15, tailY + 15);
+		    canvas.drawArc(bobble, startAngle, 270, false, paint);
+		}
+
+		if (levelUpAnimation != null) {
+		    levelUpAnimation.draw(canvas, paint);
 		}
 
 	}
