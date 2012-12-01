@@ -34,6 +34,7 @@ import com.jeffmeyerson.moonstocks.views.SellButton;
 public class StockActivity extends MoonActivity {
 	Context context = this;
 
+	private final int STOCK_CRASH_PRICE = 300;
 	private Handler mHandler = new Handler();
 	private TextView stockPriceView;
 	private TextView movingAverageView;
@@ -41,6 +42,7 @@ public class StockActivity extends MoonActivity {
 	private TextView sharesOwnedView;
 	private ChartView chartView;
 	private Button interpolationButton;
+	private Button crashThisStockButton;
 	private Stock stock;
 	private double price;
 	private String stockTicker;
@@ -125,7 +127,12 @@ public class StockActivity extends MoonActivity {
 		// ChartView
 		Runnable priceFlux = new Runnable() {
 			public void run() {
-
+		        if(player.getLevel() > 2){
+		        	crashThisStockButton.setClickable(true);
+		        	crashThisStockButton.setText("Crash this stock: $" + STOCK_CRASH_PRICE);
+		        }
+		        else
+		        	crashThisStockButton.setText("???");
 				// Get the stock price for the current time and set the TextView
 				double rawPrice;
 				rawPrice = stock.getPrice(currentTime);
@@ -266,5 +273,22 @@ public class StockActivity extends MoonActivity {
 		setResult(RESULT_OK, returnIntent);
 		finish();
 	}
+	
+	public void clickCrashTheStock(View view){
+		if(player.getBalance() >= STOCK_CRASH_PRICE){
+			double balance = player.getBalance();
+			player.setBalance(balance - STOCK_CRASH_PRICE);
+			Runnable runnable = new Runnable(){
+				public void run(){
+					stock.fn.toggleCrashed();
+					mHandler.postDelayed(this, 5000);
+				}
+			};
+			mHandler.post(runnable);
+		}
+		else
+			Toast.makeText(context, "Not enough money to crash the market!", Toast.LENGTH_SHORT).show();
+	}
+	
 
 }

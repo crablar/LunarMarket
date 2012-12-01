@@ -77,6 +77,14 @@
         android:layout_centerVertical="true" />
 
     <Button
+        android:id="@+id/crash_this_stock_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="false"
+        android:onClick="crashThisStock"/>
+    <Button
         android:id="@+id/interpolation_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

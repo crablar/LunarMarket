@@ -114,6 +114,13 @@ public class MarketActivity extends MoonActivity {
 		}
 		Runnable tableFlux = new Runnable() {
 			public void run() {
+				
+		        if(player.getLevel() > 3){
+		        	crashTheMarketButton.setClickable(true);
+		        	crashTheMarketButton.setText("Crash the market: $" + MARKET_CRASH_PRICE);
+		        }
+		        else
+		        	crashTheMarketButton.setText("???");
 
 				TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
 				for (int i = 1; i <= companyMap.size(); i++) {

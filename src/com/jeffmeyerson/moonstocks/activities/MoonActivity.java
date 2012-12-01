@@ -329,16 +329,15 @@ public abstract class MoonActivity extends Activity {
 	}
 
 	public static void crashTheMarket() {
-		Random r = new Random();
-
+		final Random r = new Random();
 		Runnable runnable = new Runnable() {
 			public void run() {
-				Random r = new Random();
 				PriceFunction.toggleCrashedMarket();
+				mHandler.postDelayed(this, 5000 + 1000 * r.nextInt(10));
 
 			};
 		};
-		mHandler.postDelayed(runnable, 5000 + 1000 * r.nextInt(10));
+		mHandler.post(runnable);
 
 	}
 }

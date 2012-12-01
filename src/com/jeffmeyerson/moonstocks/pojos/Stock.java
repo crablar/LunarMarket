@@ -23,6 +23,8 @@ public class Stock {
 
 	/** Time interval between actions measured in ms. */
 	public static final int TIMESTEP = 100;
+	
+	public static PriceFunction fn;
 
 	private List<SongElement> song;
 
@@ -81,7 +83,7 @@ public class Stock {
 				values.add(Integer.valueOf(lineArr[i]));
 			}
 
-			PriceFunction fn = PriceFunctionFactory
+			this.fn = PriceFunctionFactory
 					.getPriceFunctionForStock(stockName);
 			SongElement element = new SongElement(type, values, fn);
 

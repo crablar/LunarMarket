@@ -16,6 +16,7 @@ import com.jeffmeyerson.moonstocks.pojos.MovingAverage;
 public abstract class PriceFunction {
 
 	protected int volatilityMultiplier;
+	protected boolean crashed;
 	private MovingAverage movingAverage;
 	protected abstract String getName();
 	protected abstract int getPreviousValue();
@@ -55,7 +56,7 @@ public abstract class PriceFunction {
 			result = Math.max(result - vol, vol);
 		}
 		
-		if(crashedMarket){
+		if(crashedMarket || crashed){
 			Log.d(this.toString(),"Getting crashed value");
 			result = 10;
 			addToPreviousValues(result);
@@ -68,5 +69,9 @@ public abstract class PriceFunction {
 	abstract int upperBound();
 
 	abstract int maxVolatility();
+	
+	public void toggleCrashed() {
+		crashed = !crashed;
+	}
 
 }
