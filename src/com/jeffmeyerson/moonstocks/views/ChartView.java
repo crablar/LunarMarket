@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,9 +17,6 @@ import com.jeffmeyerson.moonstocks.activities.MoonActivity;
 import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
 
 public class ChartView extends View {
-
-	// canvas
-	private Canvas canvas;
 
 	// constants
 	private static final int MAX_POINTS = 100;
@@ -34,6 +32,9 @@ public class ChartView extends View {
 	private List<Float> points;
 	private Paint paint;
 	private boolean interpolate = false;
+	
+	// this is for the bobble at the end of the stock graph
+	private int startAngle = 0;
 
 	void initialize() {
 		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -99,7 +100,6 @@ public class ChartView extends View {
 
 	@Override
 	public void onDraw(Canvas canvas) {
-		this.canvas = canvas;
 		super.onDraw(canvas);
 
 		int IL; // short for InterpolationLevel, done for conciseness below.
@@ -130,6 +130,15 @@ public class ChartView extends View {
 			canvas.drawLine((i - IL) * SCALE,
 					SCREEN_HEIGHT - points.get(i - IL), i * SCALE,
 					SCREEN_HEIGHT - points.get(i), paint);
+		}
+        
+		if (points.size() > 0) {
+		    paint.setStyle(Style.STROKE);
+		    paint.setColor(Color.WHITE);
+		    float tailX = points.size() * SCALE;
+		    float tailY = SCREEN_HEIGHT - points.get(points.size() - 1);
+		    startAngle += 25;
+		    canvas.drawArc(new RectF(tailX - 15, tailY - 15, tailX + 15, tailY + 15), startAngle, 270, false, paint);
 		}
 
 	}
