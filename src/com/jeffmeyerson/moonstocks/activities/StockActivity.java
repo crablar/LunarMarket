@@ -198,7 +198,7 @@ public class StockActivity extends MoonActivity {
 				double balance = Utility.roundCurrency(player.getBalance());
 				if (player.updateLevel()) {
                     chartView.doLevelUpAnimation();
-					Toast.makeText(context, "You advanced a level!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "You reached level " + player.getLevel() + "!", Toast.LENGTH_SHORT).show();
 				}
 				balanceView.setText(balance + "");
 
