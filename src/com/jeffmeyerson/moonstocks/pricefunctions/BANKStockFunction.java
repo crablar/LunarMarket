@@ -7,15 +7,15 @@ import java.util.Random;
 import android.util.Log;
 
 /**
- * Evil moves as a function of BDST (which makes sense if you read the news).
+ * BDST is a high volatility company.
  * 
  */
-public class EVILStockFunction extends PriceFunction {
+public class BANKStockFunction extends PriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
 	@Override
 	public String getName() {
-		return "EVIL";
+		return "BANK";
 	}
 	
 	@Override
@@ -29,16 +29,15 @@ public class EVILStockFunction extends PriceFunction {
 	protected void addToPreviousValues(int result) {
 		previousValues.add(result);
 	}
-	
+
 	@Override
 	int upperBound() {
-		return 500;
+		return 400;
 	}
 
 	@Override
 	int maxVolatility() {
-		return 25;
+		return 10;
 	}
-
 
 }

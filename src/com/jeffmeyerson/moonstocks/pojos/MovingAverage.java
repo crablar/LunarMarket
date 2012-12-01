@@ -14,14 +14,17 @@ public class MovingAverage {
 	
 	private int numIntervals;
 	private List<Double> prices;
+	int index;
 	
 	public MovingAverage(int numIntervals){
+		index = 0;
 		this.numIntervals = numIntervals;
 		prices = new ArrayList<Double>();
 	}
 
-	public void addPrice(double price, int time){
-		prices.add(time % numIntervals, price);
+	public void addPrice(double price){
+		prices.add(index, price);
+		index %= numIntervals;
 	}
 	
 	public double getMovingAverage(){

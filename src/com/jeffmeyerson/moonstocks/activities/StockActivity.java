@@ -90,6 +90,10 @@ public class StockActivity extends MoonActivity {
 			inputStream = this.getResources().openRawResource(R.raw.par_vals);
 			play(R.raw.par);
 		}
+		else if (stockTicker.equals("BANK")) {
+			inputStream = this.getResources().openRawResource(R.raw.bank_vals);
+			play(R.raw.evil);
+		}
 
 		// Create the Stock object out of the SongData
 		stock = new Stock(inputStream);
@@ -101,7 +105,7 @@ public class StockActivity extends MoonActivity {
 		
 		price = stock.getPrice(currentTime);
 
-		movingAverage.addPrice(price, currentTime);
+		movingAverage.addPrice(price);
 
 		stockPriceView.setText("$" + price);
 
@@ -116,7 +120,7 @@ public class StockActivity extends MoonActivity {
 				double rawPrice;
 				rawPrice = stock.getPrice(currentTime);
 				price = Utility.roundCurrency(rawPrice);
-				movingAverage.addPrice(price, currentTime);
+				movingAverage.addPrice(price);
 				stockPriceView.setText("$" + price);
 				movingAverageView.setText("One-second moving average: $" + movingAverage.getMovingAverage());
 

@@ -30,4 +30,15 @@ public class WMCStockFunction extends PriceFunction {
 	protected void addToPreviousValues(int result) {
 		previousValues.add(result);
 	}
+	
+	@Override
+	int upperBound() {
+		return 300;
+	}
+
+	@Override
+	int maxVolatility() {
+		return 10;
+	}
+
 }

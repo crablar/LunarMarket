@@ -28,5 +28,16 @@ public class PARStockFunction extends PriceFunction {
 	protected void addToPreviousValues(int result) {
 		previousValues.add(result);
 	}
+	
+	@Override
+	int upperBound() {
+		return 400;
+	}
+
+	@Override
+	int maxVolatility() {
+		return 20;
+	}
+
 
 }

@@ -73,14 +73,22 @@ public class ResultsOutFormatter {
 			int lowVal = Integer.parseInt(lineArr[1]);
 			int highVal = Integer.parseInt(lineArr[1]);
 
-			// If no standard deviation, no need to normalize
+			/** If no standard deviation, no need to normalize
+			 *  This is strictly for the monotonic mp3.
+			 */
 			if (lowStandardDev == 0 && highStandardDev == 0) {
 				lowStandardDev = Integer.MAX_VALUE;
 				highStandardDev = Integer.MAX_VALUE;
 			}
+			
+			double lowStdDevRoot = Math.sqrt(lowStandardDev);
+			double highStdDevRoot = Math.sqrt(highStandardDev);
+			
+			int lowExtremity = (int)(lowVal / lowStdDevRoot);
+			int highExtremity = (int)(highVal / highStdDevRoot);
 
-			resultArr[0] += " " + (lowVal % lowStandardDev);
-			resultArr[1] += " " + (highVal % highStandardDev);
+			resultArr[0] += " " + (lowExtremity);
+			resultArr[1] += " " + (highExtremity);
 
 		}
 

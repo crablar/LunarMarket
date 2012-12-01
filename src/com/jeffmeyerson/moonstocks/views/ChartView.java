@@ -113,12 +113,12 @@ public class ChartView extends View {
 
 		for (int i = IL; i < points.size(); i += IL) {
 			int[] argb = generateTimedARGB();
-//			paint.setARGB(a, r, g, b);
-//			float[] picturePoints = generatePicturePoints(i);
-//			canvas.drawLines(picturePoints, paint);
-			
+			// paint.setARGB(a, r, g, b);
+			// float[] picturePoints = generatePicturePoints(i);
+			// canvas.drawLines(picturePoints, paint);
+
 			canvas.drawARGB(argb[0], argb[1], argb[2], argb[3]);
-			
+
 			if (points.get(i - IL) < points.get(i)) {
 				paint.setColor(Color.GREEN);
 			} else if (points.get(i - IL) > points.get(i)) {
@@ -158,19 +158,26 @@ public class ChartView extends View {
 		// rectf = new RectF(200, 200, 200, 200);
 		return canvas;
 	}
-	
-	public int[] generateTimedARGB(){
+
+	public int[] generateTimedARGB() {
 		int time = MoonActivity.getTime();
-		
+
 		// Convert time to seconds
-		time = (time / 1000) % 255;
+		time = (time / 1000);
 		
-		int a = time * 10 % 255;
-		int r = time * 20 % 255;
-		int g = 255 - time * 20 % 255;
-		int b = (127 + (time * 20)) % 255;
-		
-		int[] result = {a, r, g, b};
+//		// a fluctuates like a sin wave with a period of 512 seconds
+//		int a = (time % 511 > 255) ? 255 - (time % 255) : time % 255;
+//		
+//		// a fluctuates like a sin wave with a period of 256 seconds
+//		int r = (time % 255 > 127) ? 127 - (time % 127) : time % 255;
+//		
+//		// a fluctuates like a sin wave with a period of 256 seconds
+//		int g = (time % 127 > 63) ? 63 - (time % 63) : time % 255;
+//		
+//		// a fluctuates like a sin wave with a period of 256 seconds
+//		int b = (time % 63 > 31) ? 31 - (time % 31) : time % 255;
+
+		int[] result = { 0, 255, 255, 255 };
 		return result;
 	}
 

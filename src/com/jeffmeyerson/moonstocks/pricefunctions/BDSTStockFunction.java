@@ -7,8 +7,7 @@ import java.util.Random;
 import android.util.Log;
 
 /**
- * A function representing a company whose ambitions and greed rival those of
- * EVIL.
+ * BDST is a high volatility company.
  * 
  */
 public class BDSTStockFunction extends PriceFunction {
@@ -29,6 +28,16 @@ public class BDSTStockFunction extends PriceFunction {
 	@Override
 	protected void addToPreviousValues(int result) {
 		previousValues.add(result);
+	}
+
+	@Override
+	int upperBound() {
+		return 400;
+	}
+
+	@Override
+	int maxVolatility() {
+		return 10;
 	}
 
 }

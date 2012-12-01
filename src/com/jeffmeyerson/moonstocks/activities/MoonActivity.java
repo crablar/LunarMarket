@@ -260,6 +260,10 @@ public abstract class MoonActivity extends Activity {
 				inputStream = this.getResources().openRawResource(
 						R.raw.par_vals);
 			}
+			else if (tickerName.equals("BANK")) {
+				inputStream = this.getResources().openRawResource(
+						R.raw.bank_vals);
+			}
 
 			Stock stock = new Stock(inputStream);
 			Company company = new Company(tickerName, name, stock);

@@ -11,6 +11,8 @@ public class PriceFunctionFactory {
 			return new BDSTStockFunction();
 		if(stockName.equals("PAR"))
 			return new PARStockFunction();
+		if(stockName.equals("BANK"))
+			return new BANKStockFunction();
 		// Error
 		return null;
 	}
