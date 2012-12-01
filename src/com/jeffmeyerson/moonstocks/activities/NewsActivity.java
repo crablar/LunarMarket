@@ -23,6 +23,8 @@ public class NewsActivity extends MoonActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        
+        Log.d("class", "In NewsActivity");
 
         // play a lovely little tune
         play(R.raw.evil);

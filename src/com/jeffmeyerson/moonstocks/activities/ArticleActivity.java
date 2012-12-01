@@ -9,6 +9,7 @@ import com.jeffmeyerson.moonstocks.R;
 
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.widget.TextView;
 
 public class ArticleActivity extends MoonActivity {
@@ -16,6 +17,8 @@ public class ArticleActivity extends MoonActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Log.d("class", "In ArticleActivity");
 		setContentView(R.layout.activity_article);
 		TextView articleTextView = (TextView) findViewById(R.id.article_text);
 		articleTextView.setMovementMethod(new ScrollingMovementMethod());

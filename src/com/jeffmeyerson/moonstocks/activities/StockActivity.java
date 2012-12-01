@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +50,8 @@ public class StockActivity extends MoonActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stock);
 		InputStream inputStream = null;
+		
+		Log.d("class", "In StockActivity");
 
 		// Get the data from the Intent
 		Bundle extras = getIntent().getExtras();

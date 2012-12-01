@@ -33,7 +33,6 @@ public class MarketActivity extends MoonActivity {
 	private Context context = this;
 
 	// used for persistence?
-	private final String fileName = "mainactivity";
 	private int size;
 	private SharedPreferences mPrefs;
 	private ChartView chartView;
@@ -42,6 +41,8 @@ public class MarketActivity extends MoonActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_market);
+		
+		Log.d("class", "In MarketActivity");
 
         // Set up the scrolling stock ticker at the top.
         TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
@@ -52,6 +53,8 @@ public class MarketActivity extends MoonActivity {
         
         Log.d("level", "player level is " + player.getLevel());
         //otherwise, we don't lower the player's level
+        
+        Log.d("stocksOwned", "BANK: " + player.getSharesOwned("BANK"));
 
 		// TODO: move this stuff out to MoonActivity
 		mPrefs = getSharedPreferences("moonstocks_prefs", MODE_PRIVATE);
@@ -158,6 +161,11 @@ public class MarketActivity extends MoonActivity {
 		super.onStop();
 		update();
 	}
+	
+	protected void onResume() {
+	    super.onResume();
+	    update();
+	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -169,6 +177,7 @@ public class MarketActivity extends MoonActivity {
 				// Write your code on no result return
 			}
 		} // onActivityResult
+		
 	}
 
 	// TODO: what exactly does this function do and when is it getting called?
@@ -179,7 +188,7 @@ public class MarketActivity extends MoonActivity {
 
 		try {
 			Log.d("fileError", "writing file");
-			FileOutputStream fos = openFileOutput(fileName,
+			FileOutputStream fos = openFileOutput(PERSISTENCE_FILE,
 					Context.MODE_PRIVATE);
 			fos.write(Utility.serialize(player));
 			size = Utility.serialize(player).length;
@@ -214,6 +223,7 @@ public class MarketActivity extends MoonActivity {
 					+ String.valueOf(stock.getPrice(MoonActivity.globalTime)));
 			((TextView) row.getChildAt(2)).setText(String.valueOf(player
 					.getSharesOwned(tickerName)));
+			
 		}
 
 	}
