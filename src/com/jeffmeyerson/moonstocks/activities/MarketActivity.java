@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeffmeyerson.moonstocks.R;
 import com.jeffmeyerson.moonstocks.Utility;
@@ -34,6 +35,10 @@ public class MarketActivity extends MoonActivity {
 	private int size;
 	private SharedPreferences mPrefs;
 	private ChartView chartView;
+	private Button crashTheMarketButton;
+	
+	// A bargain at twice the price
+	public final static int MARKET_CRASH_PRICE = 400;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,15 @@ public class MarketActivity extends MoonActivity {
         // Set up the scrolling stock ticker at the top.
         TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
 
+        crashTheMarketButton = (Button) findViewById(R.id.crash_the_market_button);
+        
+        if(player.getLevel() > 1){
+        	crashTheMarketButton.setClickable(true);
+        	crashTheMarketButton.setText("Crash the market: $" + MARKET_CRASH_PRICE);
+        }
+        else
+        	crashTheMarketButton.setText("???");
+        
 		chartView = (ChartView) findViewById(R.id.chart);
         
         tickerView.scroll();
@@ -223,6 +237,16 @@ public class MarketActivity extends MoonActivity {
 			
 		}
 
+	}
+	
+	public void clickCrashTheMarket(View view){
+		if(player.getBalance() >= MARKET_CRASH_PRICE){
+			double balance = player.getBalance();
+			player.setBalance(balance - MARKET_CRASH_PRICE);
+			MoonActivity.crashTheMarket();
+		}
+		else
+			Toast.makeText(context, "Not enough money to crash the market!", Toast.LENGTH_SHORT).show();
 	}
 
 }

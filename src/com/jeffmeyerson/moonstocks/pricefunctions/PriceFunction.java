@@ -3,7 +3,10 @@ package com.jeffmeyerson.moonstocks.pricefunctions;
 import java.util.List;
 import java.util.Random;
 
+import android.util.Log;
+
 import com.jeffmeyerson.moonstocks.activities.MoonActivity;
+import com.jeffmeyerson.moonstocks.pojos.MovingAverage;
 
 /**
  * @author jeffreymeyerson
@@ -12,19 +15,24 @@ import com.jeffmeyerson.moonstocks.activities.MoonActivity;
  */
 public abstract class PriceFunction {
 
-	protected int volatilityMultiplier;;
-	
+	protected int volatilityMultiplier;
+	private MovingAverage movingAverage;
 	protected abstract String getName();
 	protected abstract int getPreviousValue();
 	protected abstract void addToPreviousValues(int result);
+	public static boolean crashedMarket = false;
 
+	public static void toggleCrashedMarket(){
+		crashedMarket = !crashedMarket;
+	}
+	
 	public int randomVolatility(){
 		Random r = new Random();
 		int playerLevel = 1;
 		if(MoonActivity.player != null)
 			playerLevel = MoonActivity.player.getLevel();
 		
-		return r.nextInt(maxVolatility() * playerLevel * volatilityMultiplier) % 350;
+		return r.nextInt(maxVolatility() * playerLevel * volatilityMultiplier) % 599;
 	}
 
 	public int getValue(int time, List<Integer> values) {
@@ -45,6 +53,13 @@ public abstract class PriceFunction {
 		if (result < 0){
 			int vol = randomVolatility();
 			result = Math.max(result - vol, vol);
+		}
+		
+		if(crashedMarket){
+			Log.d(this.toString(),"Getting crashed value");
+			result = 10;
+			addToPreviousValues(result);
+			return result;
 		}
 		addToPreviousValues(result);
 		return result;

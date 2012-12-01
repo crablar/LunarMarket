@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,6 +26,7 @@ import com.jeffmeyerson.moonstocks.Utility;
 import com.jeffmeyerson.moonstocks.pojos.Company;
 import com.jeffmeyerson.moonstocks.pojos.Player;
 import com.jeffmeyerson.moonstocks.pojos.Stock;
+import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
 
 /**
  * A base class that other MoonStocks activities can extend from. It fills in
@@ -45,11 +47,11 @@ import com.jeffmeyerson.moonstocks.pojos.Stock;
  */
 public abstract class MoonActivity extends Activity {
 
-	protected static Handler mHandler = new Handler();
-	private static boolean isRunning = false;
+	static Handler mHandler = new Handler();
+	static boolean isRunning = false;
 
 	// Map of ticker names to their companies
-	protected static HashMap<String, Company> companyMap = new HashMap<String, Company>();
+	public static HashMap<String, Company> companyMap = new HashMap<String, Company>();
 
 	// Companies sorted in a consistent fashion
 	public static ArrayList<Company> companyList = new ArrayList<Company>();
@@ -60,7 +62,7 @@ public abstract class MoonActivity extends Activity {
 
 	// The amount of time (ms) elapsed since the player started the game.
 	// TODO: persist this
-	protected static int globalTime = 1000;
+	static int globalTime = 1000;
 
 	// There is only one player
 	public static Player player;
@@ -69,14 +71,17 @@ public abstract class MoonActivity extends Activity {
 	private MediaPlayer mp;
 	private int music_id = 0;
 
+	static boolean start = true;
+
 	// Persistence related things **************************************
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (companyMap.size() == 0) {
+		Log.d("class", "In MoonActivity");
+
+		if (companyMap.size() == 0)
 			loadCompanies();
-		}
 
 		if (!isRunning) {
 			Runnable timeFlux = new Runnable() {
@@ -87,6 +92,8 @@ public abstract class MoonActivity extends Activity {
 
 					// Move to the next time interval
 					globalTime += 1000;
+
+					Log.d(this.toString(), "Time is " + globalTime);
 				}
 			};
 			// Begin running the function
@@ -95,49 +102,66 @@ public abstract class MoonActivity extends Activity {
 
 		isRunning = true;
 
-		SharedPreferences mPrefs = getSharedPreferences("moonstocks_prefs", MODE_PRIVATE);
+		SharedPreferences mPrefs = getSharedPreferences("moonstocks_prefs",
+				MODE_PRIVATE);
 		int size = mPrefs.getInt("fileSize", 0);
+		Log.d("size", "size of file: " + size);
 		// Read the player from persistence if necessary
 		if (player != null && size > 0) {
+			Log.d("exist", "Exisiting Player");
 			FileInputStream fin;
 			byte[] buffer = new byte[size];
 			try {
 				fin = openFileInput(PERSISTENCE_FILE);
 				fin.read(buffer);
 			} catch (FileNotFoundException e) {
-				Log.d("MoonActivity.onCreate", "player file not found");
+				Log.d("errors", "player file not found");
 				e.printStackTrace();
 			} catch (IOException e) {
-				Log.d("MoonActivity.onCreate", "player file io exception");
+				Log.d("errors", "player file io exception");
 				e.printStackTrace();
 			}
 
-		    player = (Player) Utility.deserialize(buffer);
+			player = (Player) Utility.deserialize(buffer);
 			if (player == null) {
-				Log.e("MoonActivity.onCreate", "Player could not be deserialized!");
+				Log.e("MoonActivity.onCreate",
+						"Player could not be deserialized!");
 			}
 		} else {
+			Log.d("new", "newPlayer!");
 			player = new Player();
 			player.setBalance(STARTING_MONEY);
 			player.setName("Jeff");
-
+			getSharedPreferences("moonstocks_prefs",
+			MODE_PRIVATE).edit().clear().commit();
+			deleteFile(PERSISTENCE_FILE);
+			Intent intent = new Intent(this, SystemDetailsActivity.class);
+			intent.putExtra("player", Utility.serialize(player));
+			startActivity(intent);
 			SharedPreferences.Editor ed = mPrefs.edit();
 
 			try {
-	            FileOutputStream fos = openFileOutput(PERSISTENCE_FILE, Context.MODE_PRIVATE);
-	            fos.write(Utility.serialize(player));
-	            size = Utility.serialize(player).length;;
-	            ed.putInt("fileSize", size);
-	            ed.commit();
-	            fos.close();
-	        } catch (FileNotFoundException e) {
-	            Log.d("MoonActivity.onCreate", "writing file not found");
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            Log.d("MoonActivity.onCreate", "writing IO exception");
-	            e.printStackTrace();
-	        }
+				Log.d("fileError", "writing file");
+				FileOutputStream fos = openFileOutput(PERSISTENCE_FILE,
+						Context.MODE_PRIVATE);
+				fos.write(Utility.serialize(player));
+				size = Utility.serialize(player).length;
+				Log.d("fileError", "buffer size in write: " + size);
+				ed.putInt("fileSize", size);
+				ed.commit();
+				fos.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				Log.d("fileError", "writing file not found");
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				Log.d("fileError", "writing IO exception");
+				e.printStackTrace();
+			}
+
 		}
+
 	}
 
 	// ActionBar related things ****************************************
@@ -158,11 +182,12 @@ public abstract class MoonActivity extends Activity {
 			player = new Player();
 			player.setBalance(STARTING_MONEY);
 			player.setName("Jeff");
-			getSharedPreferences("moonstocks_prefs", MODE_PRIVATE).edit().clear().commit();
+			getSharedPreferences("moonstocks_prefs", MODE_PRIVATE).edit()
+					.clear().commit();
 			deleteFile(PERSISTENCE_FILE);
 			Intent intent = new Intent(this, SystemDetailsActivity.class);
-            intent.putExtra("player", Utility.serialize(player));
-            startActivity(intent);
+			intent.putExtra("player", Utility.serialize(player));
+			startActivity(intent);
 			return true;
 		} else if (id == R.id.menu_news) {
 			Intent intent = new Intent(this, NewsActivity.class);
@@ -176,7 +201,8 @@ public abstract class MoonActivity extends Activity {
 			if (this instanceof NewsActivity) {
 				overridePendingTransition(0, 0);
 			} else {
-				overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+				overridePendingTransition(android.R.anim.slide_in_left,
+						android.R.anim.slide_out_right);
 			}
 			return true;
 		} else if (id == R.id.menu_system_details) {
@@ -186,7 +212,8 @@ public abstract class MoonActivity extends Activity {
 			if (this instanceof SystemDetailsActivity) {
 				overridePendingTransition(0, 0);
 			} else {
-				overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+				overridePendingTransition(android.R.anim.slide_in_left,
+						android.R.anim.slide_out_right);
 			}
 			return true;
 		} else if (id == R.id.menu_stock_market) {
@@ -194,11 +221,13 @@ public abstract class MoonActivity extends Activity {
 			Intent intent = new Intent(this, MarketActivity.class);
 			intent.putExtra("player", Utility.serialize(player));
 			startActivity(intent);
-
+			// Log.d("stocksOwned", "BANK in MoonActivity: " +
+			// player.getSharesOwned("BANK"));
 			if (this instanceof MarketActivity) {
 				overridePendingTransition(0, 0);
 			} else {
-				overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+				overridePendingTransition(android.R.anim.slide_in_left,
+						android.R.anim.slide_out_right);
 			}
 			return true;
 		}
@@ -256,7 +285,8 @@ public abstract class MoonActivity extends Activity {
 	 * Read in the list of companies from companies.xml.
 	 */
 	protected void loadCompanies() {
-		String[] companyStrings = getResources().getStringArray(R.array.companies);
+		String[] companyStrings = getResources().getStringArray(
+				R.array.companies);
 
 		for (String companyString : companyStrings) {
 			String[] companyArr = companyString.split(" ");
@@ -266,15 +296,20 @@ public abstract class MoonActivity extends Activity {
 				name += " " + companyArr[i];
 			InputStream inputStream = null;
 			if (tickerName.equals("EVIL")) {
-				inputStream = this.getResources().openRawResource(R.raw.evil_vals);
+				inputStream = this.getResources().openRawResource(
+						R.raw.evil_vals);
 			} else if (tickerName.equals("BDST")) {
-				inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
+				inputStream = this.getResources().openRawResource(
+						R.raw.bdst_vals);
 			} else if (tickerName.equals("WMC")) {
-				inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
+				inputStream = this.getResources().openRawResource(
+						R.raw.wmc_vals);
 			} else if (tickerName.equals("PAR")) {
-				inputStream = this.getResources().openRawResource(R.raw.par_vals);
+				inputStream = this.getResources().openRawResource(
+						R.raw.par_vals);
 			} else if (tickerName.equals("BANK")) {
-				inputStream = this.getResources().openRawResource(R.raw.bank_vals);
+				inputStream = this.getResources().openRawResource(
+						R.raw.bank_vals);
 			}
 
 			Stock stock = new Stock(inputStream);
@@ -289,6 +324,21 @@ public abstract class MoonActivity extends Activity {
 	}
 
 	public static int getTime() {
+		// TODO Auto-generated method stub
 		return globalTime;
+	}
+
+	public static void crashTheMarket() {
+		Random r = new Random();
+
+		Runnable runnable = new Runnable() {
+			public void run() {
+				Random r = new Random();
+				PriceFunction.toggleCrashedMarket();
+
+			};
+		};
+		mHandler.postDelayed(runnable, 5000 + 1000 * r.nextInt(10));
+
 	}
 }
