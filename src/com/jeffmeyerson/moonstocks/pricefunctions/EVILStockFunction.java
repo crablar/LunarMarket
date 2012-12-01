@@ -13,6 +13,11 @@ import android.util.Log;
 public class EVILStockFunction extends PriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
+	// EVIL is the second least volatile
+	public EVILStockFunction(){
+		this.volatilityMultiplier = 2;
+	}
+	
 	@Override
 	public String getName() {
 		return "EVIL";

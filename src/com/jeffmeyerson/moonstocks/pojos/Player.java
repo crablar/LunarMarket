@@ -15,8 +15,8 @@ import com.jeffmeyerson.moonstocks.activities.MoonActivity;
  */
 public class Player implements Serializable {
 
-	private static final String[] avatarArray = {"no eyes", "one eye", "normal", "gold teeth", "shades and nose"};
-	private static int avatarIndex = 2;
+	public enum AvatarType {NO_EYES, ONE_EYE, NORMAL, GOLD_TEETH, SHADES};
+	public AvatarType avatarType;
 	private static final long serialVersionUID = 5885032670865723288L;
 	private String playerName;
 	private double balance;
@@ -26,6 +26,7 @@ public class Player implements Serializable {
 	private int levelGoal;
 
 	public Player() {
+		avatarType = AvatarType.NORMAL;
 		balance = MoonActivity.STARTING_MONEY;
 		stockShares = new HashMap<String, Integer>();
 		protocol = new Protocol();
@@ -138,20 +139,16 @@ public class Player implements Serializable {
 	public int getLevelGoal() {
 		return levelGoal;
 	}
-
-	public String getAvatarDescription() {
-		return avatarArray[avatarIndex];
-	}
 	
 	public void advanceAvatar(){
-		if(avatarIndex < avatarArray.length - 1)
-			avatarIndex++;
+		if(avatarType != AvatarType.SHADES)
+			avatarType = AvatarType.values()[avatarType.ordinal() + 1];
 	}
 	
 	public boolean demoteAvatar(){
-		if(avatarIndex == 0)
+		if(avatarType == AvatarType.NO_EYES)
 			return false;
-		avatarIndex--;
+		avatarType = AvatarType.values()[avatarType.ordinal() - 1];
 		return true;
 	}
 	
