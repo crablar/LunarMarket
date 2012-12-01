@@ -2,6 +2,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * This formatter parses the song data and eventually magnifies it as a function
+ * of the standard deviation roots. I don't know if the math makes sense, so
+ * please ask me if you need clarification. This is my current effort to make
+ * the changes in music more pronounced once they are translated into prices.
+ * 
+ * @author jeffreymeyerson
+ * 
+ */
+
 public class ResultsOutFormatter {
 
 	public static void main(String[] args) throws FileNotFoundException {
@@ -13,11 +23,13 @@ public class ResultsOutFormatter {
 		resultArr[0] = "low_freq_values";
 		resultArr[1] = "high_freq_values";
 
+		// Number of time intervals
 		int count = 0;
+
 		int lowFreqSum = 0;
 		int highFreqSum = 0;
 
-		// First pass, find the means
+		// First pass, find the sum and of each of low vals and high vals
 		while (scanner.hasNextLine()) {
 
 			String line = scanner.nextLine();
@@ -42,7 +54,8 @@ public class ResultsOutFormatter {
 		int lowFreqValSum = 0;
 		int highFreqValSum = 0;
 
-		// Second pass, use the means
+		// Second pass, use the means to find the square of the variance from
+		// the mean for each val and keep a running sum
 		while (scanner.hasNextLine()) {
 
 			String line = scanner.nextLine();
@@ -61,10 +74,9 @@ public class ResultsOutFormatter {
 		int lowStandardDev = (int) Math.sqrt(lowFreqValSum / count);
 		int highStandardDev = (int) Math.sqrt(highFreqValSum / count);
 
-		// Third pass: create the file
 		scanner = new Scanner(file);
 
-		// Second pass, use the means
+		// Third pass: create the file
 		while (scanner.hasNextLine()) {
 
 			String line = scanner.nextLine();
@@ -73,19 +85,23 @@ public class ResultsOutFormatter {
 			int lowVal = Integer.parseInt(lineArr[1]);
 			int highVal = Integer.parseInt(lineArr[1]);
 
-			/** If no standard deviation, no need to normalize
-			 *  This is strictly for the monotonic mp3.
+			/**
+			 * If no standard deviation, no need to normalize This is strictly
+			 * for the monotonic mp3, used for testing.
 			 */
 			if (lowStandardDev == 0 && highStandardDev == 0) {
 				lowStandardDev = Integer.MAX_VALUE;
 				highStandardDev = Integer.MAX_VALUE;
 			}
-			
+
+			// Take the square root of the standard deviation
 			double lowStdDevRoot = Math.sqrt(lowStandardDev);
 			double highStdDevRoot = Math.sqrt(highStandardDev);
-			
-			int lowExtremity = (int)(lowVal / lowStdDevRoot);
-			int highExtremity = (int)(highVal / highStdDevRoot);
+
+			// Magnify the vals, keeping them a factor of the standard deviation
+			// roots
+			int lowExtremity = (int) (lowVal / lowStdDevRoot);
+			int highExtremity = (int) (highVal / highStdDevRoot);
 
 			resultArr[0] += " " + (lowExtremity);
 			resultArr[1] += " " + (highExtremity);
