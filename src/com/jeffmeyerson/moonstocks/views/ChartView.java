@@ -1,11 +1,13 @@
 package com.jeffmeyerson.moonstocks.views;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
@@ -13,41 +15,42 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.jeffmeyerson.moonstocks.activities.MoonActivity;
-
 public class ChartView extends View {
 
 	// constants
 	private static final int MAX_POINTS = 100;
-	private static final int SCREEN_HEIGHT = 300;
-	private static final float SCALE = 3;// getWidth() / 20;
 	private static final int INTERPOLATION_LEVEL = 10;
+	private static final int GRID_LINES = 10;
 
-	// these are static, not constant
-	private static double MAX_PRICE;
-	private static double MIN_PRICE;
-
-    // member variables
+    // used to configure the behavior of the ChartView
     private boolean interpolate = false;
+    private boolean showAvg;
 
-	// used for general drawing
+    // used to scale the ChartView
+    private float maxPrice = 300;
+    private float minPrice = 0;
+    
+	// general drawing primitives
 	private Paint paint;
+    private final DashPathEffect dottedLine = new DashPathEffect(new float[] {8, 10}, 0);
+    private final Path path = new Path();
+    private final RectF rect = new RectF();
 
-    // this is for the line graph
-	private List<Float> points;
-	private Path path = new Path();
+    // used by the line chart
+	private final List<Float> points = new ArrayList<Float>();
+
+	// used by the moving average
+    private float average;
 
 	// this is for the bobble at the end of the stock graph
 	private int startAngle = 0;
-	private RectF bobble = new RectF();
 
 	// OMG SPARKLES
+    private boolean triggerSparkles = false;
 	private LevelUpAnimation levelUpAnimation = null;
 
 	void initialize() {
 		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		// TODO: evaluate performance of using ArrayList vs. LinkedList here
-		points = new ArrayList<Float>();
 	}
 
 	public ChartView(Context context) {
@@ -63,17 +66,6 @@ public class ChartView extends View {
 	public ChartView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initialize();
-	}
-
-	/**
-	 * Set the max and the min price to display things better.
-	 * 
-	 * @param max
-	 * @param min
-	 */
-	public void setMaxAndMin(double max, double min) {
-		MAX_PRICE = max;
-		MIN_PRICE = min;
 	}
 
 	public void toggleInterpolation() {
@@ -104,12 +96,21 @@ public class ChartView extends View {
 				points.remove(0);
 			}
 		}
+		maxPrice = Collections.max(points);
+        minPrice = Collections.min(points);
+	}
+
+	public void showAverage(boolean showAvg) {
+	    this.showAvg = showAvg;
 	}
 	
+    public void setAverage(float average) {
+        this.average = average;
+    }
+
 	public void doLevelUpAnimation() {
-	    float tailX = points.size() * SCALE;
-        float tailY = SCREEN_HEIGHT - points.get(points.size() - 1);
-	    levelUpAnimation = new LevelUpAnimation(tailX, tailY);
+	    triggerSparkles = true;
+
 	}
 
 	@Override
@@ -118,21 +119,19 @@ public class ChartView extends View {
 
         final int h = canvas.getHeight();
         final int w = canvas.getWidth();
-        final int GRID_LINES = 10;
+        final float vScale = 3;
+        final float hScale = h / (maxPrice - minPrice);
 
         // draw ourselves a nice pretty griddy
         paint.setStrokeWidth(1);
         paint.setColor(Color.LTGRAY);
-
         for (int i = 0; i < GRID_LINES; i++) {
-            // vertical lines
             canvas.drawLine((w / GRID_LINES) * i, 0, (w / GRID_LINES) * i, h, paint);
-            // horizontal lines
             canvas.drawLine(0, (h / GRID_LINES) * i, w, (h / GRID_LINES) * i, paint);
         }
-        // draw a box around the whole shebang
         canvas.drawRect(1,1,w-1,h-1, paint);
 
+        // decide whether to interpolate
 		int IL; // short for InterpolationLevel, done for conciseness below.
 		if (interpolate) {
 			IL = INTERPOLATION_LEVEL;
@@ -140,16 +139,9 @@ public class ChartView extends View {
 			IL = 1;
 		}
 
+        // draw the stock graph
 		paint.setStrokeWidth(3);
-
 		for (int i = IL; i < points.size(); i += IL) {
-			int[] argb = generateTimedARGB();
-			// paint.setARGB(a, r, g, b);
-			// float[] picturePoints = generatePicturePoints(i);
-			// canvas.drawLines(picturePoints, paint);
-
-			canvas.drawARGB(argb[0], argb[1], argb[2], argb[3]);
-
 			if (points.get(i - IL) < points.get(i)) {
 				paint.setColor(Color.GREEN);
 			} else if (points.get(i - IL) > points.get(i)) {
@@ -157,82 +149,48 @@ public class ChartView extends View {
 			} else {
 				paint.setColor(Color.YELLOW);
 			}
-			float startX = (i - IL) * SCALE;
-			float startY = SCREEN_HEIGHT - points.get(i - IL);
-			float endX = i * SCALE;
-			float endY = SCREEN_HEIGHT - points.get(i);
-			// this proved to be too slow.
-//			path.reset();
-//			path.moveTo(startX, startY);
-//			path.lineTo(endX, endY);
-//			path.lineTo(endX, canvas.getHeight());
-//			path.lineTo(startX, canvas.getHeight());
-//			path.close();
-//			canvas.drawPath(path, paint);
+			float startX = (i - IL) * vScale;
+			float startY = h - points.get(i - IL);
+			float endX = i * vScale;
+			float endY = h - points.get(i);
+
             canvas.drawLine(startX, startY, endX, endY, paint);
 		}
 
+        // draw the bobble
 		if (points.size() > 0) {
 		    paint.setStyle(Style.STROKE);
 		    paint.setColor(Color.WHITE);
-		    float tailX = points.size() * SCALE;
-		    float tailY = SCREEN_HEIGHT - points.get(points.size() - 1);
+		    float tailX = points.size() * vScale;
+		    float tailY = h - points.get(points.size() - 1);
 		    startAngle += 25;
-		    bobble.set(tailX - 15, tailY - 15, tailX + 15, tailY + 15);
-		    canvas.drawArc(bobble, startAngle, 270, false, paint);
+		    rect.set(tailX - 15, tailY - 15, tailX + 15, tailY + 15);
+		    canvas.drawArc(rect, startAngle, 270, false, paint);
 		}
 
+        // draw the moving average line
+		if (showAvg) {
+		    paint.setColor(Color.YELLOW);
+            paint.setStyle(Style.STROKE);
+            paint.setPathEffect(dottedLine);
+            paint.setStrokeWidth(1);
+            path.reset();
+            path.moveTo(0, h - average);
+            path.lineTo(w, h - average);
+            canvas.drawPath(path, paint);
+            paint.setPathEffect(null);
+		}
+
+        // draw the sparkles
+		if (triggerSparkles) {
+            float tailX = points.size() * vScale;
+            float tailY = h - points.get(points.size() - 1);
+            // TODO: fix this warning properly
+            levelUpAnimation = new LevelUpAnimation(tailX, tailY);
+		}
 		if (levelUpAnimation != null) {
 		    levelUpAnimation.draw(canvas, paint);
 		}
 
 	}
-
-	private float[] generatePicturePoints(int parameter) {
-		float[] result = new float[(parameter % points.size()) * 4];
-		float begin = 50;
-		for (int i = 0; i < result.length; i += 4) {
-			result[i] = begin;
-			result[i + 1] = begin * 2;
-			result[i + 2] = begin;
-			result[i + 3] = begin * 2;
-		}
-		return result;
-	}
-
-	public Canvas drawPicture(Canvas canvas, int a, int r, int g, int b) {
-		// paint.setARGB(a, r, g, 255);
-		// RectF rectf = new RectF(50, 50, 50, 50);
-		// canvas.drawOval(rectf, paint);
-		// paint.setARGB(a, r, 255, b);
-		// rectf = new RectF(100, 100, 100, 100);
-		// paint.setARGB(a, 255, g, b);
-		// rectf = new RectF(150, 150, 150, 150);
-		// paint.setARGB(a, r, 255, b);
-		// rectf = new RectF(200, 200, 200, 200);
-		return canvas;
-	}
-
-	public int[] generateTimedARGB() {
-		int time = MoonActivity.getTime();
-
-		// Convert time to seconds
-		time = (time / 1000);
-		
-//		// a fluctuates like a sin wave with a period of 512 seconds
-//		int a = (time % 511 > 255) ? 255 - (time % 255) : time % 255;
-//		
-//		// a fluctuates like a sin wave with a period of 256 seconds
-//		int r = (time % 255 > 127) ? 127 - (time % 127) : time % 255;
-//		
-//		// a fluctuates like a sin wave with a period of 256 seconds
-//		int g = (time % 127 > 63) ? 63 - (time % 63) : time % 255;
-//		
-//		// a fluctuates like a sin wave with a period of 256 seconds
-//		int b = (time % 63 > 31) ? 31 - (time % 31) : time % 255;
-
-		int[] result = { 0, 255, 255, 255 };
-		return result;
-	}
-
 }

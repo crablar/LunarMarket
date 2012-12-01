@@ -39,6 +39,7 @@ public class LevelUpAnimation {
     }
     
     public void draw(Canvas canvas, Paint paint) {
+        paint.setStrokeWidth(3);
         Iterator<Sparkle> i = sparkles.iterator();
         while (i.hasNext()) {
             Sparkle s = i.next();
