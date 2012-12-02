@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    >
 
     <TextView
         android:id="@+id/stock_ticker_text"
@@ -55,16 +56,17 @@
 
     <com.jeffmeyerson.moonstocks.views.ChartView
         android:id="@+id/chart"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/stock_price_view" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/stock_price_view"
+        android:layout_above="@+id/buy_button"
+        />
 
     <com.jeffmeyerson.moonstocks.views.BuyButton
         android:id="@+id/buy_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_above="@+id/interpolation_button"
+        android:layout_above="@+id/button_container"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true" />
 
@@ -72,26 +74,31 @@
         android:id="@+id/sell_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_above="@+id/interpolation_button"
+        android:layout_above="@+id/button_container"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true" />
 
-    <Button
-        android:id="@+id/crash_this_stock_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_toRightOf="@+id/interpolation_button"
-        android:clickable="false"
-        android:onClick="onClickCrashThisStock"/>
-    <Button
-        android:id="@+id/interpolation_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:clickable="false"
-        android:onClick="toggleInterpolation"/>
+        android:weightSum="100"
+        >
+        <Button
+            android:id="@+id/crash_this_stock_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:enabled="false"
+            android:onClick="onClickCrashThisStock"/>
+        <Button
+            android:id="@+id/interpolation_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:enabled="false"
+            android:onClick="toggleInterpolation"/>
+    </LinearLayout>
 
 </RelativeLayout>

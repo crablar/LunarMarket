@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -18,7 +18,9 @@
     <TableLayout
         android:id="@+id/market_table"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stock_scroller"
+        >
 
         <TableRow
             android:id="@+id/market_header"
@@ -53,24 +55,19 @@
 
     <com.jeffmeyerson.moonstocks.views.ChartView
         android:id="@+id/chart"
-        android:layout_width="300dp"
-        android:layout_height="300dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/crash_the_market_button"
+        android:layout_below="@+id/market_table"
+        />
 
-    <TextView
-        android:id="@+id/marketAvgText"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Average Price Per Share"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
     <Button 
         android:id="@+id/crash_the_market_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:clickable="false"
+        android:enabled="false"
         android:onClick="clickCrashTheMarket"/>
 
-</LinearLayout>
+</RelativeLayout>

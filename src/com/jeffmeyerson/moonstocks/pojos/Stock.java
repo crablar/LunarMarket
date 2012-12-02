@@ -61,7 +61,6 @@ public class Stock {
 			if (line == null) {
 				break;
 			}
-			System.out.println(line);
 			// line example: "low_freq_values 5 6 6 7 7 8 8 9 9 10 10 11 11 12"
 			// The type in the above example is "low_freq_values"
 			String[] lineArr = line.split(" ");
