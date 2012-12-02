@@ -62,6 +62,7 @@ public class StockActivity extends MoonActivity {
 		final TextView balanceView = (TextView) findViewById(R.id.balance_view);
 		final Button interpolationButton = (Button) findViewById(R.id.interpolation_button);
 		final ChartView chartView = (ChartView) findViewById(R.id.chart);
+		final Button crashThisStockButton = (Button) findViewById(R.id.crash_this_stock_button);
 
 		movingAverage = new MovingAverage(10);
 
@@ -266,7 +267,7 @@ public class StockActivity extends MoonActivity {
 		finish();
 	}
 	
-	public void clickCrashTheStock(View view){
+	public void onClickCrashThisStock(View view){
 		if(player.getBalance() >= STOCK_CRASH_PRICE){
 			double balance = player.getBalance();
 			player.setBalance(balance - STOCK_CRASH_PRICE);

@@ -82,8 +82,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@+id/interpolation_button"
         android:clickable="false"
-        android:onClick="crashThisStock"/>
+        android:onClick="onClickCrashThisStock"/>
     <Button
         android:id="@+id/interpolation_button"
         android:layout_width="wrap_content"
