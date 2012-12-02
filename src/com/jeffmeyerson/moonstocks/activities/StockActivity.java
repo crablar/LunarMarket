@@ -70,10 +70,12 @@ public class StockActivity extends MoonActivity {
 		player = (Player) Utility.deserialize(extras.getByteArray("player"));
 		((TextView) findViewById(R.id.balance_view)).setText("" + player.getBalance());
 
-		if(player.getLevel() == 1)
+		if(player.getLevel() == 1) {
 			interpolationButton.setText("???");
-		else
+		} else {
 			interpolationButton.setText("Toggle Interpolation");
+			interpolationButton.setEnabled(true);
+		}
 
 		// Get the ticker symbol
 		stockTicker = extras.getString("EXTRA_TICKER_ID");

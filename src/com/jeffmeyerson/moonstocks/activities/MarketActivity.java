@@ -35,8 +35,7 @@ public class MarketActivity extends MoonActivity {
 	private int size;
 	private SharedPreferences mPrefs;
 	private ChartView chartView;
-	private Button crashTheMarketButton;
-	
+
 	// A bargain at twice the price
 	public final static int MARKET_CRASH_PRICE = 400;
 
@@ -50,10 +49,10 @@ public class MarketActivity extends MoonActivity {
         // Set up the scrolling stock ticker at the top.
         TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);
 
-        crashTheMarketButton = (Button) findViewById(R.id.crash_the_market_button);
+        final Button crashTheMarketButton = (Button) findViewById(R.id.crash_the_market_button);
         
         if(player.getLevel() > 1){
-        	crashTheMarketButton.setClickable(true);
+        	crashTheMarketButton.setEnabled(true);
         	crashTheMarketButton.setText("Crash the market: $" + MARKET_CRASH_PRICE);
         }
         else
