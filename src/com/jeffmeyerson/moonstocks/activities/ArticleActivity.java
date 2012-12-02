@@ -17,14 +17,14 @@ public class ArticleActivity extends MoonActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		Log.d("class", "In ArticleActivity");
+
+		Log.d("ArticleActivity.onCreate", "Entering method");
 		setContentView(R.layout.activity_article);
-		TextView articleTextView = (TextView) findViewById(R.id.article_text);
+		final TextView articleTextView = (TextView) findViewById(R.id.article_text);
 		articleTextView.setMovementMethod(new ScrollingMovementMethod());
 
 		// Get the data from the Intent
-		Bundle extras = getIntent().getExtras();
+		final Bundle extras = getIntent().getExtras();
 		String articleName = "";
 		if (extras != null) {
 			articleName = extras.getString("EXTRA_ARTICLE_NAME");
@@ -34,39 +34,33 @@ public class ArticleActivity extends MoonActivity {
 		if (articleName.equals("lunar_market_opens")) {
 			inputStream = this.getResources().openRawResource(R.raw.lunar_market_opens);
 			play(R.raw.evil);
-		}
-		if (articleName.equals("careful_with_the_moon")) {
+		} else if (articleName.equals("careful_with_the_moon")) {
 			inputStream = this.getResources().openRawResource(R.raw.careful_with_the_moon);
 			play(R.raw.evil);
-		}
-		if (articleName.equals("buy_stock_not_globus")) {
+		} else if (articleName.equals("buy_stock_not_globus")) {
 			inputStream = this.getResources().openRawResource(R.raw.buy_stock_not_globus);
 			play(R.raw.evil);
-		}
-		if (articleName.equals("freeze_and_thaw")) {
+		} else if (articleName.equals("freeze_and_thaw")) {
 			inputStream = this.getResources().openRawResource(R.raw.freeze_and_thaw);
 			play(R.raw.evil);
-		}
-		if (articleName.equals("bank_initialization")) {
+		} else if (articleName.equals("bank_initialization")) {
 			inputStream = this.getResources().openRawResource(R.raw.bank_initialization);
 			play(R.raw.evil);
 		}
 
 		// Create a BufferedReader for the InputStream
-		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+		final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
 		String line = "";
 		try {
 			line = br.readLine();
 			while (line != null) {
-				System.out.println(line);
 				articleTextView.append(line);
 				articleTextView.append("\n");
 				line = br.readLine();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		    Log.e("Article Activity", "IOException", e);
 		}
 	}
 

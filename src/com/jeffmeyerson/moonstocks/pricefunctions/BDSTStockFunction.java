@@ -1,8 +1,6 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import android.util.Log;
 
@@ -10,7 +8,7 @@ import android.util.Log;
  * BDST is a high volatility company.
  * 
  */
-public class BDSTStockFunction extends PriceFunction {
+public class BDSTStockFunction extends JeffsGenericPriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
 	// BDST is the most volatile

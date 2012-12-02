@@ -1,8 +1,6 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import android.util.Log;
 
@@ -10,7 +8,7 @@ import android.util.Log;
  * Evil moves as a function of BDST (which makes sense if you read the news).
  * 
  */
-public class EVILStockFunction extends PriceFunction {
+public class EVILStockFunction extends JeffsGenericPriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
 	// EVIL is the second least volatile

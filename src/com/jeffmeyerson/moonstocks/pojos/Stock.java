@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 import com.jeffmeyerson.moonstocks.pojos.SongElement.SongElementType;
 import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunction;
 import com.jeffmeyerson.moonstocks.pricefunctions.PriceFunctionFactory;
@@ -82,8 +80,7 @@ public class Stock {
 				values.add(Integer.valueOf(lineArr[i]));
 			}
 
-			this.fn = PriceFunctionFactory
-					.getPriceFunctionForStock(stockName);
+			Stock.fn = PriceFunctionFactory.getPriceFunctionForStock(stockName);
 			SongElement element = new SongElement(type, values, fn);
 
 			assert (element != null);
@@ -91,7 +88,7 @@ public class Stock {
 			song.add(element);
 
 		}
-		
+
 		MAX_PRICE = getMaxPrice();
 		MIN_PRICE = getMinPrice();
 	}

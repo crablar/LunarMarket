@@ -1,8 +1,6 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import android.util.Log;
 
@@ -10,7 +8,7 @@ import android.util.Log;
  * A simple uptrend with an upper bound.
  * 
  */
-public class WMCStockFunction extends PriceFunction {
+public class WMCStockFunction extends JeffsGenericPriceFunction {
 
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 

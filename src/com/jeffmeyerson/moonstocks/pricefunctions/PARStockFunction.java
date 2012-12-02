@@ -1,15 +1,13 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import android.util.Log;
 
 /**
  * 
  */
-public class PARStockFunction extends PriceFunction {
+public class PARStockFunction extends JeffsGenericPriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
 	// PAR is the third least volatile

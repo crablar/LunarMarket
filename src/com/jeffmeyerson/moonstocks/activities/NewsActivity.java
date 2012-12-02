@@ -17,13 +17,13 @@ import com.jeffmeyerson.moonstocks.views.TickerView;
 
 public class NewsActivity extends MoonActivity {
 
-    private Context context = this;
+    final private Context context = this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        
+
         Log.d("class", "In NewsActivity");
 
         // play a lovely little tune
@@ -34,9 +34,7 @@ public class NewsActivity extends MoonActivity {
 
         tickerView.scroll();
 
-        // Set up buttons for the articles.
-        // TODO: this should totally be programmatic
-        
+
         // Get the data from the Intent
      	Bundle extras = getIntent().getExtras();
 
@@ -52,11 +50,13 @@ public class NewsActivity extends MoonActivity {
      	        }
      	    }
      	}
-        
-        int level = player.getLevel();
-        
+
+        final int level = player.getLevel();
+
         Log.d("level", "player level in newsActivity " + level);
-        
+
+        // Set up buttons for the articles.
+        // TODO: this should totally be programmatic
         Button lunarMarketOpensButton = (Button) findViewById(R.id.lunar_market_opens_button);
         lunarMarketOpensButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {

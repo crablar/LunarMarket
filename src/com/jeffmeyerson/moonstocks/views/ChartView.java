@@ -210,6 +210,7 @@ public class ChartView extends View {
 		if (triggerSparkles) {
             // TODO: fix this warning properly
             levelUpAnimation = new LevelUpAnimation(tailX, tailY);
+            triggerSparkles = false;
 		}
 		if (levelUpAnimation != null) {
 		    levelUpAnimation.draw(canvas, paint);

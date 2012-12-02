@@ -271,10 +271,10 @@ public class StockActivity extends MoonActivity {
 		if(player.getBalance() >= STOCK_CRASH_PRICE){
 			double balance = player.getBalance();
 			player.setBalance(balance - STOCK_CRASH_PRICE);
-			stock.fn.toggleCrashed();
+			Stock.fn.crash();
 			Runnable runnable = new Runnable(){
 				public void run(){
-					stock.fn.toggleCrashed();
+					Stock.fn.crash();
 				}
 			};
 			mHandler.postDelayed(runnable, 5000);

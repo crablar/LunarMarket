@@ -16,34 +16,37 @@ import com.jeffmeyerson.moonstocks.pojos.Company;
 // Let's try not to make this a kitchen sink.
 public class Utility {
 
-	public static double getMarketAverage(){
-		if(MoonActivity.companyList.size() == 0)
+    private static final DecimalFormat twoDForm = new DecimalFormat("#.00");
+
+	public static double getMarketAverage() {
+
+		if (MoonActivity.companyList.size() == 0) {
 			return 0;
-		int time = MoonActivity.getTime();
+		}
+
+		final int time = MoonActivity.getTime();
 		double total = 0;
-		for(Company company : MoonActivity.companyList){
+
+		for (Company company : MoonActivity.companyList) {
 			total += company.getStock().getPrice(time);
 		}
+
 		return total / MoonActivity.companyList.size();
 	}
-	
+
     public static double roundCurrency(double amount) {
-        final DecimalFormat twoDForm = new DecimalFormat("#.00");
-        Double result = Double.valueOf(twoDForm.format(amount));
-        return result.doubleValue();
+        return Double.valueOf(twoDForm.format(amount)).doubleValue();
     }
 
     public static float roundCurrencyToFloat(double value) {
-        final DecimalFormat twoDForm = new DecimalFormat("#.00");
-        Float result = Float.valueOf(twoDForm.format(value));
-        return result.floatValue();
+        return Float.valueOf(twoDForm.format(value)).floatValue();
     }
-    
+
     public static byte[] serialize(Object o) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
         try {
-            ObjectOutput out = new ObjectOutputStream(bos);
+            final ObjectOutput out = new ObjectOutputStream(bos);
             out.writeObject(o);
             out.close();
 
@@ -52,8 +55,7 @@ public class Utility {
 
             return buf;
         } catch (IOException ioe) {
-            Log.e("serializeObject", "error", ioe);
-
+            Log.e("serializeObject", "IOException error", ioe);
             return null;
         }
     }
@@ -65,8 +67,8 @@ public class Utility {
         }
 
         try {
-            ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(b));
-            Object object = in.readObject();
+            final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(b));
+            final Object object = in.readObject();
             in.close();
             return object;
         } catch (ClassNotFoundException cnfe) {
