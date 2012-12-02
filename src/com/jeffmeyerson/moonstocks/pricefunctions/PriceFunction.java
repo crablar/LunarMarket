@@ -23,6 +23,10 @@ public abstract class PriceFunction {
 	protected abstract void addToPreviousValues(int result);
 	public static boolean crashedMarket = false;
 
+	public PriceFunction(){
+		crashed = false;
+	}
+	
 	public static void toggleCrashedMarket(){
 		crashedMarket = !crashedMarket;
 	}
@@ -70,7 +74,7 @@ public abstract class PriceFunction {
 
 	abstract int maxVolatility();
 	
-	public void toggleCrashed() {
+	 public void toggleCrashed() {
 		crashed = !crashed;
 	}
 

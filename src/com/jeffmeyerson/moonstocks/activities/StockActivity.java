@@ -271,13 +271,13 @@ public class StockActivity extends MoonActivity {
 		if(player.getBalance() >= STOCK_CRASH_PRICE){
 			double balance = player.getBalance();
 			player.setBalance(balance - STOCK_CRASH_PRICE);
+			stock.fn.toggleCrashed();
 			Runnable runnable = new Runnable(){
 				public void run(){
 					stock.fn.toggleCrashed();
-					mHandler.postDelayed(this, 5000);
 				}
 			};
-			mHandler.post(runnable);
+			mHandler.postDelayed(runnable, 5000);
 		}
 		else
 			Toast.makeText(context, "Not enough money to crash the market!", Toast.LENGTH_SHORT).show();
