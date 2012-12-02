@@ -312,9 +312,10 @@ public abstract class MoonActivity extends Activity {
 		Runnable runnable = new Runnable() {
 			public void run() {
 				JeffsGenericPriceFunction.toggleCrashedMarket();
-				mHandler.postDelayed(this, 5000 + 1000 * r.nextInt(10));
 			};
 		};
-		mHandler.post(runnable);
+		JeffsGenericPriceFunction.toggleCrashedMarket();
+		if(JeffsGenericPriceFunction.crashedMarket)
+			mHandler.postDelayed(runnable, 5000 + 1000 * r.nextInt(10));
 	}
 }
