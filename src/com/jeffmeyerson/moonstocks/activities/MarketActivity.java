@@ -248,6 +248,7 @@ public class MarketActivity extends MoonActivity {
 	public void clickCrashTheMarket(View view){
 		if(player.getBalance() >= MARKET_CRASH_PRICE){
 			double balance = player.getBalance();
+			
 			player.setBalance(balance - MARKET_CRASH_PRICE);
 			MoonActivity.crashTheMarket();
 		}
