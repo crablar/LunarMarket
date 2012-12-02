@@ -55,11 +55,12 @@ public class MarketActivity extends MoonActivity {
         	crashTheMarketButton.setEnabled(true);
         	crashTheMarketButton.setText("Crash the market: $" + MARKET_CRASH_PRICE);
         }
-        else
+        else {
         	crashTheMarketButton.setText("???");
+        }
         
 		chartView = (ChartView) findViewById(R.id.chart);
-        
+        chartView.setGridLines(5,10);
         tickerView.scroll();
         
         Log.d("level", "player level is " + player.getLevel());

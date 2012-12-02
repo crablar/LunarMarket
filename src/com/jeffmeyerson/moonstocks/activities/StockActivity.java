@@ -37,8 +37,6 @@ public class StockActivity extends MoonActivity {
 	private final int STOCK_CRASH_PRICE = 300;
 	private Handler mHandler = new Handler();
 
-	private Button crashThisStockButton;
-
 	private Stock stock;
 	private double price;
 	private String stockTicker;

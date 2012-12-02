@@ -14,7 +14,6 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class ChartView extends View {
@@ -22,7 +21,6 @@ public class ChartView extends View {
 	// constants
 	private static final int MAX_POINTS = 100;
 	private static final int INTERPOLATION_LEVEL = 10;
-	private static final int GRID_LINES = 10;
 
     // used to configure the behavior of the ChartView
     private boolean interpolate = false;
@@ -37,6 +35,10 @@ public class ChartView extends View {
     private final DashPathEffect dottedLine = new DashPathEffect(new float[] {8, 10}, 0);
     private final Path path = new Path();
     private final RectF rect = new RectF();
+
+    // used by the grid
+    private int verticalGridLines = 10;
+    private int horizontalGridLines = 10;
 
     // used by the line chart
 	private final List<Float> points = new ArrayList<Float>();
@@ -116,8 +118,12 @@ public class ChartView extends View {
 
 	public void doLevelUpAnimation() {
 	    triggerSparkles = true;
-
 	}
+
+    public void setGridLines(int verticalGridLines, int horizontalGridLines) {
+        this.verticalGridLines = verticalGridLines;
+        this.horizontalGridLines = horizontalGridLines;
+    }
 
 	@Override
 	public void onDraw(Canvas canvas) {
@@ -133,14 +139,17 @@ public class ChartView extends View {
         paint.setStrokeWidth(1);
         paint.setColor(Color.LTGRAY);
         paint.setStyle(Style.FILL_AND_STROKE);
-        final int priceStep = (int) ((maxPrice - minPrice) / GRID_LINES);
+        final int priceStep = (int) ((maxPrice - minPrice) / horizontalGridLines);
         paint.setTypeface(Typeface.DEFAULT);
         paint.setTextSize(20);
-        for (int i = 0; i < GRID_LINES; i++) {
-            canvas.drawLine((w / GRID_LINES) * i, 0, (w / GRID_LINES) * i, h, paint);
-            canvas.drawLine(0, (h / GRID_LINES) * i, w, (h / GRID_LINES) * i, paint);
+        for (int i = 0; i < horizontalGridLines; i++) {
+            canvas.drawLine(0, (h / horizontalGridLines) * i, w, (h / horizontalGridLines) * i, paint);
             float textWidth = paint.measureText("$" + ((priceStep * i) + (int)minPrice));
-            canvas.drawText("$" + ((priceStep * i) + (int)minPrice), w - textWidth - 5, h - (h / GRID_LINES) * i, paint);
+            canvas.drawText("$" + ((priceStep * i) + (int)minPrice), w - textWidth - 5, h - (h / horizontalGridLines) * i, paint);
+        }
+
+        for (int i = 0; i < verticalGridLines; i++) {
+            canvas.drawLine((w / verticalGridLines) * i, 0, (w / verticalGridLines) * i, h, paint);
         }
         paint.setStyle(Style.STROKE);
         canvas.drawRect(1,1,w-1,h-1, paint);
