@@ -20,6 +20,7 @@ public abstract class JeffsGenericPriceFunction implements PriceFunction {
 	protected abstract int getPreviousValue();
 	protected abstract void addToPreviousValues(int result);
 	public static boolean crashedMarket = false;
+	Random r = new Random();
 
 	public JeffsGenericPriceFunction() {
 		crashed = false;
@@ -30,12 +31,10 @@ public abstract class JeffsGenericPriceFunction implements PriceFunction {
 	}
 	
 	public int randomVolatility(){
-		Random r = new Random();
 		int playerLevel = 1;
 		if(MoonActivity.player != null)
 			playerLevel = MoonActivity.player.getLevel();
-		
-		return r.nextInt(maxVolatility() * playerLevel * volatilityMultiplier) % 599;
+		return r.nextInt(playerLevel * volatilityMultiplier) % maxVolatility();
 	}
 
 	public int getValue(int time, List<Integer> values) {
@@ -43,9 +42,9 @@ public abstract class JeffsGenericPriceFunction implements PriceFunction {
 		time = time % values.size();
 		int result = 0;
 		if (time == 0) {
-			result = values.get(0) * values.get(0);
+			result = values.get(0);
 		} else {
-			result = values.get(time) * values.get(time);
+			result = values.get(time);
 			int difference = result - getPreviousValue();
 			if (Math.abs(difference) > maxVolatility())
 				result = difference < 0 ? getPreviousValue() - randomVolatility()
@@ -53,9 +52,9 @@ public abstract class JeffsGenericPriceFunction implements PriceFunction {
 		}
 		if (result > upperBound())
 			result = upperBound() - randomVolatility();
-		if (result < 0){
+		if (result < lowerBound()){
 			int vol = randomVolatility();
-			result = Math.max(result - vol, vol);
+			result = r.nextBoolean() ? lowerBound() : lowerBound() + vol;
 		}
 		
 		if(crashedMarket || crashed){
@@ -69,7 +68,7 @@ public abstract class JeffsGenericPriceFunction implements PriceFunction {
 	}
 
 	abstract int upperBound();
-
+	abstract int lowerBound();
 	abstract int maxVolatility();
 
 	 public void crash() {

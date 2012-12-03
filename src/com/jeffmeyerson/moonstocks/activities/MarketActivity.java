@@ -60,7 +60,8 @@ public class MarketActivity extends MoonActivity {
 		final ChartView chartView = (ChartView) findViewById(R.id.chart);
         chartView.setGridLines(5,10);
         tickerView.scroll();
-
+        play(R.raw.main_menu);
+        
         Log.d("level", "player level is " + player.getLevel());
         //otherwise, we don't lower the player's level
 

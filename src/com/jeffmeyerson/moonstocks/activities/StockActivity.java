@@ -89,7 +89,7 @@ public class StockActivity extends MoonActivity {
 			play(R.raw.evil);
 		} else if (stockTicker.equals("BDST")) {
 			inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
-			play(R.raw.main_menu);
+			play(R.raw.bdst);
 		} else if (stockTicker.equals("WMC")) {
 			inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
 			play(R.raw.wmc);
@@ -100,7 +100,7 @@ public class StockActivity extends MoonActivity {
 		}
 		else if (stockTicker.equals("BANK")) {
 			inputStream = this.getResources().openRawResource(R.raw.bank_vals);
-			play(R.raw.evil);
+			play(R.raw.bank);
 		}
 
 		// Create the Stock object out of the SongData

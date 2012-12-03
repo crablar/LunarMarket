@@ -33,19 +33,19 @@ public class ArticleActivity extends MoonActivity {
 		InputStream inputStream = null;
 		if (articleName.equals("lunar_market_opens")) {
 			inputStream = this.getResources().openRawResource(R.raw.lunar_market_opens);
-			play(R.raw.evil);
+			play(R.raw.ikea_zombies);
 		} else if (articleName.equals("careful_with_the_moon")) {
 			inputStream = this.getResources().openRawResource(R.raw.careful_with_the_moon);
-			play(R.raw.evil);
+			play(R.raw.riffs2);
 		} else if (articleName.equals("buy_stock_not_globus")) {
 			inputStream = this.getResources().openRawResource(R.raw.buy_stock_not_globus);
-			play(R.raw.evil);
+			play(R.raw.fxxx);
 		} else if (articleName.equals("freeze_and_thaw")) {
 			inputStream = this.getResources().openRawResource(R.raw.freeze_and_thaw);
-			play(R.raw.evil);
+			play(R.raw.dotslashgo);
 		} else if (articleName.equals("bank_initialization")) {
 			inputStream = this.getResources().openRawResource(R.raw.bank_initialization);
-			play(R.raw.evil);
+			play(R.raw.bleepblop);
 		}
 
 		// Create a BufferedReader for the InputStream

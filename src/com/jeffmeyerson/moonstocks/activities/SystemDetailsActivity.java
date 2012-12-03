@@ -35,7 +35,7 @@ public class SystemDetailsActivity extends MoonActivity {
 
 		tickerView.scroll();
 
-		play(R.raw.evil);
+		play(R.raw.dedication);
 
 		// Get the data from the Intent
 		// TODO: Move this to MoonActivity

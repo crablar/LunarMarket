@@ -13,7 +13,7 @@ public class EVILStockFunction extends JeffsGenericPriceFunction {
 
 	// EVIL is the second least volatile
 	public EVILStockFunction(){
-		this.volatilityMultiplier = 2;
+		this.volatilityMultiplier = 1;
 	}
 	
 	@Override
@@ -33,15 +33,22 @@ public class EVILStockFunction extends JeffsGenericPriceFunction {
 		previousValues.add(result);
 	}
 	
+	
 	@Override
 	int upperBound() {
-		return 500;
+		return 1000;
+	}
+
+	@Override
+	int lowerBound() {
+		return 10;
 	}
 
 	@Override
 	int maxVolatility() {
-		return 25;
+		return 50;
 	}
+
 
 
 }

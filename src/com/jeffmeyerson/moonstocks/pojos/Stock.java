@@ -105,7 +105,6 @@ public class Stock {
 		// This gets the low frequency element
         SongElement highFreq = song.get(0);
         SongElement lowFreq = song.get(1);
-
         return (highFreq.getValue(time) + lowFreq.getValue(time)) / 2;
         }
 

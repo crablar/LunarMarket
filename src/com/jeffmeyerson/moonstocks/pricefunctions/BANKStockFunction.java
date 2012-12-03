@@ -33,9 +33,15 @@ public class BANKStockFunction extends JeffsGenericPriceFunction {
 		previousValues.add(result);
 	}
 
+	
 	@Override
 	int upperBound() {
-		return 400;
+		return 1000;
+	}
+
+	@Override
+	int lowerBound() {
+		return 10;
 	}
 
 	@Override
