@@ -1,6 +1,7 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.util.Log;
 
@@ -18,6 +19,11 @@ public class PARStockFunction extends JeffsGenericPriceFunction {
 	@Override
 	public String getName() {
 		return "PAR";
+	}
+	
+	@Override
+	public int getValue(int time, List<Integer> values){
+		return super.getValue(time, values) / 50;
 	}
 	
 	@Override

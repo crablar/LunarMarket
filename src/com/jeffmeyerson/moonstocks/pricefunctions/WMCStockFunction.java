@@ -5,19 +5,13 @@ import java.util.List;
 
 import android.util.Log;
 
-/**
- * A simple uptrend with an upper bound.
- * 
- */
 public class WMCStockFunction extends JeffsGenericPriceFunction {
 
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
-	
-	private static double growCRASH = .5;
-	
+		
 	// WMC is the second most volatile
 	public WMCStockFunction(){
-		this.volatilityMultiplier = 3;
+		this.volatilityMultiplier = 1;
 	}
 	
 	@Override
@@ -26,11 +20,10 @@ public class WMCStockFunction extends JeffsGenericPriceFunction {
 	}
 	
 	@Override
-	public int getValue(int time, List<Integer> values) {
-		int x = super.getValue(time, values);
-		growCRASH %= 100;
-		return (int)(x * x * growCRASH++);
+	public int getValue(int time, List<Integer> values){
+		return super.getValue(time, values) / 25;
 	}
+	
 
 	@Override
 	public int getPreviousValue() {

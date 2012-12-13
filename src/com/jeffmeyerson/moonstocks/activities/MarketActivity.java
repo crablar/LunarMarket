@@ -36,7 +36,7 @@ public class MarketActivity extends MoonActivity {
 	private SharedPreferences mPrefs;
 
 	// A bargain at twice the price
-	private final static int MARKET_CRASH_PRICE = 400;
+	private final static int MARKET_CRASH_PRICE = 4000;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,12 +50,12 @@ public class MarketActivity extends MoonActivity {
 
         final Button crashTheMarketButton = (Button) findViewById(R.id.crash_the_market_button);
 
-        if (player.getLevel() > 1) {
+        //if (player.getLevel() > 1) {
         	crashTheMarketButton.setEnabled(true);
         	crashTheMarketButton.setText("Crash the market: $" + MARKET_CRASH_PRICE);
-        } else {
-        	crashTheMarketButton.setText("???");
-        }
+        //} else {
+        //	crashTheMarketButton.setText("???");
+        //}
 
 		final ChartView chartView = (ChartView) findViewById(R.id.chart);
         chartView.setGridLines(5,10);
@@ -109,12 +109,12 @@ public class MarketActivity extends MoonActivity {
 		final Runnable tableFlux = new Runnable() {
 			public void run() {
 
-		        if (player.getLevel() > 3) {
+		        //if (player.getLevel() > 3) {
 		        	crashTheMarketButton.setClickable(true);
 		        	crashTheMarketButton.setText("Crash the market: $" + MARKET_CRASH_PRICE);
-		        } else {
-		        	crashTheMarketButton.setText("???");
-		        }
+		        //} else {
+		        //	crashTheMarketButton.setText("???");
+		        //}
 
 				final TableLayout marketTable = (TableLayout) findViewById(R.id.market_table);
 				for (int i = 1; i <= companyMap.size(); i++) {

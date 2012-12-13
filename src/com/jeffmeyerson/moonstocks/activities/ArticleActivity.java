@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import com.jeffmeyerson.moonstocks.R;
-
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.jeffmeyerson.moonstocks.R;
 
 public class ArticleActivity extends MoonActivity {
 

@@ -1,6 +1,7 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.util.Log;
 
@@ -19,6 +20,11 @@ public class EVILStockFunction extends JeffsGenericPriceFunction {
 	@Override
 	public String getName() {
 		return "EVIL";
+	}
+	
+	@Override
+	public int getValue(int time, List<Integer> values){
+		return super.getValue(time, values) / 25;
 	}
 	
 	@Override
@@ -46,7 +52,7 @@ public class EVILStockFunction extends JeffsGenericPriceFunction {
 
 	@Override
 	int maxVolatility() {
-		return 50;
+		return 40;
 	}
 
 
