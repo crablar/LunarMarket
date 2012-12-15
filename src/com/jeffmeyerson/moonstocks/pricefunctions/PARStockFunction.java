@@ -1,6 +1,7 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.util.Log;
 
@@ -21,6 +22,11 @@ public class PARStockFunction extends JeffsGenericPriceFunction {
 	}
 	
 	@Override
+	public int getValue(int time, List<Integer> values){
+		return super.getValue(time, values) / 50;
+	}
+	
+	@Override
 	public int getPreviousValue() {
 		if (previousValues.size() == 0)
 			Log.d(this.toString(), "StockFunction undeveloped list error");
@@ -30,13 +36,18 @@ public class PARStockFunction extends JeffsGenericPriceFunction {
 	@Override
 	protected void addToPreviousValues(int result) {
 		previousValues.add(result);
-	}
+	}	
 	
 	@Override
 	int upperBound() {
-		return 400;
+		return 1000;
 	}
 
+	@Override
+	int lowerBound() {
+		return 10;
+	}
+	
 	@Override
 	int maxVolatility() {
 		return 20;

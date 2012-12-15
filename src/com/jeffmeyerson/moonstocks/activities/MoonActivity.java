@@ -316,6 +316,6 @@ public abstract class MoonActivity extends Activity {
 		};
 		JeffsGenericPriceFunction.toggleCrashedMarket();
 		if(JeffsGenericPriceFunction.crashedMarket)
-			mHandler.postDelayed(runnable, 5000 + 1000 * r.nextInt(10));
+			mHandler.postDelayed(runnable, 3000 + 1000 * r.nextInt(3));
 	}
 }

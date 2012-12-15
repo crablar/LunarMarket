@@ -40,7 +40,7 @@ public class ResultsOutFormatter {
 			System.out.println("line " + line);
 
 			int lowVal = Integer.parseInt(lineArr[1]);
-			int highVal = Integer.parseInt(lineArr[1]);
+			int highVal = Integer.parseInt(lineArr[2]);
 
 			lowFreqSum += lowVal;
 			highFreqSum += highVal;
@@ -62,7 +62,7 @@ public class ResultsOutFormatter {
 			String[] lineArr = line.split("\t");
 
 			int lowVal = Integer.parseInt(lineArr[1]);
-			int highVal = Integer.parseInt(lineArr[1]);
+			int highVal = Integer.parseInt(lineArr[2]);
 
 			int l = lowVal - lowFreqMean;
 			int h = highVal - highFreqMean;
@@ -83,7 +83,7 @@ public class ResultsOutFormatter {
 			String[] lineArr = line.split("\t");
 
 			int lowVal = Integer.parseInt(lineArr[1]);
-			int highVal = Integer.parseInt(lineArr[1]);
+			int highVal = Integer.parseInt(lineArr[2]);
 
 			/**
 			 * If no standard deviation, no need to normalize This is strictly

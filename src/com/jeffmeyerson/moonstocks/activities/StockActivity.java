@@ -34,7 +34,7 @@ import com.jeffmeyerson.moonstocks.views.SellButton;
 public class StockActivity extends MoonActivity {
 	Context context = this;
 
-	private final int STOCK_CRASH_PRICE = 300;
+	private final int STOCK_CRASH_PRICE = 3000;
 	private Handler mHandler = new Handler();
 
 	private Stock stock;
@@ -69,7 +69,10 @@ public class StockActivity extends MoonActivity {
 		((TextView) findViewById(R.id.balance_view)).setText("" + player.getBalance());
 
 		if(player.getLevel() == 1) {
-			interpolationButton.setText("???");
+			//TODO: only in BETA
+			interpolationButton.setText("Toggle Interpolation");
+			interpolationButton.setEnabled(true);
+			//interpolationButton.setText("???");
 		} else {
 			interpolationButton.setText("Toggle Interpolation");
 			interpolationButton.setEnabled(true);
@@ -89,7 +92,7 @@ public class StockActivity extends MoonActivity {
 			play(R.raw.evil);
 		} else if (stockTicker.equals("BDST")) {
 			inputStream = this.getResources().openRawResource(R.raw.bdst_vals);
-			play(R.raw.main_menu);
+			play(R.raw.bdst);
 		} else if (stockTicker.equals("WMC")) {
 			inputStream = this.getResources().openRawResource(R.raw.wmc_vals);
 			play(R.raw.wmc);
@@ -100,7 +103,7 @@ public class StockActivity extends MoonActivity {
 		}
 		else if (stockTicker.equals("BANK")) {
 			inputStream = this.getResources().openRawResource(R.raw.bank_vals);
-			play(R.raw.evil);
+			play(R.raw.bank);
 		}
 
 		// Create the Stock object out of the SongData
@@ -123,12 +126,14 @@ public class StockActivity extends MoonActivity {
 		// ChartView
 		Runnable priceFlux = new Runnable() {
 			public void run() {
-		        if(player.getLevel() > 2){
-		        	crashThisStockButton.setClickable(true);
-		        	crashThisStockButton.setText("Crash this stock: $" + STOCK_CRASH_PRICE);
-		        }
-		        else
-		        	crashThisStockButton.setText("???");
+//		        if(player.getLevel() > 2){
+//		        	crashThisStockButton.setClickable(true);
+//		        	crashThisStockButton.setText("Crash this stock: $" + STOCK_CRASH_PRICE);
+//		        }
+//		        else
+//		        	crashThisStockButton.setText("???");
+		        crashThisStockButton.setClickable(true);
+	        	crashThisStockButton.setText("Crash this stock: $" + STOCK_CRASH_PRICE);
 				// Get the stock price for the current time and set the TextView
 				double rawPrice;
 				rawPrice = stock.getPrice(currentTime);

@@ -90,14 +90,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:enabled="false"
+            android:enabled="true"
             android:onClick="onClickCrashThisStock"/>
         <Button
             android:id="@+id/interpolation_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:enabled="false"
+            android:enabled="true"
             android:onClick="toggleInterpolation"/>
     </LinearLayout>
 

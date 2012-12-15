@@ -1,26 +1,29 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.util.Log;
 
-/**
- * A simple uptrend with an upper bound.
- * 
- */
 public class WMCStockFunction extends JeffsGenericPriceFunction {
 
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
-
+		
 	// WMC is the second most volatile
 	public WMCStockFunction(){
-		this.volatilityMultiplier = 4;
+		this.volatilityMultiplier = 1;
 	}
 	
 	@Override
 	public String getName() {
 		return "WMC";
 	}
+	
+	@Override
+	public int getValue(int time, List<Integer> values){
+		return super.getValue(time, values) / 25;
+	}
+	
 
 	@Override
 	public int getPreviousValue() {
@@ -36,9 +39,14 @@ public class WMCStockFunction extends JeffsGenericPriceFunction {
 	
 	@Override
 	int upperBound() {
-		return 300;
+		return 1000;
 	}
 
+	@Override
+	int lowerBound() {
+		return 10;
+	}
+	
 	@Override
 	int maxVolatility() {
 		return 10;

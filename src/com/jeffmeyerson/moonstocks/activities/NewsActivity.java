@@ -27,7 +27,7 @@ public class NewsActivity extends MoonActivity {
         Log.d("class", "In NewsActivity");
 
         // play a lovely little tune
-        play(R.raw.evil);
+        play(R.raw.articles);
 
         // Set up the scrolling stock ticker at the top.
         TickerView tickerView = (TickerView) findViewById(R.id.stock_scroller);

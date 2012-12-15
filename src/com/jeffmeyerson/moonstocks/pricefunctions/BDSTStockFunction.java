@@ -1,6 +1,7 @@
 package com.jeffmeyerson.moonstocks.pricefunctions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.util.Log;
 
@@ -11,14 +12,18 @@ import android.util.Log;
 public class BDSTStockFunction extends JeffsGenericPriceFunction {
 	private static ArrayList<Integer> previousValues = new ArrayList<Integer>();
 
-	// BDST is the most volatile
 	public BDSTStockFunction(){
-		this.volatilityMultiplier = 5;
+		this.volatilityMultiplier = 3;
 	}
 	
 	@Override
 	public String getName() {
 		return "BDST";
+	}
+	
+	@Override
+	public int getValue(int time, List<Integer> values){
+		return super.getValue(time, values) / 20;
 	}
 	
 	@Override
@@ -32,15 +37,20 @@ public class BDSTStockFunction extends JeffsGenericPriceFunction {
 	protected void addToPreviousValues(int result) {
 		previousValues.add(result);
 	}
-
+	
 	@Override
 	int upperBound() {
-		return 400;
+		return 1000;
 	}
 
 	@Override
-	int maxVolatility() {
+	int lowerBound() {
 		return 10;
+	}
+	
+	@Override
+	int maxVolatility() {
+		return 25;
 	}
 
 }
